@@ -9,7 +9,7 @@ import deliveryRoute from "./routes/deliveryRoute.js";
 import fishRouter from "./routes/fishRoute.js";
 
 const app = express();
-const port = process.env.PORT || 5001
+const port = process.env.PORT || 5004
 
 connectDB();
 
