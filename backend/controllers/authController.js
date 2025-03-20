@@ -1,5 +1,5 @@
 import bcrypt from 'bcryptjs';
-//import jwt from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 import userModel from '../models/userModel.js';
 import transporter from '../config/nodemailer.js';
 
@@ -50,6 +50,7 @@ const registerUser = async (req, res)=>{
         await transporter.sendMail(mailOptions);
 
         res.json({success:true, message:"User registered successfully"});
+        
 
 
 
@@ -61,4 +62,59 @@ const registerUser = async (req, res)=>{
 }
 
 
-export {registerUser}
+
+//login user
+
+const loginUser = async(req,res)=>{
+
+    const{email,password} = req.body;
+    
+    if(!email || !password)
+    {
+        return res.json({success:false, message:"email and password are required"})
+    }
+
+    try
+    {
+        const user = await userModel.findOne({email});
+
+        if(!user)
+        {
+           return res.json({success:false, message: "Invalid email or user doesn't exist"})
+        }
+
+        const isMatch = await bcrypt.compare(password, user.password);
+
+        if(!isMatch)
+        {
+            return res.json({success:false, message:"Invalid password"})
+        }
+
+        const token = createToken(user._id);
+
+        res.json({success:true, token , role:user.role});
+
+
+    }
+    catch(error)
+    {
+        console.log(error)
+        res.json({success:false, message: error.message})
+    }
+
+}
+
+//create token
+
+const createToken = (id) =>{
+    return jwt.sign({id},process.env.JWT_SECRET)
+}
+
+
+
+
+
+
+
+
+export {registerUser, loginUser}
