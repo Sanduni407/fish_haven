@@ -1,0 +1,17 @@
+.assign-vehicle-container
+{
+    display: flex;
+    height: 100vh; 
+}
+
+.assign-vehicle-container .left-column{
+    width: 250px;
+    padding: 20px;
+}
+
+.assign-vehicle-container .right-column
+{
+    flex-grow: 1;
+    padding: 20px;
+  
+}
