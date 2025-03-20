@@ -46,4 +46,69 @@ const generateOrderCode = async () => {
 }
 
 
-export{CreateAOrder}
+const getAllOrdersById = async(req,res)=>{
+    try
+    {
+       const id = req.body.userId;
+ 
+       const orders = await ExportOrderModel.find({userId:id});
+ 
+       if(!orders)
+       {
+          return res.json({success:false,message:'No orders'})
+       }
+       
+       res.json({success:true,orders})
+
+    }catch(err){
+
+       console.log(err);
+       res.json({success:false,message:err.message})
+    }
+ }
+
+
+ const getAllOrders = async(req,res)=>{
+    try
+    {
+       
+ 
+       const orders = await ExportOrderModel.find();
+ 
+       if(!orders)
+       {
+          return res.json({success:false,message:'No orders'})
+       }
+       
+       res.json({success:true,orders})
+
+    }catch(err){
+
+       console.log(err);
+       res.json({success:false,message:err.message})
+    }
+ }
+
+
+ const getOrderByOrderId = async(req,res)=>{
+    try
+    {
+       const Orderid = req.body.id;
+ 
+       const order = await ExportOrderModel.findOne({_id:Orderid});
+ 
+       if(!order)
+       {
+          return res.json({success:false,message:'No order found'})
+       }
+       
+       res.json({success:true,order})
+ 
+    }catch(err){
+ 
+       console.log(err);
+       res.json({success:false,message:err.message})
+    }
+ }
+
+export{CreateAOrder, getAllOrdersById,getAllOrders,getOrderByOrderId}
