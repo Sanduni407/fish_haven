@@ -5,6 +5,7 @@ import 'dotenv/config';
 import connectDB from "./config/mongodb.js";
 import authRouter from "./routes/authRoutes.js";
 import orderRouter from "./routes/OrderRoute.js";
+import deliveryRoute from "./routes/deliveryRoute.js";
 
 const app = express();
 const port = process.env.PORT || 5004
@@ -21,6 +22,8 @@ app.get('/',(req,res)=>{
 app.use('/api/auth', authRouter)
 
 app.use('/api/order',orderRouter)
+
+app.use("/api/delivery",deliveryRoute)
 
 
 app.listen(port, ()=>{
