@@ -1,4 +1,4 @@
-//import DeliveryModel from "../models/deliverModel.js";
+import DeliveryModel from "../models/deliverModel.js";
 import ExportOrderModel from "../models/exporterOrderModel.js";
 
 
@@ -111,4 +111,91 @@ const getAllOrdersById = async(req,res)=>{
     }
  }
 
-export{CreateAOrder, getAllOrdersById,getAllOrders,getOrderByOrderId}
+
+ const updateOrderstatus = async(req,res)=>{
+   try
+   {
+      const{selectedRowId} = req.params;
+     const{status} = req.body;
+
+     if(!selectedRowId || !status)
+     {
+      return res.json({success:false , message:'required data is missing'})
+     }
+
+     const updatedOrder = await ExportOrderModel.findByIdAndUpdate(selectedRowId, { status }, { new: true });
+
+       res.json({success:true,message:'updated'})
+
+   }catch(err){
+
+      console.log(err);
+      res.json({success:false,message:'Error'})
+   }
+}
+
+
+const deleteOrder = async(req,res)=>{
+   try
+   {
+      const{selectedRowId} = req.params;
+
+     if(!selectedRowId)
+     {
+      return res.json({success:false , message:'required data is missing'})
+     }
+
+         await ExportOrderModel.findByIdAndDelete(selectedRowId);
+
+       res.json({success:true,message:'deleted'})
+
+   }catch(err){
+
+      console.log(err);
+      res.json({success:false,message:'Error'})
+   }
+}
+
+
+const updateOrder = async(req,res)=>{
+   try {
+      const {selectedRowId} = req.params;
+      const {shippingAddress, shippingDate,  orderType,  contact,cart } = req.body;
+  
+      if(!selectedRowId || !shippingAddress || !shippingDate || !orderType || !contact || !cart)
+         {
+          return res.json({success:false , message:'required data is missing'})
+         }
+
+
+      const updatedOrder = await ExportOrderModel.findByIdAndUpdate(selectedRowId, {
+         shippingAddress,
+         shippingDate,
+         orderType,
+         contact,
+         cart
+      }, { new: true });
+
+      const order = await ExportOrderModel.findOne({_id: selectedRowId })
+      const orderCode = await order.orderCode;
+
+      await DeliveryModel.findOneAndUpdate(
+         { orderCode : orderCode }, 
+         { shippingAddress, orderType,  contact},  
+         { new: true } 
+      );
+
+    
+  
+      if (!updatedOrder) return res.status(404).json({ success: false, message: 'Order not found' });
+  
+      res.json({ success: true, message: 'Order updated successfully' });
+
+    } catch (error) {
+
+      res.json({ success: false, message: 'Error updating order' });
+    }
+}
+
+
+export{CreateAOrder, getAllOrdersById,getAllOrders,getOrderByOrderId, updateOrderstatus,deleteOrder,updateOrder}

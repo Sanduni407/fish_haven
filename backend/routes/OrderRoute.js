@@ -1,5 +1,5 @@
 import express from 'express'
-import { CreateAOrder ,getAllOrdersById ,getAllOrders,getOrderByOrderId} from '../controllers/exportOrderController.js';
+import { CreateAOrder ,getAllOrdersById ,getAllOrders,getOrderByOrderId,updateOrderstatus,deleteOrder,updateOrder} from '../controllers/exportOrderController.js';
 import userAuth from '../middleware/auth.js';
 
 const orderRouter = express.Router();
@@ -8,5 +8,8 @@ orderRouter.post('/create-order',userAuth, CreateAOrder);
 orderRouter.post('/get-orders-byuser',userAuth, getAllOrdersById);
 orderRouter.get('/get-orders',getAllOrders );
 orderRouter.post('/get-order',getOrderByOrderId);
+orderRouter.put('/update-status/:selectedRowId',updateOrderstatus);
+orderRouter.delete('/delete-order/:selectedRowId',deleteOrder);
+orderRouter.put('/update-order/:selectedRowId',updateOrder);
 
 export default orderRouter; 
