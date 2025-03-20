@@ -1,0 +1,17 @@
+.create-delivery-container {
+    display: flex;
+    height: 100vh;
+  }
+  
+  .create-delivery-container .left-column {
+    width: 250px; 
+    padding: 20px;
+  }
+  
+  .create-delivery-container .right-column {
+    flex-grow: 1; 
+    padding: 20px;
+    margin-left: 80px;
+    
+  }
+  
