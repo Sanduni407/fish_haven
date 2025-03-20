@@ -6,7 +6,7 @@ import connectDB from "./config/mongodb.js";
 import authRouter from "./routes/authRoutes.js";
 
 const app = express();
-const port = process.env.PORT || 5001
+const port = process.env.PORT || 5004
 
 connectDB();
 
@@ -23,3 +23,4 @@ app.use('/api/auth', authRouter)
 app.listen(port, ()=>{
     console.log(`Server started on PORT:${port}`)
 });
+
