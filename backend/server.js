@@ -7,6 +7,7 @@ import authRouter from "./routes/authRoutes.js";
 import orderRouter from "./routes/OrderRoute.js";
 import deliveryRoute from "./routes/deliveryRoute.js";
 import fishRouter from "./routes/fishRoute.js";
+import employeeRouter from "./routes/employeeRoute.js";
 
 const app = express();
 const port = process.env.PORT || 5004
@@ -27,6 +28,8 @@ app.use('/api/order',orderRouter)
 app.use("/api/delivery",deliveryRoute)
 
 app.use('/api/fish',fishRouter)
+
+app.use('/api/employee',employeeRouter)
 
 
 app.listen(port, ()=>{
