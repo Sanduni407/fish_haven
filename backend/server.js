@@ -8,7 +8,7 @@ import orderRouter from "./routes/OrderRoute.js";
 import deliveryRoute from "./routes/deliveryRoute.js";
 
 const app = express();
-const port = process.env.PORT || 5004
+const port = process.env.PORT || 5001
 
 connectDB();
 
