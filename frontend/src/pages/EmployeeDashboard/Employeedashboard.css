@@ -1,0 +1,16 @@
+.employee-dashboard-container{
+    display: flex;
+  height: 100vh;
+}
+
+.employee-dashboard-container .left-column{
+    width: 250px; 
+    padding: 20px;
+}
+
+.employee-dashboard-container .right-column
+{
+    flex-grow: 1; 
+  padding: 20px;
+
+}
