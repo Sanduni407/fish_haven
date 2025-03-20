@@ -1,0 +1,15 @@
+.view-all-leave-container {
+    display: flex;
+    height: 100vh; 
+  }
+  
+  .view-all-leave-container .left-column {
+    width: 250px; 
+    padding: 20px;
+  }
+  
+  .view-all-leave-container .right-column {
+    flex-grow: 1; 
+      padding: 20px;
+  }
+  
