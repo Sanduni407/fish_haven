@@ -38,5 +38,90 @@ const createDelivery = async(req,res)=>{
     }
 }
 
+const getAllDeliveries = async(req,res)=>{
+    try
+    {
+       
+ 
+       const deliveries = await DeliveryModel.find();
+ 
+       if(!deliveries)
+       {
+          return res.json({success:false,message:'No deliveries'})
+       }
+       
+       res.json({success:true,deliveries})
 
-export{createDelivery}
+    }catch(err){
+
+       console.log(err);
+       res.json({success:false,message:err.message})
+    }
+ }
+
+
+ const deleteDelivery = async(req,res)=>{
+    try
+    {
+       const{selectedRowId} = req.params;
+ 
+      if(!selectedRowId)
+      {
+       return res.json({success:false , message:'required data is missing'})
+      }
+ 
+          await DeliveryModel.findByIdAndDelete(selectedRowId);
+ 
+        res.json({success:true,message:'deleted'})
+ 
+    }catch(err){
+ 
+       console.log(err);
+       res.json({success:false,message:'Error'})
+    }
+ }
+
+ const fetchaDeliveryByDeliveryId = async(req,res)=>{
+   try{
+
+      const{id} = req.params;
+
+      const deliveryRecord = await DeliveryModel.findOne({_id:id});
+
+      res.json({success:true, deliveryRecord })
+
+   }catch(err)
+   {
+      console.log(err);
+       res.json({success:false,message:'Error'})
+   }
+ }
+ 
+
+ const updateDelivery = async(req,res)=>{
+   try {
+      const {id} = req.params;
+      const {deliveryDate,PackagingArray} = req.body;
+  
+      if(!deliveryDate || !PackagingArray)
+         {
+          return res.json({success:false , message:'required data is missing'})
+         }
+
+
+      const updatedDelivery = await DeliveryModel.findByIdAndUpdate(id, {
+         deliveryDate,
+         PackagingArray
+      }, { new: true });
+  
+      if (!updatedDelivery) return res.status(404).json({ success: false, message: 'delivery is not found' });
+  
+      res.json({ success: true, message: 'delivery updated successfully' });
+
+    } catch (error) {
+
+      res.json({ success: false, message: 'Error updating delivery' });
+    }
+}
+
+export{createDelivery,getAllDeliveries,deleteDelivery,updateDelivery,fetchaDeliveryByDeliveryId}
