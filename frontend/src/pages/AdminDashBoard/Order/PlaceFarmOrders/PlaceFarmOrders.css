@@ -1,0 +1,42 @@
+.admin-farm-orders-container{
+    display: flex;
+    height: 100vh;
+}
+
+.admin-farm-orders-container .left-column{
+
+    width: 250px; 
+    padding: 20px;
+}
+
+.admin-farm-orders-container .right-column{
+
+    flex-grow: 1;
+    background-color: #f4f4f4;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.right-column .first-row{
+    margin-top: 50px;
+    width:100%;
+    
+}
+
+.right-column .second-row{
+   
+  width:900px;
+    
+}
+
+.farm-order-update
+{
+    display:flex;
+    justify-content: center;
+    gap:10px;
+}
+
+
+
