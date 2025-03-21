@@ -1,7 +1,7 @@
 import express from 'express'
 import { CreateAOrder ,getAllOrdersById ,getAllOrders,getOrderByOrderId,updateOrderstatus,deleteOrder,updateOrder} from '../controllers/exportOrderController.js';
 import userAuth from '../middleware/auth.js';
-import {  getAllFarmOrders, placeafarmOrder ,getTheFarmByCategory,getOrdersByUserId,deleteFarmOrder} from '../controllers/farmOrderController.js';
+import {  getAllFarmOrders, placeafarmOrder ,getTheFarmByCategory,getOrdersByUserId,deleteFarmOrder,updateFramOrder,getThefarmOrderByOrderId} from '../controllers/farmOrderController.js';
 
 const orderRouter = express.Router();
 
@@ -19,6 +19,8 @@ orderRouter.get('/get-all-farm-order',getAllFarmOrders);
 orderRouter.post('/get-the-farm',getTheFarmByCategory);
 orderRouter.post('/get-farm-Orders-byuser',userAuth,getOrdersByUserId);
 orderRouter.delete('/delete-farm-order/:id', deleteFarmOrder);
+orderRouter.put('/update-farm-order/:id', updateFramOrder);
+orderRouter.post('/get-farm-order-byorderid', getThefarmOrderByOrderId);
 
 
 export default orderRouter; 
