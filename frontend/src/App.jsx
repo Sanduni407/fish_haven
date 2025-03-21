@@ -75,8 +75,8 @@ const App = () => {
         <Route path='/admin/update-delivery/:id' element={<UpdateDelivery/>}/>
         <Route path='/admin/assign-vehicle/:id' element={<AssignVehicle/>}/>
 
-        {/*Avishka */}   
-        <Route path='/employee/dashboard' element={<Employeedashboard/>}/>               
+        {/*Avishka */}
+        <Route path='/employee/dashboard' element={<Employeedashboard/>}/>
         <Route path='/employee/add-leave' element={<AddLeave/>}/>
         <Route path='/employee/view-leaves' element={<ViewRequest/>}/>
         <Route path='/admin/view-leaves' element={<ViewLeaveReq/>}/>
