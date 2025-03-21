@@ -1,0 +1,20 @@
+.view-user-profile-container {
+    display: flex;
+    height: 100vh; 
+  }
+  
+  .view-user-profile-container .left-column {
+    width: 250px; 
+    padding: 20px;
+  }
+  
+  .view-user-profile-container .right-column {
+    flex-grow: 1; 
+      padding: 20px;
+      display: flex;
+      justify-content: center; 
+      align-items: flex-start; 
+      padding-top: 50px; 
+      width: 100%; 
+  }
+  
