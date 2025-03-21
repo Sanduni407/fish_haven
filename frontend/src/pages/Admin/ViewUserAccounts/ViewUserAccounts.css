@@ -1,0 +1,19 @@
+.main {
+    display: flex;
+    align-items: flex-start;
+    height: 100vh;
+}
+
+
+.exporter-table-container {
+    width: calc(100% - 250px);
+    margin-left: 250px; 
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.btn-btn{
+    width:200px;
+    color:white;
+    margin-left: 20px;
+}
