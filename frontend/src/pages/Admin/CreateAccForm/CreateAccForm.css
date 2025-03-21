@@ -1,0 +1,16 @@
+.admin-create-acc-container {
+    display: flex;
+    height: 100vh; 
+  }
+  
+  .admin-create-acc-container .left-column {
+    width: 250px; 
+    padding: 20px;
+  }
+  
+  .admin-create-acc-container .right-column {
+    flex-grow: 1; 
+      padding: 20px;
+  
+  }
+  
