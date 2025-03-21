@@ -69,6 +69,12 @@ const App = () => {
         <Route path='/supplier-view-profile' element={<SupplierProfiles/>}/>
         <Route path='/employee-view-profile' element={<EmployeeProfiles/>}/>
 
+        {/*Minuli */}
+        <Route path='/admin/create-delivery/:id' element={<CreateDelivery/>}/>
+        <Route path='/admin/view-deliveries' element={<ViewDelivery/>}/>
+        <Route path='/admin/update-delivery/:id' element={<UpdateDelivery/>}/>
+        <Route path='/admin/assign-vehicle/:id' element={<AssignVehicle/>}/>
+
 
         
 
