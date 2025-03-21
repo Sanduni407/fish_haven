@@ -1,0 +1,111 @@
+.admin-view-order-container {
+    display: flex;
+    height: 100vh; /* Full height of the viewport */
+  }
+  
+  .left-column {
+    width: 250px; /* Fixed width */
+    padding: 20px;
+  }
+  
+  .right-column {
+    flex-grow: 1; /* Takes the remaining space */
+    padding: 20px;
+  }
+  
+    
+   /* Ensure the container of buttons and dropdown aligns properly */
+  .admin-order-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    gap: 10px; /* Adds spacing between elements */
+  }
+  
+  /* Left & Right Sections */
+  .admin-order-left,
+  .admin-order-right {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+  
+  /* Buttons & Dropdown Styling */
+  .admin-order-btn,
+  .admin-order-status {
+    padding: 10px 0; /* Equal vertical padding */
+    width: 200px; /* Same width for buttons */
+    height: 40px; /* Same height for all elements */
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    text-align: center;
+  }
+  
+  /* Dropdown */
+  .admin-order-status {
+    border: 1px solid #ccc;
+    background-color: white;
+  }
+  
+  /* Button Colors */
+  .admin-order-remove {
+    background-color: #771d1d;
+    color: white;
+  }
+  
+  .admin-order-request {
+    background-color: #0e654c;
+    color: white;
+  }
+  
+  .admin-order-update {
+    background-color: #2a3c7a;
+    color: white;
+  }
+  
+  /* Hover Effects */
+  .admin-order-btn:hover {
+    opacity: 0.8;
+  }
+  
+    
+    /* Table Styles */
+    .admin-order-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    
+    .admin-order-table th, .admin-order-table td {
+      padding: 10px;
+      border: 1px solid #ddd;
+      text-align: left;
+    }
+    
+    .admin-order-table th {
+      background-color: #1f2937;
+      color: white;
+    }
+    
+    /* Checkbox */
+    .admin-order-checkbox {
+      width: 16px;
+      height: 16px;
+    }
+    
+    /* View Button */
+    .admin-order-view-btn {
+      background-color: #2a3c7a;
+      color: white;
+      border: none;
+      padding: 5px 8px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    
+    .admin-order-view-btn:hover {
+      background-color: #1e3a8a;
+    }
+    
