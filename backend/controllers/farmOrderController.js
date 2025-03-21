@@ -111,4 +111,49 @@ const getOrdersByUserId = async(req,res)=>{
     }
 }
 
-export {placeafarmOrder,getAllFarmOrders,getTheFarmByCategory,getOrdersByUserId,deleteFarmOrder}
+
+const updateFramOrder = async(req,res)=>
+    {
+         const{id} = req.params;
+         const{orderCode,selectedCategory,selectedFarm,size,quantity, date} = req.body;
+    
+         try
+         {
+           const updatedOrder = await FarmOrderModel.findByIdAndUpdate(id,{orderCode,selectedCategory,selectedFarm,size,quantity, date},{new:true});
+    
+           if(!updatedOrder )
+           {
+            return res.json({success:false, message:'order can not find'});
+           }
+    
+           res.json({success:true, message:'order Updated successfully'})
+         }
+         catch(err)
+         {
+            console.log(err)
+            res.json({success:false , message:'farm order can not be updated'})
+         }
+    }
+    
+    const getThefarmOrderByOrderId = async(req,res)=>{
+    
+        const{id} = req.body;
+        try
+        {
+          const Order = await FarmOrderModel.findOne({_id:id})
+    
+          if(!Order)
+          {
+           return res.json({success:false, message:'order can not find'});
+          }
+    
+          res.json({success:true, Order})
+        }
+        catch(err)
+        {
+           console.log(err)
+           res.json({success:false , message:'Error'})
+        }
+    }
+
+export {placeafarmOrder,getAllFarmOrders,getTheFarmByCategory,getOrdersByUserId,deleteFarmOrder,updateFramOrder,getThefarmOrderByOrderId}
