@@ -44,4 +44,71 @@ const getAllFarmOrders = async(req,res)=>{
     }
 }
 
-export {placeafarmOrder,getAllFarmOrders}
+const getTheFarmByCategory = async (req, res) => {
+    try {
+        const { selectedCategory } = req.body;
+
+        // Find the fish category
+        const fishcategory = await fishModel.findOne({ fishCategory: selectedCategory });
+
+        if (!fishcategory) {
+            return res.json({ success: false, message: "Fish category not found" });
+        }
+
+        const userId = await fishcategory.userId;
+        // Find the user (farm owner) by userId
+        const user = await userModel.findOne({ _id: userId });
+
+        if (!user) {
+            return res.json({ success: false, message: "User not found" });
+        }
+
+        // Extract businessName
+        const farm = user.businessName;
+
+        res.json({ success: true, farm });
+
+    } catch (err) {
+        res.json({ success: false, message: err.message });
+    }
+};
+
+const deleteFarmOrder = async(req,res)=>{
+    try
+    {
+       const{id} = req.params;
+ 
+      if(!id)
+      {
+       return res.json({success:false , message:'required data is missing'})
+      }
+ 
+          await FarmOrderModel.findByIdAndDelete(id);
+ 
+        res.json({success:true,message:'deleted'})
+ 
+    }catch(err){
+ 
+       console.log(err);
+       res.json({success:false,message:'Error'})
+    }
+ }
+
+const getOrdersByUserId = async(req,res)=>{
+
+    const {userId} = req.body;
+
+    try{
+
+        const orders = await FarmOrderModel.find({userId:userId});
+
+        res.json({success:true,orders })
+
+    }catch(err)
+    {
+        console.log(err)
+        res.json({success:false, message:'request has been failed'})
+    }
+}
+
+export {placeafarmOrder,getAllFarmOrders,getTheFarmByCategory,getOrdersByUserId,deleteFarmOrder}
