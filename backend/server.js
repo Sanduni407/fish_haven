@@ -10,7 +10,7 @@ import fishRouter from "./routes/fishRoute.js";
 import employeeRouter from "./routes/employeeRoute.js";
 
 const app = express();
-const port = process.env.PORT || 5005
+const port = process.env.PORT || 5006
 
 connectDB();
 

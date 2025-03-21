@@ -4,7 +4,6 @@ import userModel from '../models/userModel.js';
 import transporter from '../config/nodemailer.js';
 
 
-
 //create a user account
 
 const registerUser = async (req, res)=>{
@@ -50,7 +49,6 @@ const registerUser = async (req, res)=>{
         await transporter.sendMail(mailOptions);
 
         res.json({success:true, message:"User registered successfully"});
-        
 
 
 
@@ -60,7 +58,6 @@ const registerUser = async (req, res)=>{
          res.json({success:false, message: error.message})
     }
 }
-
 
 
 //login user
@@ -114,132 +111,195 @@ const createToken = (id) =>{
 //send password reset otp
 
 const sendResetOtp = async(req,res)=>{
-    const{email} = req.body;
- 
-    if(!email)
+   const{email} = req.body;
+
+   if(!email)
+   {
+    return res.json({success:false, message:'Email is required'});
+   }
+
+   try{
+
+    const user = await userModel.findOne({email})
+
+    if(!user)
     {
-     return res.json({success:false, message:'Email is required'});
+        return res.json({success:false, message:"user not found"});
     }
- 
+
+     const otp = generateOTP();
+
+     user.resetOtp = otp;
+     user.resetOtpExpireAt = Date.now() + 10 * 60 * 1000;
+
+     await user.save();
+
+     const mailOptions = {
+        from: process.env.SENDER_EMAIL,
+        to: user.email,
+        subject:'Password reset OTP',
+        html: `<h3 style="text-align:center;">Your OTP for resetting your password is ${otp}</h3>`
+    }
+
+    await transporter.sendMail(mailOptions);
+
+    res.json({success:true, message:"OTP sent to your email"});
+
+   }
+   catch(error)
+   {
+    console.log(error)
+    res.json({success:false, message: error.message})
+   }
+
+}
+
+//otp generate
+
+const generateOTP = ()=>{
+
+  const otp = String(Math.floor(100000 + Math.random()*900000));
+  return otp;
+}
+
+
+//reset user password
+
+const resetPassword = async(req,res)=>{
+
+    const{email,otp,newPassword} = req.body;
+
+    if(!email || !otp || !newPassword){
+
+        return res.json({success:false, message:"email,otp and new password are requirred"})
+    }
+
     try{
- 
-     const user = await userModel.findOne({email})
- 
-     if(!user)
-     {
-         return res.json({success:false, message:"user not found"});
-     }
- 
-      const otp = generateOTP();
- 
-      user.resetOtp = otp;
-      user.resetOtpExpireAt = Date.now() + 10 * 60 * 1000;
- 
-      await user.save();
- 
-      const mailOptions = {
-         from: process.env.SENDER_EMAIL,
-         to: user.email,
-         subject:'Password reset OTP',
-         html: `<h3 style="text-align:center;">Your OTP for resetting your password is ${otp}</h3>`
-     }
- 
-     await transporter.sendMail(mailOptions);
- 
-     res.json({success:true, message:"OTP sent to your email"});
- 
-    }
-    catch(error)
+
+        const user = await userModel.findOne({email});
+        if(!user)
+        {
+            return res.json({success:false, message:"user not found"}) 
+        }
+
+        if(user.resetOtp === "" || user.resetOtp != otp)
+        {
+            return res.json({success:false, message:"Invalid Otp"}) 
+        }
+
+        if(user.resetOtpExpireAt < Date.now())
+        {
+            return res.json({success: false, message: 'OTP Expired'})
+        }
+
+        const hashedPassword = await bcrypt.hash(newPassword,10);
+
+        user.password = hashedPassword;
+        user.resetOtp = "";
+        user.resetOtpExpireAt = 0;
+
+
+
+       await user.save();
+
+       return res.json({success: true, message: 'Password has been reset successfully'})
+
+    }catch(error)
     {
-     console.log(error)
-     res.json({success:false, message: error.message})
+        console.log(error)
+        res.json({success:false, message: error.message})
     }
- 
- }
- 
- //otp generate
- 
- const generateOTP = ()=>{
- 
-   const otp = String(Math.floor(100000 + Math.random()*900000));
-   return otp;
- }
- 
- 
- //reset user password
- 
- const resetPassword = async(req,res)=>{
- 
-     const{email,otp,newPassword} = req.body;
- 
-     if(!email || !otp || !newPassword){
- 
-         return res.json({success:false, message:"email,otp and new password are requirred"})
-     }
- 
-     try{
- 
-         const user = await userModel.findOne({email});
-         if(!user)
-         {
-             return res.json({success:false, message:"user not found"}) 
-         }
- 
-         if(user.resetOtp === "" || user.resetOtp != otp)
-         {
-             return res.json({success:false, message:"Invalid Otp"}) 
-         }
- 
-         if(user.resetOtpExpireAt < Date.now())
-         {
-             return res.json({success: false, message: 'OTP Expired'})
-         }
- 
-         const hashedPassword = await bcrypt.hash(newPassword,10);
- 
-         user.password = hashedPassword;
-         user.resetOtp = "";
-         user.resetOtpExpireAt = 0;
- 
- 
- 
-        await user.save();
- 
-        return res.json({success: true, message: 'Password has been reset successfully'})
- 
-     }catch(error)
-     {
-         console.log(error)
-         res.json({success:false, message: error.message})
-     }
- 
- }
- 
- 
- //fetch all user account details from the database and display to admin
- const getAllUserAccounts = async(req,res)=>{
- 
- 
-     try{
- 
-         const users = await userModel.find();
-         
- 
-         return res.json({success: true, users})
- 
-     }catch(error)
-     {
-         console.log(error)
-         res.json({success:false, message: error.message})
-     }
- 
- 
- }
+
+}
+
+
+//fetch all user account details from the database and display to admin
+const getAllUserAccounts = async(req,res)=>{
+
+
+    try{
+
+        const users = await userModel.find();
+        
+
+        return res.json({success: true, users})
+
+    }catch(error)
+    {
+        console.log(error)
+        res.json({success:false, message: error.message})
+    }
+
+
+}
+
+
+//get user details by id to display in user profiles
+
+const getuserDetailsById = async(req,res)=>{
+
+    const id = req.body.userId;
+
+    if(!id)
+    {
+        return res.json({success:false , message:'required details are missing'});
+    }
+
+    try{
+
+        const user = await userModel.findById(id);
+
+        if(!user)
+        {
+            return res.json({success:false , message:'invalid id'});
+        }
+
+        return res.json({success: true, user})
+
+    }catch(error)
+    {
+        console.log(error)
+        res.json({success:false, message: error.message})
+    }
+
+}
+
+const updateUserById = async(req,res)=>{
+
+     const id = req.params.id; // Get user id from request parameters
+        const { name, businessName, businessRegNo, address, email, phone } = req.body; // Get data from request body
+    
+        
+        try {
+           await userModel.findByIdAndUpdate(id, //find user by id and update
+                { name: name, businessName: businessName, businessRegNo: businessRegNo, address: address, email: email, phone: phone },{new:true});
+               
+        } catch (err) {
+            console.log(err); // If error
+        }
+    
+         return res.status(200).json({ success:true, message:'successfully updated' });
+
+}
+
+const deleteUser = async (req, res) => {
+
+    const id = req.params.id; // Get user id from request parameters
+    
+    try {
+       const user = await userModel.findByIdAndDelete(id); // Find user by id and delete
+
+         if (!user) { // If user not found
+        return res.status(404).json({ success: false,message: 'unable to delete' });
+    }
+
+    return res.status(200).json({ success:true,message: 'User deleted successfully' }); // If user deleted successfully
+
+    } catch (err) {
+        console.log(err); // If error
+        res.json({success:false, message: err.message})
+    } 
   
-
-
-
-
-
-
-export {registerUser, loginUser , sendResetOtp,resetPassword, getAllUserAccounts}
+}; 
+ 
+export {registerUser,loginUser,sendResetOtp,resetPassword, getAllUserAccounts, getuserDetailsById,updateUserById,deleteUser}
