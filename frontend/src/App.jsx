@@ -76,6 +76,12 @@ const App = () => {
         <Route path='/admin/assign-vehicle/:id' element={<AssignVehicle/>}/>
 
 
+        {/* Sanjitha */}
+        <Route path='/supplier/add-fish' element={<AddFish/>}/>
+        <Route path='/admin/manage-inventory' element={<InventoryManage/>}/>
+        <Route path='/view/inventory' element={<Inventory/>}/>
+
+
         
 
       </Routes>
