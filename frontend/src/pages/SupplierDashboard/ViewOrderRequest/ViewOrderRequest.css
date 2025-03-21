@@ -1,0 +1,32 @@
+.supplier-view-order {
+    display: flex;
+    height: 100vh; /* Full height of the viewport */
+  }
+  
+  .supplier-view-order .left-column {
+    width: 250px; /* Fixed width */
+    padding: 20px;
+  }
+  
+  .supplier-view-order .right-column {
+    flex-grow: 1; /* Takes the remaining space */
+    padding: 20px;
+  }
+
+  .supplier-order-container
+  {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap:20px;
+  }
+  
+  .supplier-order-container .left-corner
+  {
+    display: flex;
+    gap:50px;
+  }
+
+  .supplier-order-container .left-corner p{
+    font-size: 16px;
+  }
