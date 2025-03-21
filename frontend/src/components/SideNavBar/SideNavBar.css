@@ -1,66 +1,66 @@
-/* Sidebar.css */
+/* SideNavBar.css */
 .sidebar {
-    width: 250px;
-    height: 100vh;
-    background-color: #000; /* Black background */
-    color: #fff; /* White text */
-    padding: 20px;
-    position: fixed;
-    left: 0;
-    top: 0;
-    overflow-y: auto;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
-  }
-  
-  .sidebar-title {
-    font-size: 22px;
-    font-weight: bold;
-    margin-bottom: 20px;
-    text-align: center;
-    color: #2f5b8e; /* Green title */
-    border-bottom: 2px solid #3d4a8a;
-    padding-bottom: 10px;
-  }
-  
-  .sidebar-menu {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  .sidebar-item {
-    margin: 10px 0;
-  }
-  
-  .sidebar-link {
-    display: block;
-    text-decoration: none;
-    color: white;
-    padding: 12px;
-    border-radius: 5px;
-    transition: all 0.3s;
-    font-size: 16px;
-    font-weight: bold;
-  }
-  
-  .sidebar-link:hover {
-    background: #30488f; /* Green background on hover */
-    color: black;
-  }
-  
-  .logout-button {
-    background-color: #d9534f;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    width: 100%;
-    text-align: center;
-    font-size: 16px;
-    cursor: pointer;
-    margin-top: 20px;
-    border-radius: 5px;
-  }
-  
-  .logout-button:hover {
-    background-color: #c9302c;
-  }
-  
+  width: 250px;
+  height: 100vh;
+  background-color: #1b1e2f; /* Dark blue background */
+  color: white;
+  padding: 20px;
+  position: fixed;
+  left: 0;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.sidebar-title {
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.sidebar-menu {
+  list-style-type: none;
+  padding: 0;
+  flex-grow: 1;
+}
+
+.sidebar-item {
+  margin: 15px 0;
+}
+
+.sidebar-link {
+  display: block;
+  text-decoration: none;
+  color: white;
+  padding: 12px 15px;
+  border-radius: 5px;
+  transition: background 0.3s, transform 0.2s;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.sidebar-link:hover {
+  background: #66666e; /* Blue highlight */
+  transform: translateX(5px);
+}
+
+.logout-button {
+  background-color: #9a9a9d;
+  color: #1b1e2f;
+  border: none;
+  padding: 12px;
+  width: 60%;
+  text-align: center;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 20px;
+  border-radius: 5px;
+}
+
+.logout-button:hover {
+  background-color: #9a9a9d;
+}

@@ -9,7 +9,7 @@ import axios from 'axios';
 import { AppContext } from '../../../context/AppContext';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
-import './InventoryManage.css'
+
 import SideNavBar from '../../../components/SideNavBar/SideNavBar';
 
 const InventoryManage = () => {
