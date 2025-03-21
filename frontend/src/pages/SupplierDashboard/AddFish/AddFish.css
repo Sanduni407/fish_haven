@@ -1,0 +1,71 @@
+.supplier-add-fish-container{
+    display: flex;
+    height: 100vh;
+}
+
+.supplier-add-fish-container .left-column{
+    width: 250px; /* Fixed width */
+    padding: 20px;
+}
+
+.supplier-add-fish-container .right-column{
+    flex-grow: 1;
+    padding: 20px;
+  
+}
+
+.supplier-add-fish-container .right-column .input-fields{
+    width:80vw;
+    height:auto;
+    margin:auto;
+    margin-top: 70px;
+ }
+ 
+ .supplier-add-fish-container .right-column .input-fields input,select{
+     width:400px;
+     padding:10px;
+     border: none;
+     outline: none;
+     border: 2px solid #124559;
+ }
+ 
+ .right-column .input-fields .first-row{
+     display:flex;
+     justify-content: space-between;
+ }
+ 
+ .right-column .input-fields .second-row{
+     margin-top: 30px;
+     display:flex;
+     justify-content: center;
+     gap:30px;
+ }
+ 
+ .input-fields .btnadd{
+     margin-top: 20px;
+     border: none;
+     padding:10px 20px;
+     background-color: #124559;
+     color: white;
+     cursor: pointer;
+     margin-bottom: 50px;
+   
+ }
+ 
+ 
+ .supplier-add-fish-containertwo {
+     width: 80%;
+     margin: auto;
+     background: white;
+     padding: 20px;
+     border-radius: 8px;
+     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+ }
+ 
+ .supplier-add-fish-containertwo .table {
+     width: 100%;
+     border-collapse: collapse;
+     margin-top: 20px;
+ }
+ 
+ 
