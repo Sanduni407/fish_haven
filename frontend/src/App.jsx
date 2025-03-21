@@ -29,7 +29,7 @@ import Employeedashboard from './pages/EmployeeDashboard/Employeedashboard';
 import AddLeave from './pages/EmployeeDashboard/Employee/AddLeave';
 import ViewRequest from './pages/EmployeeDashboard/Employee/ViewRequest';
 import ViewLeaveReq from './pages/AdminDashBoard/Employee/ViewLeaveReq';
-import ViewUserProfile from './pages/ExporterDashBoard/UserProfile/viewUserProfile';
+import ViewUserProfile from './pages/ExporterDashBoard/UserProfile/ViewUserProfile';
 import SupplierProfiles from './pages/SupplierDashboard/UserProfile/SupplierProfiles';
 import EmployeeProfiles from './pages/EmployeeDashboard/UserProfile/EmployeeProfiles';
 
@@ -55,6 +55,19 @@ const App = () => {
         <Route path='/admin/place-farm-orders/:orderCode' element={<PlaceFarmOrders/>}/>
         <Route path='/admin/view-farm-orders' element={<PlaceFarmOrders/>}/>
         <Route path='/supplier/view-order' element={<ViewOrderRequest/>}/>
+
+
+        {/* danushi  */}
+        <Route path='/login' element={<Login/>}/>
+        <Route path='/exporter-register' element={<ExporterRegisterForm/>}/>
+        <Route path='/password-reset' element={<PasswordResetPage/>}/>
+        <Route path='/admin-users' element={<ViewUserAccounts/>}/>
+        <Route path='/create-acc/:id' element={<CreateAccForm/>}/>
+        <Route path='/create-acc' element={<CreateAccForm/>}/>
+        <Route path='/view-requests' element={<ReqRequestTable/>}/>
+        <Route path='/exporter-view-profile' element={<ViewUserProfile/>}/>
+        <Route path='/supplier-view-profile' element={<SupplierProfiles/>}/>
+        <Route path='/employee-view-profile' element={<EmployeeProfiles/>}/>
 
 
         
