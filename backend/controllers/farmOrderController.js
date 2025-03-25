@@ -6,14 +6,10 @@ import userModel from "../models/userModel.js";
 
 const placeafarmOrder = async(req,res)=>{
 
-    const{orderCode,selectedCategory,selectedFarm,size,quantity,date} = req.body;
+    const{orderCode,selectedCategory,selectedFarm,size,quantity,date,userId} = req.body;
 
     
     try{
-
-        const user = await userModel.findOne({businessName:selectedFarm});
-        
-        const userId = user._id;
 
         const newFramOrder = new FarmOrderModel({orderCode,selectedCategory,selectedFarm,size,quantity,date,userId});
         
@@ -63,10 +59,7 @@ const getTheFarmByCategory = async (req, res) => {
             return res.json({ success: false, message: "User not found" });
         }
 
-        // Extract businessName
-        const farm = user.businessName;
-
-        res.json({ success: true, farm });
+        res.json({ success: true ,user });
 
     } catch (err) {
         res.json({ success: false, message: err.message });

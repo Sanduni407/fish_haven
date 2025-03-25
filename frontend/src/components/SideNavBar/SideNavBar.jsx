@@ -14,10 +14,13 @@ const SideNavBar = ({ role }) => {
       { name: "User Management", path: "/admin-users" },
       { name: "Export Orders", path: "/admin/view-orders" },
       { name: "Supplier Requests", path: "/admin/view-farm-orders" },
+      { name: "Order Requests", path: "/admin/view-order-requests" },
       { name: "View Deliveries", path: "/admin/view-deliveries" },
       { name: "Manage Inventory", path: "/admin/manage-inventory" },
       { name: "Full Inventory", path: "/view/inventory" },
       { name: "View Leave Requests", path: "/admin/view-leaves" },
+
+     
     ],
     Exporter: [
       { name: "Place Order", path: "/exporter/place-order" },

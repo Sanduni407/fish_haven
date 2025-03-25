@@ -27,6 +27,7 @@ const PlaceFarmOrders = () => {
   const[quantity,setquantity] = useState('')
   const[code,setOrderCode] = useState('')
   const[date, setDate] = useState('')
+  const[userId,setUserId] = useState('')
 
 
   const fetchAllFishCategories = async()=>{
@@ -56,8 +57,11 @@ const PlaceFarmOrders = () => {
 
        if(response.data.success)
        {
-        console.log(response.data.farm)
-         setselectedFarm(response.data.farm)
+        console.log(response.data.user)
+
+        const user = response.data.user
+         setselectedFarm(user.businessName)
+         setUserId(user._id)
        }
     }catch(err)
     {
@@ -78,7 +82,7 @@ const PlaceFarmOrders = () => {
    
     try{
 
-      const response = await axios.post('http://localhost:4000/api/order/place-farm-order',{orderCode,selectedCategory,size,quantity,date,selectedFarm})
+      const response = await axios.post('http://localhost:4000/api/order/place-farm-order',{orderCode,selectedCategory,size,quantity,date,selectedFarm,userId})
 
      if(response.data.success)
        {
