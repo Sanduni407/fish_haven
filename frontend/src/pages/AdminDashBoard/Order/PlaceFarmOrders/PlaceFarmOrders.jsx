@@ -9,6 +9,7 @@ import axios from 'axios';
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import { toast } from 'react-toastify';
 
 
 const PlaceFarmOrders = () => {
@@ -28,6 +29,14 @@ const PlaceFarmOrders = () => {
   const[code,setOrderCode] = useState('')
   const[date, setDate] = useState('')
   const[userId,setUserId] = useState('')
+
+
+   //validate the data
+
+   const [categoryValid, setCategoryValid] = useState(null);
+   const [sizeValid, setSizeValid] = useState(null);
+   const [quantityValid, setQuantityValid] = useState(null);
+   const [dateValid, setDateValid] = useState(null);
 
 
   const fetchAllFishCategories = async()=>{
@@ -79,6 +88,11 @@ const PlaceFarmOrders = () => {
   
 
   const placeOrder = async()=>{
+
+    if (!categoryValid || !sizeValid  || !quantityValid || !dateValid) {
+      toast.error("Please correct the invalid fields before placing an order.");
+      return;
+     }
    
     try{
 
@@ -88,6 +102,17 @@ const PlaceFarmOrders = () => {
        {
         console.log('order placed successfully')
         fetchFarmOrders()
+
+        setselectedCategory('')
+        setselectedFarm('')
+        setSize('')
+        setquantity('')
+        setDate('')
+
+        setCategoryValid(null)
+        setSizeValid(null)
+        setQuantityValid(null)
+        setDateValid(null)
        
         
        }
@@ -140,6 +165,19 @@ const PlaceFarmOrders = () => {
       {
        console.log('successfully updated')
        fetchFarmOrders()
+
+       setselectedCategory('')
+       setselectedFarm('')
+       setSize('')
+       setquantity('')
+       setDate('')
+
+       setCategoryValid(null)
+       setSizeValid(null)
+       setQuantityValid(null)
+       setDateValid(null)
+
+
        setModalShow(false)
       }
    }
@@ -172,6 +210,43 @@ const PlaceFarmOrders = () => {
     }
   }
 
+
+
+  //validate functions
+
+  const handleFishCategoryChange = (e) => {
+    
+    const value = e.target.value;
+    setselectedCategory(value);
+    setCategoryValid(value !== '');
+ };
+
+
+ const handleSizeChange = (e) => {
+  const value = e.target.value;
+  setSize(value);
+  setSizeValid(value !== '');
+};
+  
+
+const handleQuantityChange = (e) => {
+  const value = parseFloat(e.target.value);
+  setquantity(value);
+  setQuantityValid(value > 0);
+};
+  
+
+const handleDateChange = (e) => {
+
+  const value = e.target.value;
+  const today = new Date();
+  const selectedDate = new Date(value);
+  today.setHours(0, 0, 0, 0);
+  selectedDate.setHours(0, 0, 0, 0);
+  setDate(value);
+  setDateValid(selectedDate > today);
+};  
+
   
 
   return (
@@ -181,54 +256,74 @@ const PlaceFarmOrders = () => {
   </div>
   <div className="right-column">
     
-    <div className="first-row">
+  <div className="first-row">
 
-    <Form>
-      <Row>
-        <Col>
+<Form>
+    <Row> 
+       <Col>
+          <Form.Label>Order Code</Form.Label>
           <Form.Control placeholder='Order Code' value={orderCode}  readOnly/>
-        </Col>
+       </Col>
+
         <Col>
-          <Form.Select placeholder="Last name" onChange={(e)=>{setselectedCategory(e.target.value)}} >
-          <option>Select fish category</option>
-            {fish.map((fish,index)=>{
-              return(
-                <option key={index} value={fish}>{fish}</option>
-              )
-            })}
+           <Form.Label>Fish Category</Form.Label>
+           <Form.Select placeholder="Last name" onChange={handleFishCategoryChange} value={selectedCategory}>
+                   <option>Select fish category</option>
+                      {fish.map((fish,index)=>{
+                        return(
+                          <option key={index} value={fish}>{fish}</option>
+                             )
+                            })}
+             </Form.Select>
+
+        {categoryValid === false && <span className='error-text'>❌ Select a category</span>}
+        {categoryValid === true && <span className='valid-text'>✅</span>}
+
+         </Col>
+
+         <Col>
+            <Form.Label>Fish Supplier</Form.Label>
+            <Form.Control placeholder="Fish supplier" value={selectedFarm}  readOnly />
+         </Col>
+   </Row>
+</Form>
+
+</div>
+
+<div className="second-row">
+
+<Form>
+   <Row>
+        <Col>
+            <Form.Label>Fish Size</Form.Label>
+            <Form.Select placeholder="Size" onChange={handleSizeChange} value={size}  >
+                  <option value="">select size</option>
+                  <option  value='large'>Large</option>
+                  <option  value='Medium'>Medium</option>
+                 <option  value='Small'>Small</option>
             </Form.Select>
-          
-        </Col>
-        <Col>
-          <Form.Control placeholder="Fish supplier" value={selectedFarm}  readOnly />
-        </Col>
-      </Row>
-    </Form>
-       
-    </div>
+       {sizeValid === false && <span className='error-text'>❌ Select a size</span>}
+       {sizeValid === true && <span className='valid-text'>✅</span>}
 
-    <div className="second-row">
+        </Col>
 
-    <Form>
-      <Row>
-        <Col>
-         <Form.Select placeholder="Size" onChange={(e)=>{setSize(e.target.value)}}  >
-                <option value="">select size</option>
-                <option  value='large'>Large</option>
-                <option  value='Medium'>Medium</option>
-                <option  value='Small'>Small</option>
-            </Form.Select>
+         <Col>
+               <Form.Label>Quantity</Form.Label>
+               <Form.Control placeholder="Quantity" type='Number' onChange={handleQuantityChange} value={quantity} />
+        {quantityValid === false && <span className='error-text'>❌ Must be greater than 0</span>}
+       {quantityValid === true && <span className='valid-text'>✅</span>}
         </Col>
-        <Col>
-          <Form.Control placeholder="Quantity" type='Number' onChange={(e)=>{setquantity(parseFloat(e.target.value))}} />
-        </Col>
-        <Col>
-          <Form.Control  type='date' placeholder='Delivery deadline' onChange={(e)=>{setDate(e.target.value)}} />
-        </Col>
-      </Row>
-    </Form>
 
-    </div>
+        <Col>
+             <Form.Label>Delivery Deadline</Form.Label>
+             <Form.Control  type='date' placeholder='Delivery deadline' onChange={handleDateChange} value={date} />
+       {dateValid === false && <span className='error-text'>❌ Select a future date</span>}
+       {dateValid === true && <span className='valid-text'>✅</span>}
+       </Col>
+ </Row>
+</Form>
+
+</div>
 
        <Button variant="dark"  onClick={()=>{placeOrder()}} style={{width:'200px', marginTop:'10px',marginBottom:'20px'}}>Place Order</Button>
      
@@ -272,60 +367,74 @@ const PlaceFarmOrders = () => {
 
   <Modal show={modalShow} onHide={()=>{setModalShow(false)}} centered>
       <Modal.Header closeButton>
-        <Modal.Title> Update Order Details</Modal.Title>
+          <Modal.Title> Update Order Details</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-      <Form>
-      <Row>
-        <Col>
-          <Form.Control placeholder='Order Code' value={code}  readOnly/>
-        </Col>
-       </Row> 
-       <Row>
-        <Col>
-          <Form.Select placeholder="Last name" onChange={(e)=>{setselectedCategory(e.target.value)}} value={selectedCategory}>
-          <option>Select fish category</option>
-            {fish.map((fish,index)=>{
-              return(
-                <option key={index} value={fish}>{fish}</option>
-              )
-            })}
-            </Form.Select>
+          <Form>
+             <Row>
+
+                <Col>
+                   <Form.Control placeholder='Order Code' value={code}  readOnly/>
+                </Col>
+            </Row> 
+            <Row>
+                <Col>
+                   <Form.Select placeholder="Last name" onChange={handleFishCategoryChange} value={selectedCategory}>
+                            <option>Select fish category</option>
+                                {fish.map((fish,index)=>{
+                                     return(
+                                         <option key={index} value={fish}>{fish}</option>
+                                             )
+                                             })}
+                    </Form.Select>
+                {categoryValid === false && <span className='error-text'>❌ Select a category</span>}
+                {categoryValid === true && <span className='valid-text'>✅</span>}
           
-        </Col>
-       </Row>
-        <Row>
-        <Col>
-          <Form.Control placeholder="Fish supplier" value={selectedFarm} readOnly />
-        </Col>
-        <Col>
-         <Form.Select placeholder="Size" onChange={(e)=>{setSize(e.target.value)}} value={size} >
-                <option value="">select size</option>
-                <option  value='large'>Large</option>
-                <option  value='Medium'>Medium</option>
-                <option  value='Small'>Small</option>
-            </Form.Select>
-        </Col>
-        </Row>
-        <Row>
-        <Col>
-          <Form.Control placeholder="Quantity" type='Number' onChange={(e)=>{setquantity(parseFloat(e.target.value))}} value={quantity} />
-        </Col>
-        </Row>
-        <Row>
-        <Col>
-          <Form.Control  type='date' placeholder='Delivery deadline' onChange={(e)=>{setDate(e.target.value)}} value={date} />
-        </Col>
-      </Row>
-    </Form>
-      </Modal.Body>
+                </Col>
+            </Row>
+            <Row>
+               <Col>
+                    <Form.Control placeholder="Fish supplier" value={selectedFarm} readOnly />
+              </Col>
+
+               <Col>
+                  <Form.Select placeholder="Size" onChange={handleSizeChange} value={size} >
+                         <option value="">select size</option>
+                         <option  value='large'>Large</option>
+                         <option  value='Medium'>Medium</option>
+                        <option  value='Small'>Small</option>
+                  </Form.Select>
+               {sizeValid === false && <span className='error-text'>❌ Select a size</span>}
+               {sizeValid === true && <span className='valid-text'>✅</span>}
+              </Col>
+           </Row>
+
+           <Row>
+              <Col>
+                  <Form.Control placeholder="Quantity" type='Number' onChange={handleQuantityChange} value={quantity} />
+                      {quantityValid === false && <span className='error-text'>❌ Must be greater than 0</span>}
+                      {quantityValid === true && <span className='valid-text'>✅</span>}
+             </Col>
+         </Row>
+         
+         <Row>
+             <Col>
+                   <Form.Control  type='date' placeholder='Delivery deadline' onChange={handleDateChange} value={date} />
+                    {dateValid === false && <span className='error-text'>❌ Select a future date</span>}
+                    {dateValid === true && <span className='valid-text'>✅</span>}
+              </Col>
+         </Row>
+     </Form>
+</Modal.Body>
+
       <Modal.Footer>
         <div className="farm-order-update">
           <Button variant="success" onClick={()=> updateOrder()} style={{width:'230px'}}>Update Order</Button>
-        <Button variant="secondary" onClick={()=> setModalShow(false)} style={{width:'230px'}}>  Close </Button>
+          <Button variant="secondary" onClick={()=> setModalShow(false)} style={{width:'230px'}}>  Close </Button>
         </div>
         
       </Modal.Footer>
+
     </Modal>
 
 </div>
