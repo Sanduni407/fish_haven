@@ -131,9 +131,11 @@ const UpdateDelivery = () => {
       <Form>
           <Row>
           <Col>
+          <label>Order ID</label><br/>
               <Form.Control placeholder='Order code' value={orderCode} readOnly />
             </Col>
             <Col>
+            <label>Address</label><br/>
               <Form.Control placeholder='Shipping address' value={shippingAddress} readOnly/>
             </Col>
             
@@ -142,18 +144,22 @@ const UpdateDelivery = () => {
           </Row>
           <Row>
           <Col>
+          <label>Contact No</label><br/>
               <Form.Control placeholder="Contact number" value={contact}  readOnly/>
             </Col>
           
           <Col>
+          <label>Order Type</label><br/>
               <Form.Control placeholder="Order Type" value={orderType}  readOnly/>
             </Col> 
              <Col>
+             <label>Shipment Date</label><br/>
               <Form.Control placeholder='Delivery date' value={deliveryDate} type='date' onChange={(e)=>{setdeliveryDate(e.target.value)}} />
             </Col>
           </Row>
           <Row>
               <Col>
+              <label>Fish Variety</label><br/>
               <Form.Select placeholder="Fish variety"  onChange={(e)=>{setvariety(e.target.value)}}>
               <option>Select fish category</option>
               {fishCategory.map((fish,index)=>{
@@ -165,6 +171,7 @@ const UpdateDelivery = () => {
               
             </Col>
           <Col>
+          <label>Quantity</label><br/>
               <Form.Control placeholder="Quantity"  type='number'  onChange={(e)=>{setQuantity(parseFloat(e.target.value))}}/>
             </Col>
     
