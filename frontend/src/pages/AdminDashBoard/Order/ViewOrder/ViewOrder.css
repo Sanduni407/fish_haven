@@ -1,29 +1,29 @@
 .admin-view-order-container {
     display: flex;
-    height: 100vh; /* Full height of the viewport */
+    height: 100vh; 
   }
   
   .left-column {
-    width: 250px; /* Fixed width */
+    width: 250px; 
     padding: 20px;
   }
   
   .right-column {
-    flex-grow: 1; /* Takes the remaining space */
+    flex-grow: 1; 
     padding: 20px;
   }
   
     
-   /* Ensure the container of buttons and dropdown aligns properly */
+   
   .admin-order-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 15px;
-    gap: 10px; /* Adds spacing between elements */
+    gap: 10px; 
   }
   
-  /* Left & Right Sections */
+  
   .admin-order-left,
   .admin-order-right {
     display: flex;
@@ -31,12 +31,12 @@
     align-items: center;
   }
   
-  /* Buttons & Dropdown Styling */
+  
   .admin-order-btn,
   .admin-order-status {
-    padding: 10px 0; /* Equal vertical padding */
-    width: 200px; /* Same width for buttons */
-    height: 40px; /* Same height for all elements */
+    padding: 10px 0; 
+    width: 200px; 
+    height: 40px; 
     border: none;
     border-radius: 4px;
     font-size: 14px;
@@ -44,13 +44,13 @@
     text-align: center;
   }
   
-  /* Dropdown */
+  
   .admin-order-status {
     border: 1px solid #ccc;
     background-color: white;
   }
   
-  /* Button Colors */
+  
   .admin-order-remove {
     background-color: #771d1d;
     color: white;
@@ -66,13 +66,13 @@
     color: white;
   }
   
-  /* Hover Effects */
+  
   .admin-order-btn:hover {
     opacity: 0.8;
   }
   
     
-    /* Table Styles */
+    
     .admin-order-table {
       width: 100%;
       border-collapse: collapse;
@@ -89,13 +89,13 @@
       color: white;
     }
     
-    /* Checkbox */
+    
     .admin-order-checkbox {
       width: 16px;
       height: 16px;
     }
     
-    /* View Button */
+    
     .admin-order-view-btn {
       background-color: #2a3c7a;
       color: white;

@@ -198,4 +198,26 @@ const updateOrder = async(req,res)=>{
 }
 
 
-export{CreateAOrder, getAllOrdersById,getAllOrders,getOrderByOrderId, updateOrderstatus,deleteOrder,updateOrder}
+const getOrderByOrderCode = async(req,res)=>{
+   try
+   {
+      const orderCode = req.body.orderCode;
+
+      const order = await ExportOrderModel.findOne({orderCode: orderCode});
+
+      if(!order)
+      {
+         return res.json({success:false,message:'No order found'})
+      }
+      
+      res.json({success:true,order})
+
+   }catch(err){
+
+      console.log(err);
+      res.json({success:false,message:err.message})
+   }
+}
+
+
+export{CreateAOrder, getAllOrdersById,getAllOrders,getOrderByOrderId, updateOrderstatus,deleteOrder,updateOrder,getOrderByOrderCode}

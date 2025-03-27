@@ -1,15 +1,15 @@
 .supplier-view-order {
     display: flex;
-    height: 100vh; /* Full height of the viewport */
+    height: 100vh; 
   }
   
   .supplier-view-order .left-column {
-    width: 250px; /* Fixed width */
+    width: 250px; 
     padding: 20px;
   }
   
   .supplier-view-order .right-column {
-    flex-grow: 1; /* Takes the remaining space */
+    flex-grow: 1; 
     padding: 20px;
   }
 
