@@ -5,7 +5,7 @@ import { CreateAleave, getRequestsByUserId,updateRequest,getRequestByRequestId,D
 
 const employeeRouter = express.Router();
 
-employeeRouter.post('/create-leave',userAuth,CreateAleave);
+employeeRouter.post('/create-leave',userAuth,CreateAleave); //leavecontroller
 employeeRouter.post('/get-requests-byuser',userAuth, getRequestsByUserId);
 employeeRouter.put('/update-request/:id',updateRequest);
 employeeRouter.post('/fetch-a-request',getRequestByRequestId);
@@ -13,4 +13,4 @@ employeeRouter.delete('/delete-a-request/:id',DeleteRequest);
 employeeRouter.get('/get-all-requests',getAllRequests);
 employeeRouter.put('/update-status/:id',updateLeavestatus);
 
-export default employeeRouter; 
+export default employeeRouter;
