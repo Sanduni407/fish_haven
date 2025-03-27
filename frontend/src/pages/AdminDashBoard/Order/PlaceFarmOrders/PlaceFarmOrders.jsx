@@ -19,6 +19,8 @@ const PlaceFarmOrders = () => {
   const[fish,setFish] = useState([])
   const[orders,setOrders] = useState([])
 
+  const[expectedshipmentDate, setexpectedShipmentDate] = useState('')
+
   const [modalShow, setModalShow] = useState(false);
 
   const[id,setId] = useState('')
@@ -38,6 +40,8 @@ const PlaceFarmOrders = () => {
    const [quantityValid, setQuantityValid] = useState(null);
    const [dateValid, setDateValid] = useState(null);
 
+   const[errMessage , setErrMessage] = useState('')
+
 
   const fetchAllFishCategories = async()=>{
     try{
@@ -53,9 +57,21 @@ const PlaceFarmOrders = () => {
     }
   }
 
+
+  const fetchaOrder = async()=>{
+    try{
+        
+      const response = await axios.post('http://localhost:4000/api/order/get-order-by-ordercode',{orderCode});
+      setexpectedShipmentDate(response.data.order.shippingDate)
+    }catch(err){
+      consoole.log(err)
+    }
+  }
+
   useEffect(()=>{
     fetchFarmOrders()
     fetchAllFishCategories()
+    fetchaOrder()
   },[])
 
   const fetchBusinessName = async()=>{
@@ -236,16 +252,30 @@ const handleQuantityChange = (e) => {
 };
   
 
+
+
 const handleDateChange = (e) => {
 
-  const value = e.target.value;
-  const today = new Date();
-  const selectedDate = new Date(value);
-  today.setHours(0, 0, 0, 0);
-  selectedDate.setHours(0, 0, 0, 0);
-  setDate(value);
-  setDateValid(selectedDate > today);
+
+  const selectedDate = new Date(e.target.value);
+
+
+  const maxDate = new Date(expectedshipmentDate);
+  const minDate = new Date();
+
+  if (selectedDate <= minDate || selectedDate > maxDate) {
+      setErrMessage(`Deadline date must be between ${minDate.toISOString().split('T')[0]} and ${maxDate.toISOString().split('T')[0]}`);
+      setDateValid(false);
+      setDate(''); 
+  } else {
+      
+      setErrMessage('');
+      setDateValid(true);
+      setDate(e.target.value);
+  }
+  
 };  
+
 
   
 
@@ -276,8 +306,8 @@ const handleDateChange = (e) => {
                             })}
              </Form.Select>
 
-        {categoryValid === false && <span className='error-text'>❌ Select a category</span>}
-        {categoryValid === true && <span className='valid-text'>✅</span>}
+        {categoryValid === false && <p className='error-text'>❌ Select a category</p>}
+        {categoryValid === true && <p className='valid-text'>✅</p>}
 
          </Col>
 
@@ -302,23 +332,23 @@ const handleDateChange = (e) => {
                   <option  value='Medium'>Medium</option>
                  <option  value='Small'>Small</option>
             </Form.Select>
-       {sizeValid === false && <span className='error-text'>❌ Select a size</span>}
-       {sizeValid === true && <span className='valid-text'>✅</span>}
+       {sizeValid === false && <p className='error-text'>❌ Select a size</p>}
+       {sizeValid === true && <p className='valid-text'>✅</p>}
 
         </Col>
 
          <Col>
                <Form.Label>Quantity</Form.Label>
                <Form.Control placeholder="Quantity" type='Number' onChange={handleQuantityChange} value={quantity} />
-        {quantityValid === false && <span className='error-text'>❌ Must be greater than 0</span>}
-       {quantityValid === true && <span className='valid-text'>✅</span>}
+        {quantityValid === false && <p className='error-text'>❌ Must be greater than 0</p>}
+       {quantityValid === true && <p className='valid-text'>✅</p>}
         </Col>
 
         <Col>
              <Form.Label>Delivery Deadline</Form.Label>
              <Form.Control  type='date' placeholder='Delivery deadline' onChange={handleDateChange} value={date} />
-       {dateValid === false && <span className='error-text'>❌ Select a future date</span>}
-       {dateValid === true && <span className='valid-text'>✅</span>}
+             {dateValid === false && <p className='error-text'>{errMessage}</p>}
+             {dateValid === true && <p className='valid-text'>✅</p>}
        </Col>
  </Row>
 </Form>
@@ -387,8 +417,8 @@ const handleDateChange = (e) => {
                                              )
                                              })}
                     </Form.Select>
-                {categoryValid === false && <span className='error-text'>❌ Select a category</span>}
-                {categoryValid === true && <span className='valid-text'>✅</span>}
+                {categoryValid === false && <p className='error-text'>❌ Select a category</p>}
+                {categoryValid === true && <p className='valid-text'>✅</p>}
           
                 </Col>
             </Row>
@@ -404,24 +434,24 @@ const handleDateChange = (e) => {
                          <option  value='Medium'>Medium</option>
                         <option  value='Small'>Small</option>
                   </Form.Select>
-               {sizeValid === false && <span className='error-text'>❌ Select a size</span>}
-               {sizeValid === true && <span className='valid-text'>✅</span>}
+               {sizeValid === false && <p className='error-text'>❌ Select a size</p>}
+               {sizeValid === true && <p className='valid-text'>✅</p>}
               </Col>
            </Row>
 
            <Row>
               <Col>
                   <Form.Control placeholder="Quantity" type='Number' onChange={handleQuantityChange} value={quantity} />
-                      {quantityValid === false && <span className='error-text'>❌ Must be greater than 0</span>}
-                      {quantityValid === true && <span className='valid-text'>✅</span>}
+                      {quantityValid === false && <p className='error-text'>❌ Must be greater than 0</p>}
+                      {quantityValid === true && <p className='valid-text'>✅</p>}
              </Col>
          </Row>
          
          <Row>
              <Col>
                    <Form.Control  type='date' placeholder='Delivery deadline' onChange={handleDateChange} value={date} />
-                    {dateValid === false && <span className='error-text'>❌ Select a future date</span>}
-                    {dateValid === true && <span className='valid-text'>✅</span>}
+                   {dateValid === false && <p className='error-text'>{errMessage}</p>}
+                   {dateValid === true && <p className='valid-text'>✅</p>}
               </Col>
          </Row>
      </Form>
