@@ -213,22 +213,22 @@ const UpdateOrder = () => {
           <Col>
               <Form.Label>Shipping address</Form.Label>
               <Form.Control type='text' placeholder='enter your shipping address' value={shippingAddress} onChange={handleAddressChange} />
-              {addressValid === false && <span className='error-text'>❌ Invalid Address</span>}
-              {addressValid === true && <span className='valid-text'>✅</span>}
+              {addressValid === false && <p className='error-text'>❌ Invalid Address</p>}
+              {addressValid === true && <p className='valid-text'>✅</p>}
             </Col>
 
             <Col>
               <Form.Label>Expected Shipment Date</Form.Label>
               <Form.Control type='date' placeholder='shipment date' value={shippingDate} onChange={handleDateChange}/>
-              {dateValid === false && <span className='error-text'>❌ Select a future date</span>}
-              {dateValid === true && <span className='valid-text'>✅</span>}
+              {dateValid === false && <p className='error-text'>❌ Select a future date</p>}
+              {dateValid === true && <p className='valid-text'>✅</p>}
             </Col>
             
             <Col>
               <Form.Label>Contact Number</Form.Label>
               <Form.Control type='text' placeholder='contact number' value={contact} onChange={handleContactChange}/>
-              {contactValid === false && <span className='error-text'>❌ Invalid Contact</span>}
-              {contactValid === true && <span className='valid-text'>✅</span>}
+              {contactValid === false && <p className='error-text'>❌ Invalid Contact</p>}
+              {contactValid === true && <p className='valid-text'>✅</p>}
             </Col>
 
             <Col>
@@ -238,8 +238,8 @@ const UpdateOrder = () => {
               <option value="Normal Type">Normal Type</option>
               <option value="Exporter Type">Exporter Type</option>
                  </Form.Select>
-                 {orderTypeValid === false && <span className='error-text'>❌ Please select a valid order type</span>}
-                 {orderTypeValid === true && <span className='valid-text'>✅</span>}  
+                 {orderTypeValid === false && <p className='error-text'>❌ Please select a valid order type</p>}
+                 {orderTypeValid === true && <p className='valid-text'>✅</p>}  
               
             </Col>  
           </Row>
@@ -255,8 +255,8 @@ const UpdateOrder = () => {
                 <option value={fish} key={index}>{fish}</option>
              ))}   
                  </Form.Select>
-                 {fishVarietyValid === false && <span className='error-text'>❌ Please select a fish variety</span>}
-                 {fishVarietyValid === true && <span className='valid-text'>✅</span>}
+                 {fishVarietyValid === false && <p className='error-text'>❌ Please select a fish variety</p>}
+                 {fishVarietyValid === true && <p className='valid-text'>✅</p>}
             </Col>
 
             <Col>
@@ -267,8 +267,8 @@ const UpdateOrder = () => {
           <option value="Small">Small</option>
           <option value="Large">Large</option>
                  </Form.Select>
-                 {sizeValid === false && size === '' && <span className='error-text'>❌ Please select a size</span>}
-                 {sizeValid === true && <span className='valid-text'>✅</span>}    
+                 {sizeValid === false && size === '' && <p className='error-text'>❌ Please select a size</p>}
+                 {sizeValid === true && <p className='valid-text'>✅</p>}    
             </Col>
 
             <Col>
@@ -279,15 +279,15 @@ const UpdateOrder = () => {
           <option value="Male">Male</option>
           <option value="Mixed">Mixed</option>
                  </Form.Select>
-                 {genderValid === false && <span className='error-text'>❌ Please select a gender</span>}
-                 {genderValid === true && <span className='valid-text'>✅</span>}    
+                 {genderValid === false && <p className='error-text'>❌ Please select a gender</p>}
+                 {genderValid === true && <p className='valid-text'>✅</p>}    
             </Col>
            
            <Col>
             <Form.Label>Quantity</Form.Label>
             <Form.Control type='number' placeholder='quantity' onChange={handleQuantityChange}/>
-            {quantityValid === false && <span className='error-text'>❌ Must be greater than 0</span>}
-            {quantityValid === true && <span className='valid-text'>✅</span>}
+            {quantityValid === false && <p className='error-text'>❌ Must be greater than 0</p>}
+            {quantityValid === true && <p className='valid-text'>✅</p>}
            </Col>
           </Row>
          
