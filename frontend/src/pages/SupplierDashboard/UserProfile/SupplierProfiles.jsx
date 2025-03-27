@@ -11,6 +11,8 @@ import Row from 'react-bootstrap/Row';
 import { AppContext } from '../../../context/AppContext';
 import SideNavBar from '../../../components/SideNavBar/SideNavBar';
 
+// View Supplier User Profile
+
 const SupplierProfiles = () => {
     const {token} = useContext(AppContext)
 
@@ -24,153 +26,145 @@ const SupplierProfiles = () => {
 
     const [modalShow, setModalShow] = useState(false);
 
-
     const fetchUserProfileData = async()=>{
-     
         try{
-    
-          const response = await axios.post('http://localhost:4000/api/auth/get-user',{},{headers:{token}});
-    
-          if(response.data.success)
-          {
-            console.log(response.data.user)
-           
-            const user = response.data.user;
-            setId(user._id)
-            setName(user.name)
-            setbusinessName(user.businessName)
-            setbusinessRegNo(user.businessRegNo)
-            setemail(user.email)
-            setphone(user.phone)
-            setaddress(user.address)
-          }
-          else
-          {
-            console.log('Error')
-          }
-    
-        }catch(err)
-        {
-          console.log(err);
+            const response = await axios.post('http://localhost:4000/api/auth/get-user',{},{headers:{token}});
+            if(response.data.success) {
+                console.log(response.data.user)
+                const user = response.data.user;
+                setId(user._id)
+                setName(user.name)
+                setbusinessName(user.businessName)
+                setbusinessRegNo(user.businessRegNo)
+                setemail(user.email)
+                setphone(user.phone)
+                setaddress(user.address)
+            } else {
+                console.log('Error')
+            }
+        } catch(err) {
+            console.log(err);
         }
-      }
+    }
 
-      useEffect(()=>{
+    useEffect(()=>{
         fetchUserProfileData()
-      },[])
+    },[])
 
+    // Update user details
 
-      const updateUser = async()=>{
-     
-        try{
-    
-          const response = await axios.put(`http://localhost:4000/api/auth/update-user/${id}`,
-            {name, businessName, businessRegNo, address, email, phone});
-    
-          if(response.data.success)
-          {
-            console.log('upated successfully')
-            fetchUserProfileData()
-            setModalShow(false)
-          }
-          else
-          {
-            console.log('Error')
-          }
-    
-        }catch(err)
-        {
-          console.log(err);
+    const updateUser = async()=>{
+
+        // Email validation 
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+        // Phone number validation 
+        const phoneRegex = /^[0-9]{10}$/;
+
+        // Validate email
+        if (!emailRegex.test(email)) {
+            alert("Please enter a valid email address.");
+            return; // Stop further execution if email is invalid
         }
-      }
 
+        // Validate phone number
+        if (!phoneRegex.test(phone)) {
+            alert("Please enter a valid phone number (10 digits).");
+            return; // Stop further execution if phone number is invalid
+        }
+
+        try {
+            const response = await axios.put(`http://localhost:4000/api/auth/update-user/${id}`,
+                {name, businessName, businessRegNo, address, email, phone});
+
+            if (response.data.success) {
+                console.log('Updated successfully');
+                fetchUserProfileData();
+                setModalShow(false);
+            } else {
+                console.log('Error');
+            }
+
+        } catch (err) {
+            console.log(err);
+        }
+    }
 
   return (
     <div>
 
-   <div className="view-user-profile-container">
-      <div className="left-column">
-       <SideNavBar role={'Supplier'} />
-      </div>
-   <div className="right-column">
+        <div className="view-user-profile-container">
+            <div className="left-column">
+                <SideNavBar role={'Supplier'} />
+            </div>
+            <div className="right-column">
 
-   <Card style={{ width: '40rem' ,marginTop:'50px' , backgroundColor: '#f8f9fa'}} >
-      <Card.Body>
-        <Card.Title>My Profile</Card.Title>
-        <Card.Text>
-          
-        </Card.Text>
-      </Card.Body >
-      <ListGroup className="list-group-flush" >
-        <ListGroup.Item style={{ backgroundColor: '#f8f9fa'}}><span style={{color:'#49557e', fontWeight:'bold',marginRight:'10px'}}>Full Name :</span> {name}</ListGroup.Item>
-        <ListGroup.Item style={{ backgroundColor: '#f8f9fa'}}> <span style={{color:'#49557e', fontWeight:'bold',marginRight:'10px'}}>Email : </span>{email} </ListGroup.Item>
-        <ListGroup.Item style={{ backgroundColor: '#f8f9fa'}}><span style={{color:'#49557e', fontWeight:'bold',marginRight:'10px'}}>Business Name :</span> {businessName} </ListGroup.Item>
-        <ListGroup.Item style={{ backgroundColor: '#f8f9fa'}}><span style={{color:'#49557e', fontWeight:'bold',marginRight:'10px'}}>Business RegNo :</span> {businessRegNo}</ListGroup.Item>
-        <ListGroup.Item style={{ backgroundColor: '#f8f9fa'}}><span style={{color:'#49557e', fontWeight:'bold',marginRight:'10px'}}>Contact No :</span> {phone}</ListGroup.Item>
-        <ListGroup.Item style={{ backgroundColor: '#f8f9fa'}}><span style={{color:'#49557e', fontWeight:'bold',marginRight:'10px'}}>Address :</span> {address} </ListGroup.Item>    
-      </ListGroup>
-      <Card.Body>
-      <Button  style={{width:'130px', backgroundColor:'#49557e', color:'white',border:'none'}} onClick={()=>{setModalShow(true)}}>Edit Profile</Button>
-      </Card.Body>
-    </Card>
+                <Card style={{ width: '40rem' ,marginTop:'50px' , backgroundColor: '#f8f9fa'}} >
+                    <Card.Body>
+                        <Card.Title>My Profile</Card.Title>
+                    </Card.Body>
+                    <ListGroup className="list-group-flush" >
+                        <ListGroup.Item style={{ backgroundColor: '#f8f9fa'}}><span style={{color:'#49557e', fontWeight:'bold',marginRight:'10px'}}>Full Name :</span> {name}</ListGroup.Item>
+                        <ListGroup.Item style={{ backgroundColor: '#f8f9fa'}}> <span style={{color:'#49557e', fontWeight:'bold',marginRight:'10px'}}>Email : </span>{email} </ListGroup.Item>
+                        <ListGroup.Item style={{ backgroundColor: '#f8f9fa'}}><span style={{color:'#49557e', fontWeight:'bold',marginRight:'10px'}}>Business Name :</span> {businessName} </ListGroup.Item>
+                        <ListGroup.Item style={{ backgroundColor: '#f8f9fa'}}><span style={{color:'#49557e', fontWeight:'bold',marginRight:'10px'}}>Business RegNo :</span> {businessRegNo}</ListGroup.Item>
+                        <ListGroup.Item style={{ backgroundColor: '#f8f9fa'}}><span style={{color:'#49557e', fontWeight:'bold',marginRight:'10px'}}>Contact No :</span> {phone}</ListGroup.Item>
+                        <ListGroup.Item style={{ backgroundColor: '#f8f9fa'}}><span style={{color:'#49557e', fontWeight:'bold',marginRight:'10px'}}>Address :</span> {address} </ListGroup.Item>    
+                    </ListGroup>
+                    <Card.Body>
+                    <Button  style={{width:'130px', backgroundColor:'#49557e', color:'white',border:'none'}} onClick={()=>{setModalShow(true)}}>Edit Profile</Button>
+                    </Card.Body>
+                </Card>
 
-   </div>
-   </div>
+            </div>
+        </div>
 
+        <Modal show={modalShow} onHide={()=>{setModalShow(false)}} centered>
+            <Modal.Header closeButton>
+                <Modal.Title style={{color:'#49557e'}} onClick={ fetchUserProfileData}>Edit Profile Details</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                <Form style={{marginTop:'30px'}}>
+                    <Row>
+                        <Col>
+                            <Form.Control type='text' value={name} onChange={(e)=>{setName(e.target.value)}} />
+                        </Col>
+                    </Row>
 
-   <Modal show={modalShow} onHide={()=>{setModalShow(false)}} centered>
-          <Modal.Header closeButton>
-            <Modal.Title style={{color:'#49557e'}} onClick={ fetchUserProfileData}>Edit Profile Details</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-          <Form style={{marginTop:'30px'}}>
-        <Row>
-        <Col>
-            <Form.Control type='text' value={name} onChange={(e)=>{setName(e.target.value)}} />
-          </Col>
-          </Row>
+                    <Row>
+                        <Col>
+                            <Form.Control value={email} onChange={(e)=>{setemail(e.target.value)}} />
+                        </Col>
+                    </Row>
 
-          <Row>
-  
-          <Col>
-           
-          <Form.Control value={email} onChange={(e)=>{setemail(e.target.value)}} />
-          </Col>
-          </Row>
-
-          <Row>
-          <Col>
-          <Form.Control value={businessName} onChange={(e)=>{setbusinessName(e.target.value)}}/>
-            
-          </Col>
-          
-          <Col>
-            <Form.Control value={businessRegNo} onChange={(e)=>{setbusinessRegNo(e.target.value)}}   />
-          </Col>
-          </Row>
-          <Row>
-        <Col>
-            <Form.Control type='Number' value={phone} onChange={(e)=>{setphone(e.target.value)}}  />
-          </Col>  
-          </Row>
-          <Row>
-          <Col>
-            <Form.Control type='text' value={address} onChange={(e)=>{setaddress(e.target.value)}}   />
-          </Col>  
-        </Row>
-      </Form>  
-          </Modal.Body>
-          <Modal.Footer>
-          <Button variant="secondary" style={{backgroundColor:'#49557e', color:'white', width:"200px"}} onClick={updateUser}>
-              Update
-            </Button>
-          </Modal.Footer>
+                    <Row>
+                        <Col>
+                            <Form.Control value={businessName} onChange={(e)=>{setbusinessName(e.target.value)}}/>
+                        </Col>
+                        <Col>
+                            <Form.Control value={businessRegNo} onChange={(e)=>{setbusinessRegNo(e.target.value)}} />
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col>
+                            <Form.Control type='Number' value={phone} onChange={(e)=>{setphone(e.target.value)}} />
+                        </Col>  
+                    </Row>
+                    <Row>
+                        <Col>
+                            <Form.Control type='text' value={address} onChange={(e)=>{setaddress(e.target.value)}} />
+                        </Col>  
+                    </Row>
+                </Form>  
+            </Modal.Body>
+            <Modal.Footer>
+                <Button variant="secondary" style={{backgroundColor:'#49557e', color:'white', width:"200px"}} onClick={updateUser}>
+                    Update
+                </Button>
+            </Modal.Footer>
         </Modal>
-  
-      
-    </div>
 
-    
+    </div>
   )
 }
 

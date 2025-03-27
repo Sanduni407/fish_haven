@@ -1,65 +1,95 @@
-import React, { useState } from 'react'
-import './ExporterRegisterForm.css'
-import axios from 'axios'
+import React, { useState } from 'react';
+import './ExporterRegisterForm.css';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+
 
 const ExporterRegisterForm = () => {
 
-  const[name,setName] = useState('');
-  const[ businessName,setbusinessName] = useState('');
-  const[ businessRegNo,setbusinessRegNo] = useState('');
-  const[address,setaddress] = useState('');
-  const[ email,setemail] = useState('');
-  const[ phone,setphone] = useState('');
+  const navigate = useNavigate();
 
+  const [name, setName] = useState('');
+  const [businessName, setBusinessName] = useState('');
+  const [businessRegNo, setBusinessRegNo] = useState('');
+  const [address, setAddress] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [errors, setErrors] = useState({});
 
-  const requestRegistration = async(e)=>{
+  //validation
+  const validate = () => {
+    let newErrors = {};
 
-     e.preventDefault()
-    try{
-
-      const response = await axios.post('http://localhost:4000/api/reg-request/create-request', {name,businessName,businessRegNo,address,email,phone});
-
-      if(response.data.success)
-      {
-        console.log(response.data)
-      }
-      else
-      {
-        console.log(response.data)
-      }
-
-    }catch(err){
-
-       console.log(err)
+    if (!email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+      newErrors.email = 'Invalid email format';
     }
-  }
-  
+
+    if (!phone.match(/^\d{10}$/)) {
+      newErrors.phone = 'Phone number must be exactly 10 digits';
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const requestRegistration = async (e) => {
+    e.preventDefault();
+    
+    if (!validate()) return;
+
+    try {
+      const response = await axios.post('http://localhost:4000/api/reg-request/create-request', {
+        name,
+        businessName,
+        businessRegNo,
+        address,
+        email,
+        phone,
+      });
+
+      if (response.data.success) {
+        console.log(response.data);
+        alert('Registration request submitted successfully!');
+        navigate('/');
+      } else {
+        console.log(response.data);
+        alert('Failed to submit request.');
+      }
+    } catch (err) {
+      console.log(err);
+      alert('An error occurred.');
+    }
+  };
+
   return (
     <div className="exporter-form-container">
       <form className="exporter-form" onSubmit={requestRegistration}>
 
         <label>Name</label>
-        <input type="text" name="name" onChange={(e=>setName(e.target.value))} value={name} required />
+        <input type="text" name="name" onChange={(e) => setName(e.target.value)} value={name} required />
 
         <label>Business Name</label>
-        <input type="text" name="businessName" onChange={(e=>setbusinessName(e.target.value))} value={businessName} required />
+        <input type="text" name="businessName" onChange={(e) => setBusinessName(e.target.value)} value={businessName} required />
 
         <label>Business Registration Number</label>
-        <input type="text" name="businessRegNo" onChange={(e=>setbusinessRegNo(e.target.value))} value={businessRegNo} required />
+        <input type="text" name="businessRegNo" onChange={(e) => setBusinessRegNo(e.target.value)} value={businessRegNo} required />
 
         <label>Email</label>
-        <input type="email" name="email"  onChange={(e=>setemail(e.target.value))} value={email} required />
+        <input type="email" name="email" onChange={(e) => setEmail(e.target.value)} value={email} required />
+        {errors.email && <p className="error">{errors.email}</p>}
 
         <label>Phone</label>
-        <input type="text" name="phone" onChange={(e=>setphone(e.target.value))} value={phone} required />
+        <input type="text" name="phone" onChange={(e) => setPhone(e.target.value)} value={phone} required />
+        {errors.phone && <p className="error">{errors.phone}</p>}
 
         <label>Address</label>
-        <input type="text" name="address" onChange={(e=>setaddress(e.target.value))} value={address}  required />
+        <input type="text" name="address" onChange={(e) => setAddress(e.target.value)} value={address} required />
 
         <button type="submit">Register</button>
       </form>
     </div>
-  )
-}
+  );
+};
 
-export default ExporterRegisterForm
+export default ExporterRegisterForm;
+
