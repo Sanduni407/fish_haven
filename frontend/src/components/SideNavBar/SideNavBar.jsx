@@ -17,7 +17,7 @@ const SideNavBar = ({ role }) => {
       { name: "Order Requests", path: "/admin/view-order-requests" },
       { name: "View Deliveries", path: "/admin/view-deliveries" },
       { name: "Manage Inventory", path: "/admin/manage-inventory" },
-      { name: "Full Inventory", path: "/view/inventory" },
+     //  { name: "Full Inventory", path: "/view/inventory" },
       { name: "View Leave Requests", path: "/admin/view-leaves" },
 
      
