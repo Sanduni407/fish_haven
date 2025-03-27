@@ -168,7 +168,7 @@ const CreateDelivery = () => {
       <Row>
           <Col>
           <label>Fish Variety</label><br/>
-          <Form.Select placeholder="Fish variety"  onChange={(e)=>{setvariety(e.target.value)}}>
+          <Form.Select placeholder="Fish variety"  onChange={(e)=>{setvariety(e.target.value)}}required>
           <option>Select fish category</option>
           {fishCategory.map((fish,index)=>{
             return(
