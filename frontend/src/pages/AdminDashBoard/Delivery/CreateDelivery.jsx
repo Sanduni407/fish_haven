@@ -15,9 +15,9 @@ const CreateDelivery = () => {
     const{id} = useParams();
 
     const predefinedPackageSizes = {
-        "Betta": 5,
+        "Betta": 2,
         "Neon tetra": 4,
-        "Cod": 3,
+        "Guppi": 8,
         "Trout": 2,
         "Mackerel": 6
     };
