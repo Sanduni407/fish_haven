@@ -6,6 +6,7 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import Button from 'react-bootstrap/Button';
 
 const CreateDelivery = () => {
@@ -116,6 +117,7 @@ const CreateDelivery = () => {
           if(response.data.success)
           {
             console.log("record created successfully")
+            toast.success('Record added successfully')
           }
           else
           {

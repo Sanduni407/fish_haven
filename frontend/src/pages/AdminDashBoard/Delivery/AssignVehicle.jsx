@@ -143,6 +143,7 @@ const update = async()=>{
         if(response.data.success)
         {
             console.log('updated successfully')
+            toast.success('Vehicle details changed successfully')
             getAllDetails()
             setModalShow(false);
 
@@ -162,6 +163,7 @@ const Delete = async()=>{
         if(response.data.success)
         {
             console.log('successfully deleted')
+            toast.success('Record removed successfully')
             getAllDetails()
           
 

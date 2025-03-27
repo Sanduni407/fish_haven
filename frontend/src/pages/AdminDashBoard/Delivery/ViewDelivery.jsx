@@ -5,6 +5,7 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Table from "react-bootstrap/Table";
 import SideNavBar from '../../../components/SideNavBar/SideNavBar';
+import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 
 const ViewDelivery = () => {
@@ -65,6 +66,7 @@ const ViewDelivery = () => {
               if(response.data.success)
               {
                 console.log("successfully deleted")
+                toast.success('Record deleted successfully')
                 fetchAllDeliveries()
               }
 

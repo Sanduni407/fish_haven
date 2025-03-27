@@ -6,6 +6,7 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button';
+import { toast } from 'react-toastify';
 import axios from 'axios';
 
 const UpdateDelivery = () => {
@@ -114,6 +115,7 @@ const UpdateDelivery = () => {
           if(response.data.success)
           {
             console.log("updated successfully")
+            toast.success('successfully updated')
             navigate('/admin/view-deliveries')
           }
 
