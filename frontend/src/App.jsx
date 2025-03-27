@@ -32,6 +32,7 @@ import ViewLeaveReq from './pages/AdminDashBoard/Employee/ViewLeaveReq';
 import ViewUserProfile from './pages/ExporterDashBoard/UserProfile/ViewUserProfile';
 import SupplierProfiles from './pages/SupplierDashboard/UserProfile/SupplierProfiles';
 import EmployeeProfiles from './pages/EmployeeDashboard/UserProfile/EmployeeProfiles';
+import ViewAdminOrderRequests from './pages/AdminDashBoard/Order/ViewAdminOrderRequests/ViewAdminOrderRequests';
 
 
 const App = () => {
@@ -53,6 +54,7 @@ const App = () => {
         <Route path='/exporter/update-order/:id' element={<UpdateOrder/>}/>
         <Route path='/admin/view-orders' element={<ViewOrder/>}/>
         <Route path='/admin/place-farm-orders/:orderCode' element={<PlaceFarmOrders/>}/>
+        <Route path='/admin/view-order-requests' element={<ViewAdminOrderRequests/>}/>
         <Route path='/admin/view-farm-orders' element={<PlaceFarmOrders/>}/>
         <Route path='/supplier/view-order' element={<ViewOrderRequest/>}/>
 

@@ -21,21 +21,36 @@ const UpdateOrder = () => {
       const[contact,setcontact] = useState('');
       const[cart,setCartItems] = useState([]);
 
-    const[fishCategory,setfishCategory] = useState([]);
+       const[fishCategory,setfishCategory] = useState([]);
+ 
+       // states for validate the data
 
-    //to add new fish to the order description list
-    const [variety, setVariety] = useState('');
-    const [size, setSize] = useState('');
-    const [gender, setGender] = useState('');
-    const [quantity, setQuantity] = useState(0);
+       // Validation States
+        const [contactValid, setContactValid] = useState(null);
+        const [addressValid, setAddressValid] = useState(null);
+        const [quantityValid, setQuantityValid] = useState(null);
+        const [dateValid, setDateValid] = useState(null);
+        const [orderTypeValid, setOrderTypeValid] = useState(null);
+        const [fishVarietyValid, setFishVarietyValid] = useState(null);
+        const [sizeValid, setSizeValid] = useState(null);
+        const [genderValid, setGenderValid] = useState(null);
+
+
+       //to add new fish to the order description list
+        const [variety, setVariety] = useState('');
+        const [size, setSize] = useState('');
+        const [gender, setGender] = useState('');
+        const [quantity, setQuantity] = useState(0);
 
     const fetchOrderData = async () => {
-        try {
+          try {
+
           const response = await axios.post(`http://localhost:4000/api/order/get-order`,{id});
   
           if (response.data.success) {
 
             const { shippingAddress, shippingDate, orderType,contact, cart } = response.data.order;
+
             setshippingAddress(shippingAddress);
             setshippingDate(shippingDate);
             setorderType(orderType);
@@ -44,7 +59,7 @@ const UpdateOrder = () => {
   
           } else {
             toast.error('Failed to fetch order details');
-          }
+          } 
         } catch (error) {
 
           console.error(error);
@@ -78,14 +93,92 @@ const UpdateOrder = () => {
       },[])
     
 
+
       const addToCART = (newItem)=>{
 
-        setCartItems(prevstate=>[...prevstate,newItem]);
-        console.log(cart);
+        if(!variety || !size || !quantity || !gender)
+               {
+                   toast.error("Please correct the invalid fields before placing an order.");
+                   return;
+               }
+                   setCartItems(prevstate => [...prevstate, newItem]);
+                   console.log(cart);
+      
+                   setVariety('')
+                   setSize('')
+                   setQuantity('')
+                   setGender('')
+      
+      
+                   setFishVarietyValid(null)
+                   setSizeValid(null)
+                   setQuantityValid(null)
+                  setGenderValid(null)
       }
+
+       // Contact Number Validation
+         const handleContactChange = (e) => {
+            const value = e.target.value;
+            setcontact(value);
+            setContactValid(/^\d{10}$/.test(value));
+         };
+
+       //shipping address validation
+          const handleAddressChange = (e) => {
+             const value = e.target.value;
+             setshippingAddress(value);
+             setAddressValid(/^[a-zA-Z0-9,\/ ]{5,}$/.test(value));
+         };
+
+       // Quantity Validation
+          const handleQuantityChange = (e) => {
+              const value = parseFloat(e.target.value);
+              setQuantity(value);
+              setQuantityValid(value > 0);
+           };
+
+     // shipping date Validation 
+          const handleDateChange = (e) => {
+               const value = e.target.value;
+               const today = new Date();
+               const selectedDate = new Date(value);
+               today.setHours(0, 0, 0, 0);
+               selectedDate.setHours(0, 0, 0, 0);
+               setshippingDate(value);
+               setDateValid(selectedDate > today);
+ };
+
+     // validate details of the dropdowns
+          const handleOrderTypeChange = (e) => {
+  
+                const value = e.target.value;
+                setorderType(value);
+               setOrderTypeValid(value !== '');
+              };
+
+       const handleFishVarietyChange = (e) => {
+              const value = e.target.value;
+              setVariety(value);
+              setFishVarietyValid(value !== '');
+             };
+
+        const handleSizeChange = (e) => {
+              const value = e.target.value;
+              setSize(value);
+             setSizeValid(value !== '');
+            };
+
+         const handleGenderChange = (e) => {
+               const value = e.target.value;
+               setGender(value);
+               setGenderValid(value !== '');
+            };
+
+
 
       const updateOrder = async()=>{
 
+        
          try{
            
             const response = await axios.put(`http://localhost:4000/api/order/update-order/${id}`,{
@@ -114,63 +207,87 @@ const UpdateOrder = () => {
   
 
    <div className="content-area">
-
+    <br/>
    <Form>
           <Row>
           <Col>
-              <Form.Control type='text' placeholder='shipment address' value={shippingAddress} onChange={(e)=>{setshippingAddress(e.target.value)}} />
+              <Form.Label>Shipping address</Form.Label>
+              <Form.Control type='text' placeholder='enter your shipping address' value={shippingAddress} onChange={handleAddressChange} />
+              {addressValid === false && <p className='error-text'>❌ Invalid Address</p>}
+              {addressValid === true && <p className='valid-text'>✅</p>}
             </Col>
 
             <Col>
-              <Form.Control type='date' placeholder='shipment date' value={shippingDate} onChange={(e)=>{setshippingDate(e.target.value)}}/>
+              <Form.Label>Expected Shipment Date</Form.Label>
+              <Form.Control type='date' placeholder='shipment date' value={shippingDate} onChange={handleDateChange}/>
+              {dateValid === false && <p className='error-text'>❌ Select a future date</p>}
+              {dateValid === true && <p className='valid-text'>✅</p>}
             </Col>
             
             <Col>
-              <Form.Control type='text' placeholder='contact number' value={contact} onChange={(e)=>{setcontact(e.target.value)}}/>
+              <Form.Label>Contact Number</Form.Label>
+              <Form.Control type='text' placeholder='contact number' value={contact} onChange={handleContactChange}/>
+              {contactValid === false && <p className='error-text'>❌ Invalid Contact</p>}
+              {contactValid === true && <p className='valid-text'>✅</p>}
             </Col>
 
             <Col>
-              <Form.Select value={orderType} onChange={(e)=>{setorderType(e.target.value)}}>
+              <Form.Label>Order Type</Form.Label>
+              <Form.Select value={orderType} onChange={handleOrderTypeChange}>
               <option>Select Order Type</option>
               <option value="Normal Type">Normal Type</option>
               <option value="Exporter Type">Exporter Type</option>
                  </Form.Select>
+                 {orderTypeValid === false && <p className='error-text'>❌ Please select a valid order type</p>}
+                 {orderTypeValid === true && <p className='valid-text'>✅</p>}  
               
             </Col>  
           </Row>
 
-         
+         <br/>
 
           <Row>
           <Col>
-          <Form.Select onChange={(e)=>{setVariety(e.target.value)}}>
+          <Form.Label>Fish Variety</Form.Label>
+          <Form.Select onChange={handleFishVarietyChange}>
           <option>Fish variety</option>
              {fishCategory.map((fish,index)=>(
                 <option value={fish} key={index}>{fish}</option>
              ))}   
                  </Form.Select>
+                 {fishVarietyValid === false && <p className='error-text'>❌ Please select a fish variety</p>}
+                 {fishVarietyValid === true && <p className='valid-text'>✅</p>}
             </Col>
 
             <Col>
-          <Form.Select  onChange={(e)=>{setSize(e.target.value)}}>
+           <Form.Label>Fish Size</Form.Label>
+          <Form.Select  onChange={handleSizeChange}>
           <option >Select size</option>
           <option value="Medium">Medium</option>
           <option value="Small">Small</option>
           <option value="Large">Large</option>
                  </Form.Select>
+                 {sizeValid === false && size === '' && <p className='error-text'>❌ Please select a size</p>}
+                 {sizeValid === true && <p className='valid-text'>✅</p>}    
             </Col>
 
             <Col>
-          <Form.Select  onChange={(e)=>{setGender(e.target.value)}}>
+          <Form.Label>Fish Gender</Form.Label> 
+          <Form.Select  onChange={handleGenderChange}>
           <option >Select gender</option>
           <option value="Female">Female</option>
           <option value="Male">Male</option>
           <option value="Mixed">Mixed</option>
                  </Form.Select>
+                 {genderValid === false && <p className='error-text'>❌ Please select a gender</p>}
+                 {genderValid === true && <p className='valid-text'>✅</p>}    
             </Col>
            
            <Col>
-            <Form.Control type='number' placeholder='quantity' onChange={(e)=>{setQuantity(parseFloat(e.target.value))}}/>
+            <Form.Label>Quantity</Form.Label>
+            <Form.Control type='number' placeholder='quantity' onChange={handleQuantityChange}/>
+            {quantityValid === false && <p className='error-text'>❌ Must be greater than 0</p>}
+            {quantityValid === true && <p className='valid-text'>✅</p>}
            </Col>
           </Row>
          

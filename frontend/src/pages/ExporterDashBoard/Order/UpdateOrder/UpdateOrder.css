@@ -1,152 +1,162 @@
 .create-order{
-    display: flex;
-    align-items: flex-start; 
-    height: 100vh;
-   
+  display: flex;
+  align-items: flex-start; 
+  height: 100vh;
+ 
 }
 
 
 .content-area{
-    width: calc(100% - 250px); 
-    margin-left: 250px; 
-    padding: 20px;
-    box-sizing: border-box;
-    height: 100%;
-    display:flex;
-    flex-direction: column;
-    gap:30px;
+  width: calc(100% - 250px); 
+  margin-left: 250px; 
+  padding: 20px;
+  box-sizing: border-box;
+  height: 100%;
+  display:flex;
+  flex-direction: column;
+  gap:30px;
 }
 
 .exporter-details{
-    margin-top: 100px;
-    display: flex;
-    justify-content: center;
-    gap:20px;
+  margin-top: 100px;
+  display: flex;
+  justify-content: center;
+  gap:20px;
 }
 
 .fish-details{
 
-    display: flex;
-    justify-content: center;
-    gap:20px;
+  display: flex;
+  justify-content: center;
+  gap:20px;
 }
 
 .exporter-details input{
-    border: none;
-    outline: none;
-    border:1px solid #1b263b;
-    background-color: white;
-    padding:10px 80px;
-    
+  border: none;
+  outline: none;
+  border:1px solid #1b263b;
+  background-color: white;
+  padding:10px 80px;
+  
 }
 
 .fish-details input,select{
 
-    border: none;
-    outline: none;
-    border:1px solid #1b263b;
-    background-color: white;
-    padding:10px 90px;
+  border: none;
+  outline: none;
+  border:1px solid #1b263b;
+  background-color: white;
+  padding:10px 90px;
 }
 
 .fish-details input{
 
-    border: none;
-    outline: none;
-    border:1px solid #1b263b;
-    padding:10px 10px;
+  border: none;
+  outline: none;
+  border:1px solid #1b263b;
+  padding:10px 10px;
 }
 
-/* Styling input fields, select dropdowns, and date picker */
+
 .exporter-details input,
 .exporter-details select,
 .fish-details input,
 .fish-details select {
-    color: #444; /* Change to the preferred text color */
-    font-size: 16px; /* Adjust the font size */
-    padding: 8px;
-    border-radius: 5px;
+  color: #444; 
+  font-size: 16px;
+  padding: 8px;
+  border-radius: 5px;
 }
 
-/* Styling the placeholder text */
+
 .exporter-details input::placeholder,
 .fish-details input::placeholder {
-    color: #777; /* Placeholder color */
-    font-size: 16px;
-    opacity: 1; /* Ensures full visibility */
+  color: #777; 
+  font-size: 16px;
+  opacity: 1; 
 }
 
-/* Styling the date input field */
+
 .exporter-details input[type="date"] {
-    color: #444; /* Text color */
-    font-size: 16px;
+  color: #444; 
+  font-size: 16px;
 }
 
-/* To style the placeholder text inside date input fields */
+
 .exporter-details input[type="date"]::-webkit-datetime-edit {
-    color: #777; /* Placeholder color */
-    font-size: 16px;
+  color: #777; 
+  font-size: 16px;
 }
 
 .table-style {
-    width: 80%;
-    margin-left: auto;
-    margin-right: auto;
-    padding: 20px;
-  }
-  
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    background-color: white;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  thead {
-    background-color: #1b263b; /* Dark Blue Header */
-    color: white;
-    text-align: left;
-  }
-  
-  th, td {
-    padding: 12px 16px;
-    text-align: center;
-    border-bottom: 1px solid #ddd;
-  }
-  
-  tbody tr:nth-child(even) {
-    background-color: #f8f9fa; /* Light Grey Zebra Stripes */
-  }
-  
-  tbody tr:hover {
-    background-color: #e9ecef; /* Hover Effect */
-  }
-  
-  .btndelete {
-    background-color: #d9534f; /* Red Delete Button */
-    color: white;
-    border: none;
-    padding: 6px 12px;
-    cursor: pointer;
-    border-radius: 5px;
-    transition: 0.3s;
-  }
-  
-  .btndelete:hover {
-    background-color: #c9302c;
-  }
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 20px;
+}
 
-  .btn-update{
-    background-color: #d9534f; /* Red Delete Button */
-    width:150px;
-    color: white;
-    border: none;
-    padding: 10px 12px;
-    cursor: pointer;
-    border-radius: 5px;
-    transition: 0.3s;
-  }
-  
-  
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+thead {
+  background-color: #1b263b; 
+  color: white;
+  text-align: left;
+}
+
+th, td {
+  padding: 12px 16px;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #f8f9fa; 
+}
+
+tbody tr:hover {
+  background-color: #e9ecef; 
+}
+
+.btndelete {
+  background-color: #d9534f; 
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: 0.3s;
+}
+
+.btndelete:hover {
+  background-color: #c9302c;
+}
+
+.btn-update{
+  background-color: #d9534f; 
+  width:150px;
+  color: white;
+  border: none;
+  padding: 10px 12px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: 0.3s;
+}
+ 
+
+.valid-text {
+  color: green;
+  margin-left: 3px;
+}
+
+.error-text {
+  color: red;
+  margin-left: 3px;
+}
+

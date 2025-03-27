@@ -147,7 +147,7 @@ const ViewOrder = () => {
           </div>
         </div>
 
-        {/* Table */}
+       
         <table className="admin-order-table">
           <thead>
             <tr>
@@ -156,8 +156,8 @@ const ViewOrder = () => {
               <th>Shipping address</th>
               <th>Shipping date</th>
               <th>Order type</th>
+              <th>Contact No</th>
               <th>Order status</th>
-              <th>View description</th>
               <th> </th>
             </tr>
           </thead>
