@@ -11,6 +11,8 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 
+// View User Profile
+
 const ViewUserProfile = () => {
 
     const {token} = useContext(AppContext)
@@ -60,31 +62,44 @@ const ViewUserProfile = () => {
         fetchUserProfileData()
       },[])
 
+//update user details
 
-      const updateUser = async()=>{
-     
-        try{
+      const updateUser = async() => {
+        // Email validation 
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     
-          const response = await axios.put(`http://localhost:4000/api/auth/update-user/${id}`,
-            {name, businessName, businessRegNo, address, email, phone});
+        // Phone number validation
+        const phoneRegex = /^[0-9]{10}$/;
     
-          if(response.data.success)
-          {
-            console.log('upated successfully')
-            fetchUserProfileData()
-            setModalShow(false)
-          }
-          else
-          {
-            console.log('Error')
-          }
-    
-        }catch(err)
-        {
-          console.log(err);
+        // Validate email
+        if (!emailRegex.test(email)) {
+            alert("Please enter a valid email address.");
+            return; // Stop further execution if email is invalid
         }
-      }
-
+    
+        // Validate phone number
+        if (!phoneRegex.test(phone)) {
+            alert("Please enter a valid phone number (10 digits).");
+            return; // Stop further execution if phone number is invalid
+        }
+    
+        try {
+            const response = await axios.put(`http://localhost:4000/api/auth/update-user/${id}`,
+                {name, businessName, businessRegNo, address, email, phone});
+    
+            if (response.data.success) {
+                console.log('Updated successfully');
+                fetchUserProfileData();
+                setModalShow(false);
+            } else {
+                console.log('Error');
+            }
+    
+        } catch (err) {
+            console.log(err);
+        }
+    }
+    
 
   return (
     <div>
@@ -117,6 +132,7 @@ const ViewUserProfile = () => {
 
    </div>
    </div>
+
 
 
    <Modal show={modalShow} onHide={()=>{setModalShow(false)}} centered>

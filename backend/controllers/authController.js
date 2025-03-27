@@ -108,7 +108,7 @@ const createToken = (id) =>{
 }
 
 
-//send password reset otp
+//send otp to reset password
 
 const sendResetOtp = async(req,res)=>{
    const{email} = req.body;
