@@ -6,6 +6,7 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button';
+import { toast } from 'react-toastify';
 import axios from 'axios';
 
 const UpdateDelivery = () => {
@@ -30,6 +31,11 @@ const UpdateDelivery = () => {
       const[ orderType, setorderType] = useState('');
       const[ contact, setcontact] = useState('');
       const[PackagingArray,setPackagingArray] = useState([]);
+
+      //for validation
+      
+          const[shipmentDate, setShipmentDate] = useState('');
+          const[errMessage , setErrMessage] = useState('')
 
        const[ fishCategory, setfishCategory] = useState([]);
 
@@ -89,10 +95,33 @@ const UpdateDelivery = () => {
           console.log(PackagingArray);
         }
 
+
+        const fetchaOrder = async()=>{
+          console.log('function executes')
+          try{
+              
+            const response = await axios.post('http://localhost:4000/api/order/get-order-by-ordercode',{orderCode});
+            if(response.data.success)
+            {
+              console.log(response.data.order.shippingDate)
+              setShipmentDate(response.data.order.shippingDate)
+            }
+           
+          }catch(err){
+            console.log(err)
+          }
+        }
+
+
   useEffect(()=>{
     fetchaDelivery();
     fetchAllFishCategory();
   },[])
+
+
+  useEffect(()=>{
+    fetchaOrder()
+  },[orderCode])
 
 
    useEffect(() => {
@@ -114,6 +143,7 @@ const UpdateDelivery = () => {
           if(response.data.success)
           {
             console.log("updated successfully")
+            toast.success('successfully updated')
             navigate('/admin/view-deliveries')
           }
 
@@ -122,6 +152,27 @@ const UpdateDelivery = () => {
           console.log(err)
         }
       }
+
+      //date validation
+
+      const handleDateChange = (e) => {
+        const selectedDate = new Date(e.target.value);
+
+        const minDate = new Date(shipmentDate);
+        minDate.setDate(minDate.getDate() - 6);
+    
+        if (selectedDate < minDate || selectedDate > new Date(shipmentDate)) {
+            setErrMessage(`Delivery date must be between ${minDate.toISOString().split('T')[0]} and ${shipmentDate}`);
+           
+            setdeliveryDate(''); 
+        } else {
+            
+            setErrMessage('');
+          
+            setdeliveryDate(e.target.value);
+        }
+    };
+
   return (
     <div className="admin-update-container">
     <div className="left-column">
@@ -131,9 +182,11 @@ const UpdateDelivery = () => {
       <Form>
           <Row>
           <Col>
+          <label>Order ID</label><br/>
               <Form.Control placeholder='Order code' value={orderCode} readOnly />
             </Col>
             <Col>
+            <label>Address</label><br/>
               <Form.Control placeholder='Shipping address' value={shippingAddress} readOnly/>
             </Col>
             
@@ -142,19 +195,28 @@ const UpdateDelivery = () => {
           </Row>
           <Row>
           <Col>
+          <label>Contact No</label><br/>
               <Form.Control placeholder="Contact number" value={contact}  readOnly/>
             </Col>
           
           <Col>
+          <label>Order Type</label><br/>
               <Form.Control placeholder="Order Type" value={orderType}  readOnly/>
             </Col> 
              <Col>
-              <Form.Control placeholder='Delivery date' value={deliveryDate} type='date' onChange={(e)=>{setdeliveryDate(e.target.value)}} />
+             <label>Shipment Date</label><br/>
+              <Form.Control placeholder='Delivery date' value={deliveryDate} type='date' onChange={handleDateChange} />
+              {errMessage ? (
+                   <p style={{ color: 'red', fontSize: '14px', marginTop: '5px' }}>{errMessage}</p>
+               ) : (
+              <p style={{ color: 'green', fontSize: '14px', marginTop: '5px' }}></p>
+               )}
             </Col>
           </Row>
           <Row>
               <Col>
-              <Form.Select placeholder="Fish variety"  onChange={(e)=>{setvariety(e.target.value)}}>
+              <label>Fish Variety</label><br/>
+              <Form.Select placeholder="Fish variety"  onChange={(e)=>{setvariety(e.target.value)}}required>
               <option>Select fish category</option>
               {fishCategory.map((fish,index)=>{
                 return(
@@ -165,6 +227,7 @@ const UpdateDelivery = () => {
               
             </Col>
           <Col>
+          <label>Quantity</label><br/>
               <Form.Control placeholder="Quantity"  type='number'  onChange={(e)=>{setQuantity(parseFloat(e.target.value))}}/>
             </Col>
     

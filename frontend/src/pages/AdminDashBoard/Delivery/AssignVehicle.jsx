@@ -143,6 +143,7 @@ const update = async()=>{
         if(response.data.success)
         {
             console.log('updated successfully')
+            toast.success('Vehicle details changed successfully')
             getAllDetails()
             setModalShow(false);
 
@@ -162,6 +163,7 @@ const Delete = async()=>{
         if(response.data.success)
         {
             console.log('successfully deleted')
+            toast.success('Record removed successfully')
             getAllDetails()
           
 
@@ -193,7 +195,7 @@ const Delete = async()=>{
 
         <Col>
           <label>Vehicle No</label><br/>
-          <Form.Select placeholder="vehicle No"  onChange={(e)=>{setvehicle(e.target.value)}}>
+          <Form.Select placeholder="vehicle No"  onChange={(e)=>{setvehicle(e.target.value)}}required>
               <option>Assign a vehicle</option>
               <option value="CXX-2316" >CXX-2316</option>
               <option value="DBR-2456" >DBR-2456</option>

@@ -6,6 +6,7 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import Button from 'react-bootstrap/Button';
 
 const CreateDelivery = () => {
@@ -14,9 +15,9 @@ const CreateDelivery = () => {
     const{id} = useParams();
 
     const predefinedPackageSizes = {
-        "Betta": 5,
+        "Betta": 2,
         "Neon tetra": 4,
-        "Cod": 3,
+        "Guppi": 8,
         "Trout": 2,
         "Mackerel": 6
     };
@@ -28,6 +29,12 @@ const CreateDelivery = () => {
     const[ deliveryDate, setdeliveryDate] = useState('');
     const[ orderType, setorderType] = useState('');
     const[ contact, setcontact] = useState('');
+
+
+    //for validation
+
+    const[shipmentDate, setShipmentDate] = useState('');
+    const[errMessage , setErrMessage] = useState('')
 
     const[PackagingArray,setPackagingArray] = useState([]);
     
@@ -56,7 +63,8 @@ const CreateDelivery = () => {
             setOrderCode(order.orderCode)
             setshippingAddress(order.shippingAddress)
             setorderType(order.orderType)
-            setcontact(order.contact)     
+            setcontact(order.contact) 
+            setShipmentDate(order.shippingDate)    
           }
     
         }catch(err)
@@ -116,6 +124,7 @@ const CreateDelivery = () => {
           if(response.data.success)
           {
             console.log("record created successfully")
+            toast.success('Record added successfully')
           }
           else
           {
@@ -129,6 +138,24 @@ const CreateDelivery = () => {
       }
     
 
+      const handleDateChange = (e) => {
+        const selectedDate = new Date(e.target.value);
+
+        const minDate = new Date(shipmentDate);
+        minDate.setDate(minDate.getDate() - 6);
+    
+        if (selectedDate < minDate || selectedDate > new Date(shipmentDate)) {
+            setErrMessage(`Delivery date must be between ${minDate.toISOString().split('T')[0]} and ${shipmentDate}`);
+           
+            setdeliveryDate(''); 
+        } else {
+            
+            setErrMessage('');
+          
+            setdeliveryDate(e.target.value);
+        }
+    };
+
   return (
     <div className="create-delivery-container">
     <div className="left-column">
@@ -139,9 +166,11 @@ const CreateDelivery = () => {
     <Form>
       <Row>
       <Col>
+      <label>Order ID</label><br/>
           <Form.Control placeholder='Order code' value={orderCode} readOnly />
         </Col>
         <Col>
+        <label>Address</label><br/>
           <Form.Control placeholder='Shipping address' value={shippingAddress} readOnly/>
         </Col>
         
@@ -150,19 +179,29 @@ const CreateDelivery = () => {
       </Row>
       <Row>
       <Col>
+      <label>Contact No</label><br/>
           <Form.Control placeholder="Contact number" value={contact}  readOnly/>
         </Col>
       
       <Col>
+      <label>Order Type</label><br/>
           <Form.Control placeholder="Order Type" value={orderType}  readOnly/>
         </Col> 
          <Col>
-          <Form.Control placeholder='Delivery date' type='date' onChange={(e)=>{setdeliveryDate(e.target.value)}} />
+         <label>Shipment Date</label><br/>
+          <Form.Control placeholder='Delivery date' type='date' onChange={handleDateChange} />
+          {errMessage ? (
+    <p style={{ color: 'red', fontSize: '14px', marginTop: '5px' }}>{errMessage}</p>
+     ) : (
+    <p style={{ color: 'green', fontSize: '14px', marginTop: '5px' }}></p>
+    )}
         </Col>
+       
       </Row>
       <Row>
           <Col>
-          <Form.Select placeholder="Fish variety"  onChange={(e)=>{setvariety(e.target.value)}}>
+          <label>Fish Variety</label><br/>
+          <Form.Select placeholder="Fish variety"  onChange={(e)=>{setvariety(e.target.value)}}required>
           <option>Select fish category</option>
           {fishCategory.map((fish,index)=>{
             return(
@@ -173,6 +212,7 @@ const CreateDelivery = () => {
           
         </Col>
       <Col>
+      <label>Quantity</label><br/>
           <Form.Control placeholder="Quantity"  type='number' onChange={(e)=>{setQuantity(parseFloat(e.target.value))}}/>
         </Col>
       </Row>
