@@ -35,6 +35,7 @@ const UpdateDelivery = () => {
   const [quantity, setQuantity] = useState(0);
   const [qtyForPackage, setqtyForPackage] = useState(0);
   const [NoOfPackages, setNoOfPackages] = useState(0);
+    const [quantityError, setQuantityError] = useState('');
 
   const fetchaDelivery = async () => {
     try {
@@ -191,6 +192,7 @@ const UpdateDelivery = () => {
                 value={quantity}
                 onChange={handleQuantityChange}
               />
+                {quantityError && <p style={{ color: 'red', fontSize: '14px', marginTop: '5px' }}>{quantityError}</p>}
             </Col>
           </Row>
         </Form>
