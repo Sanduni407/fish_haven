@@ -30,6 +30,12 @@ const CreateDelivery = () => {
     const[ orderType, setorderType] = useState('');
     const[ contact, setcontact] = useState('');
 
+
+    //for validation
+
+    const[shipmentDate, setShipmentDate] = useState('');
+    const[errMessage , setErrMessage] = useState('')
+
     const[PackagingArray,setPackagingArray] = useState([]);
     
       const[variety,setvariety] = useState('');
@@ -57,7 +63,8 @@ const CreateDelivery = () => {
             setOrderCode(order.orderCode)
             setshippingAddress(order.shippingAddress)
             setorderType(order.orderType)
-            setcontact(order.contact)     
+            setcontact(order.contact) 
+            setShipmentDate(order.shippingDate)    
           }
     
         }catch(err)
@@ -131,6 +138,24 @@ const CreateDelivery = () => {
       }
     
 
+      const handleDateChange = (e) => {
+        const selectedDate = new Date(e.target.value);
+
+        const minDate = new Date(shipmentDate);
+        minDate.setDate(minDate.getDate() - 6);
+    
+        if (selectedDate < minDate || selectedDate > new Date(shipmentDate)) {
+            setErrMessage(`Delivery date must be between ${minDate.toISOString().split('T')[0]} and ${shipmentDate}`);
+           
+            setdeliveryDate(''); 
+        } else {
+            
+            setErrMessage('');
+          
+            setdeliveryDate(e.target.value);
+        }
+    };
+
   return (
     <div className="create-delivery-container">
     <div className="left-column">
@@ -164,8 +189,14 @@ const CreateDelivery = () => {
         </Col> 
          <Col>
          <label>Shipment Date</label><br/>
-          <Form.Control placeholder='Delivery date' type='date' onChange={(e)=>{setdeliveryDate(e.target.value)}} />
+          <Form.Control placeholder='Delivery date' type='date' onChange={handleDateChange} />
+          {errMessage ? (
+    <p style={{ color: 'red', fontSize: '14px', marginTop: '5px' }}>{errMessage}</p>
+     ) : (
+    <p style={{ color: 'green', fontSize: '14px', marginTop: '5px' }}></p>
+    )}
         </Col>
+       
       </Row>
       <Row>
           <Col>

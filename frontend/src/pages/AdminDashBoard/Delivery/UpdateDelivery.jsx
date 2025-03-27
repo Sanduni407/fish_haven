@@ -32,6 +32,11 @@ const UpdateDelivery = () => {
       const[ contact, setcontact] = useState('');
       const[PackagingArray,setPackagingArray] = useState([]);
 
+      //for validation
+      
+          const[shipmentDate, setShipmentDate] = useState('');
+          const[errMessage , setErrMessage] = useState('')
+
        const[ fishCategory, setfishCategory] = useState([]);
 
         const[variety,setvariety] = useState('');
@@ -90,10 +95,33 @@ const UpdateDelivery = () => {
           console.log(PackagingArray);
         }
 
+
+        const fetchaOrder = async()=>{
+          console.log('function executes')
+          try{
+              
+            const response = await axios.post('http://localhost:4000/api/order/get-order-by-ordercode',{orderCode});
+            if(response.data.success)
+            {
+              console.log(response.data.order.shippingDate)
+              setShipmentDate(response.data.order.shippingDate)
+            }
+           
+          }catch(err){
+            console.log(err)
+          }
+        }
+
+
   useEffect(()=>{
     fetchaDelivery();
     fetchAllFishCategory();
   },[])
+
+
+  useEffect(()=>{
+    fetchaOrder()
+  },[orderCode])
 
 
    useEffect(() => {
@@ -124,6 +152,27 @@ const UpdateDelivery = () => {
           console.log(err)
         }
       }
+
+      //date validation
+
+      const handleDateChange = (e) => {
+        const selectedDate = new Date(e.target.value);
+
+        const minDate = new Date(shipmentDate);
+        minDate.setDate(minDate.getDate() - 6);
+    
+        if (selectedDate < minDate || selectedDate > new Date(shipmentDate)) {
+            setErrMessage(`Delivery date must be between ${minDate.toISOString().split('T')[0]} and ${shipmentDate}`);
+           
+            setdeliveryDate(''); 
+        } else {
+            
+            setErrMessage('');
+          
+            setdeliveryDate(e.target.value);
+        }
+    };
+
   return (
     <div className="admin-update-container">
     <div className="left-column">
@@ -156,7 +205,12 @@ const UpdateDelivery = () => {
             </Col> 
              <Col>
              <label>Shipment Date</label><br/>
-              <Form.Control placeholder='Delivery date' value={deliveryDate} type='date' onChange={(e)=>{setdeliveryDate(e.target.value)}} />
+              <Form.Control placeholder='Delivery date' value={deliveryDate} type='date' onChange={handleDateChange} />
+              {errMessage ? (
+                   <p style={{ color: 'red', fontSize: '14px', marginTop: '5px' }}>{errMessage}</p>
+               ) : (
+              <p style={{ color: 'green', fontSize: '14px', marginTop: '5px' }}></p>
+               )}
             </Col>
           </Row>
           <Row>
