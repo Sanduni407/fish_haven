@@ -7,6 +7,9 @@ import Table from "react-bootstrap/Table";
 import SideNavBar from '../../../components/SideNavBar/SideNavBar';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import Form from 'react-bootstrap/Form';
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
 
 const ViewDelivery = () => {
 
@@ -18,11 +21,13 @@ const ViewDelivery = () => {
 
      const [modalShow, setModalShow] = useState(false);
 
+     const[search, setSearch] = useState("");
+
     const fetchAllDeliveries = async()=>{
 
         try{
     
-          const response = await axios.get('http://localhost:4000/api/delivery/get-deliveries');
+          const response = await axios.get(`http://localhost:4000/api/delivery/get-deliveries?searchText=${search}`);
     
           if(response.data.success)
           {
@@ -57,6 +62,9 @@ const ViewDelivery = () => {
         fetchAllDeliveries()
       },[])
 
+      useEffect(()=>{
+        fetchAllDeliveries()
+      },[search])
 
       const deleteDelivery = async(id)=>{
         try{
@@ -76,6 +84,99 @@ const ViewDelivery = () => {
         }
       }
 
+
+
+      const downloadOrderPDF = async (id) => {
+        try {
+          const response = await axios.get(`http://localhost:4000/api/delivery/fetch-a-delivery/${id}`);
+      
+          if (response.data.success) {
+            const delivery = response.data.deliveryRecord;
+            const doc = new jsPDF();
+      
+            const pageWidth = doc.internal.pageSize.getWidth();
+            const margin = 10;
+      
+            // Draw a border around the page
+            doc.setDrawColor(0);
+            doc.setLineWidth(0.5);
+            doc.rect(margin, margin, pageWidth - margin * 2, 270);
+      
+            // "Fish Haven" - top-left with larger font
+            doc.setFontSize(14);
+            doc.setFont("helvetica", "bold");
+            doc.text("Fish Haven", margin + 2, 18);
+      
+            // Date & Time just below "Fish Haven"
+            const generatedAt = new Date().toLocaleString();
+            doc.setFontSize(10);
+            doc.setFont("helvetica", "normal");
+            doc.text(`Generated on: ${generatedAt}`, margin + 2, 25);
+      
+            // Title - "Order Report" centered a bit lower
+            doc.setFontSize(18);
+            doc.setFont("helvetica", "bold");
+            doc.text("Delivery Report", pageWidth / 2, 40, { align: "center" });
+      
+            // Order Details with spacing
+            doc.setFontSize(12);
+            doc.setFont("helvetica", "normal");
+      
+            let yPosition = 55;
+            doc.text(`Delivery Code: ${delivery.delCode}`, margin + 2, yPosition);
+      
+            yPosition += 8;
+            doc.text(`Order Code: ${delivery.orderCode}`, margin + 2, yPosition);
+      
+            yPosition += 8;
+            doc.text(`Shipping Address: ${delivery.shippingAddress}`, margin + 2, yPosition);
+      
+            yPosition += 8;
+            doc.text(`Shippment Date: ${delivery.deliveryDate}`, margin + 2, yPosition);
+      
+            yPosition += 8;
+            doc.text(`Contact No: ${delivery.contact}`, margin + 2, yPosition);
+      
+            yPosition += 8;
+            doc.text(`Packaging Type: ${delivery.orderType}`, margin + 2, yPosition);
+      
+            // Table Data
+            const items = delivery.PackagingArray.map(item => [
+              item.variety,
+              item.quantity,
+              item.qtyForPackage,
+              item.NoOfPackages
+            ]);
+      
+            // Table with padding from borders
+            autoTable(doc, {
+              head: [['Variety', 'Quantity', 'Qty per Package', 'No of packages']],
+              body: items,
+              startY: yPosition + 15, // Start table below the last text
+              theme: 'grid',
+              headStyles: {
+                fillColor: [15, 30, 80],
+                textColor: 255,
+                fontSize: 11,
+                fontStyle: 'bold'
+              },
+              bodyStyles: {
+                fontSize: 10
+              },
+              styles: {
+                halign: 'center'
+              },
+              margin: { left: margin + 5, right: margin + 5 }
+            });
+      
+            const fileName = `Delivery_Report_${delivery.delCode}.pdf`;
+            doc.save(fileName);
+          }
+        } catch (err) {
+          console.error("Error downloading PDF:", err);
+        }
+      };
+      
       
   return (
 
@@ -85,6 +186,8 @@ const ViewDelivery = () => {
   <div className="right-column">
 
      <div>
+
+     <Form.Control placeholder='Search here' type='search' onChange={(e)=>{setSearch(e.target.value)}}/>
 
 <table className="admin-order-table" >
           <thead>
@@ -119,7 +222,10 @@ const ViewDelivery = () => {
               <td><Button variant="primary" onClick={()=>{fetchaDelivery(delivery._id); setModalShow(true);}}>View</Button></td>
               
               <td>
-                <button className="admin-order-view-btn"  onClick={()=>{  navigate(`/admin/assign-vehicle/${delivery._id}`)}}>Assign</button>
+                <button className="admin-order-view-btn"  onClick={()=>{navigate(`/admin/assign-vehicle/${delivery._id}`)}}>Assign</button>
+              </td>
+              <td>
+                <button className="admin-order-view-btn"  onClick={()=>{downloadOrderPDF(delivery._id)}}>Generate</button>
               </td>
             </tr>
               )

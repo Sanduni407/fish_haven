@@ -1,6 +1,6 @@
 import AssignVehicleModel from "../models/asignVehicleModel.js";
 import DeliveryModel from "../models/deliverModel.js";
-
+import ExportOrderModel from "../models/exporterOrderModel.js"
 
 
 const assignVehicle = async(req , res)=>{
@@ -25,7 +25,13 @@ const assignVehicle = async(req , res)=>{
 const getAllVehicle = async(req , res)=>{
     try{
 
-         const assignVehicles = await AssignVehicleModel.find();
+        const{searchText} = req.query;
+
+        const filter = searchText ?{$or:[
+            {date:{$regex:searchText, $options:"i"}}
+           ]}:{};
+
+         const assignVehicles = await AssignVehicleModel.find(filter);
            
           res.status(201).json({ success: true , assignVehicles });
 
@@ -63,6 +69,26 @@ const updateAssignedVehicle = async(req,res)=>{
  
       const updatedDelivery = await AssignVehicleModel.findByIdAndUpdate(id, {status,time,vehicle}, { new: true });
  
+       
+      if(status === 'Out-for-delivery' || status === 'Delivered')
+        {
+          const delCode = updatedDelivery.delCode;
+          const delivery = await DeliveryModel.findOne({delCode:delCode});
+  
+          const updatedOrder =  await ExportOrderModel.findOne({orderCode:delivery.orderCode});
+          
+          if (updatedOrder) {
+              updatedOrder.status = status;
+              await updatedOrder.save();
+            } else {
+              console.warn('Export order not found for orderCode:', delivery.orderCode);
+            }
+        }
+
+
+
+
+
         res.json({success:true,message:'updated'})
  
     }catch(err){
