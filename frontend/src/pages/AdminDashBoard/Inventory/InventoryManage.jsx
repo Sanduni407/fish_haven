@@ -8,15 +8,19 @@ import { AppContext } from '../../../context/AppContext';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import SideNavBar from '../../../components/SideNavBar/SideNavBar';
+import {assets} from '../../../assets/assets'
 
 const InventoryManage = () => {
   const { token } = useContext(AppContext);
   const [modalShow, setModalShow] = useState(false);
+
+  const[image,setImage] =useState(false)
   const [fishCategory, setfishCategory] = useState('');
   const [gender, setgender] = useState('');
   const [size, setsize] = useState('');
   const [unitPrice, setunitPrice] = useState(0);
   const [quantity, setquantity] = useState(0);
+
   const [fish, setFish] = useState([]);
   const [id, setId] = useState('');
 
@@ -56,15 +60,31 @@ const InventoryManage = () => {
     }
 
     try {
-      const response = await axios.post(
-        'http://localhost:4000/api/fish/create-fish',
-        { fishCategory, gender, size, unitPrice, quantity },
-        { headers: { token } }
-      );
+
+      const formData = new FormData();
+
+      formData.append("fishCategory",fishCategory)
+      formData.append("gender",gender)
+      formData.append("size",size)
+      formData.append("unitPrice",unitPrice)
+      formData.append("quantity",quantity)
+      formData.append("image",image)
+
+
+      const response = await axios.post('http://localhost:4000/api/fish/create-fish',
+          formData
+         ,{headers:{token}})
 
       if (response.data.success) {
         toast.success(response.data.message);
         getFishById();
+
+          setfishCategory("")
+          setgender('')
+          setsize('')
+          setunitPrice(0)
+          setquantity(0)
+          setImage(false)
       }
     } catch (err) {
       console.log(err);
@@ -136,6 +156,12 @@ const InventoryManage = () => {
         toast.success('Fish updated successfully');
         getFishById();
         setModalShow(false);
+
+        setfishCategory("")
+          setgender('')
+          setsize('')
+          setunitPrice(0)
+          setquantity(0)
       }
     } catch (err) {
       console.log(err);
@@ -153,6 +179,16 @@ const InventoryManage = () => {
       </div>
       <div className="right-column">
         <Form style={{ marginTop: '30px' }}>
+
+        <Row>
+        <Form.Label htmlFor='image'>
+            <img src={image?URL.createObjectURL(image):assets.upload_area} alt="" />
+        </Form.Label>
+
+        <Form.Control onChange={(e)=>setImage(e.target.files[0])}   type='file' id='image' hidden required/>
+
+        </Row>
+
           <Row>
             <Col>
               <Form.Control
@@ -255,44 +291,61 @@ const InventoryManage = () => {
         </div>
       </div>
 
-      <Modal show={modalShow} onHide={() => setModalShow(false)} centered>
-        <Modal.Header closeButton>
-          <Modal.Title>Update Fish Details</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form style={{ marginTop: '30px' }}>
-            <Row>
-              <Col>
-                <Form.Control
-                  type="text"
-                  value={fishCategory}
-                  onChange={(e) => setfishCategory(e.target.value)}
-                  placeholder="Fish name (fish category, e.g., Fighter)"
-                />
-              </Col>
-              <Col>
-                <Form.Select value={gender} onChange={(e) => setgender(e.target.value)} placeholder="Gender">
-                  <option>Select gender</option>
-                  <option value="Male">Male</option>
-                  <option value="Female">Female</option>
-                  <option value="Missed">Missed</option>
-                </Form.Select>
-              </Col>
-              <Col>
-                {/* Other form elements */}
-              </Col>
-            </Row>
-          </Form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => setModalShow(false)}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={updateFish}>
-            Save Changes
-          </Button>
-        </Modal.Footer>
-      </Modal>
+
+
+      <Modal show={modalShow} onHide={()=>{setModalShow(false)}} centered>
+          <Modal.Header closeButton>
+            <Modal.Title>Update Fish Details</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+          <Form style={{marginTop:'30px'}}>
+
+        <Row>
+        <Col> 
+            <Form.Control type='text' value={fishCategory} onChange={(e)=>{setfishCategory(e.target.value)}} placeholder='fish name (fish category ex-: fighter'/>
+          </Col>
+  
+          <Col>
+            <Form.Select  value={gender} onChange={(e)=>{setgender(e.target.value)}} placeholder='gender'>
+            <option>Select gender</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Missed">Missed</option>
+              </Form.Select>
+            
+          </Col>
+          <Col>
+            <Form.Select  value={size} onChange={(e)=>{setsize(e.target.value)}} placeholder='fish size'>
+            <option>Select size</option>
+            <option value="small">small</option>
+            <option value="Medium">Medium</option>
+            <option value="Large">Large</option>
+              </Form.Select>
+            
+          </Col>
+         
+        </Row>
+        <Row> 
+          <Col>
+            <Form.Control value={unitPrice} onChange={(e)=>{setunitPrice(parseFloat(e.target.value))}} placeholder='Unit Price'/>
+          </Col>
+        <Col>
+            <Form.Control type='Number' value={quantity} onChange={(e)=>{setquantity(parseFloat(e.target.value))}} placeholder='Available Quantity'/>
+          </Col>   
+        </Row>
+      </Form>  
+          </Modal.Body>
+          <Modal.Footer>
+          <Button variant="secondary" style={{backgroundColor:'#16a085'}} onClick={updateFish}>
+              Update
+            </Button>
+            <Button variant="secondary" onClick={()=> setModalShow(false)}>
+              Close
+            </Button>
+          </Modal.Footer>
+        </Modal>
+
+
     </div>
   );
 };
