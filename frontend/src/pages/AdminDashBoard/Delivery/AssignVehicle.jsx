@@ -22,7 +22,7 @@ const AssignVehicle = () => {
     const [ delCode, setdelCode] = useState("");
     const [status , setStatus] = useState('')
 
-    const [ searchDate, setSearchDate] = useState("");
+    const [searchDate, setSearchDate] = useState("");
 
     const [selectedId, setselectedId] = useState('')
 
@@ -74,7 +74,7 @@ const AssignVehicle = () => {
 
         try{
 
-            const response = await axios.get(`http://localhost:4000/api/delivery/get-all-vehicle`);
+            const response = await axios.get(`http://localhost:4000/api/delivery/get-all-vehicle?searchText=${searchDate}`);
       
             if(response.data.success)
             {
@@ -93,24 +93,10 @@ const AssignVehicle = () => {
     },[])
 
 
-const filter = async()=>{
-
-    try{
-
-        const response = await axios.get(`http://localhost:4000/api/delivery/filter-vehicles/${searchDate}`);
-  
-        if(response.data.success)
-        {
-            setAssignedVehicles(response.data.availableVehicles)
-        }
-
-    }catch(err)
-    {
-        console.log(err)
-    }
-
-
-}
+    useEffect(()=>{
+     
+      getAllDetails()
+  },[searchDate])
 
 const fetchAssignedData= async(id)=>{
     try{
@@ -219,9 +205,6 @@ const Delete = async()=>{
 
       <center> <Form> <Row> <Col>
           <Form.Control placeholder='Search here'  onChange={(e)=>{setSearchDate(e.target.value)}} type='date' style={{width:'500px', marginTop:'30px',marginLeft:'200px'}}/>
-        </Col>
-        <Col>
-        <Button variant="primary"  style={{width:'200px', marginTop:'30px',marginRight:'300px'}} onClick={filter}>Search</Button>
         </Col>
         </Row></Form></center>
        
