@@ -29,6 +29,7 @@ app.use('/api/order',orderRouter)
 app.use("/api/delivery",deliveryRoute)
 
 app.use('/api/fish',fishRouter)
+app.use("/images",express.static('uploads'))
 
 app.use('/api/employee',employeeRouter)
 

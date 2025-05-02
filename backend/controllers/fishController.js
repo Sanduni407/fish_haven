@@ -1,11 +1,25 @@
 import fishModel from "../models/fishModel.js";
+import fs from 'fs'
 
 
-
+//add fish
 const addfish = async(req,res)=>{
     try{
 
-        const createFish = new fishModel(req.body);
+        let image_filename = `${req.file.filename}`;
+
+        const createFish = new fishModel({
+            userId: req.body.userId,
+            fishCategory: req.body.fishCategory,
+            gender: req.body.gender,
+            size: req.body.size,
+            unitPrice: req.body.unitPrice,
+            quantity: req.body.quantity,
+            image:image_filename
+        })
+
+
+        // const createFish = new fishModel(req.body);
 
         await createFish.save();
 
@@ -17,7 +31,6 @@ const addfish = async(req,res)=>{
         res.json({success:false,message:'Error'})
     }
 }
-
 
 const getfishById = async(req,res)=>{ // get fish by user id
 
@@ -59,6 +72,10 @@ const getUniqueFishNames = async (req, res) => {
     }
 };
 
+
+
+
+/*
 const updateFish = async(req,res)=>{
 
     const {id} = req.params; // extract unique fish id
@@ -81,6 +98,47 @@ const updateFish = async(req,res)=>{
   
 
 }
+*/
+
+
+const updateFish = async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const fish = await fishModel.findById(id);
+        if (!fish) return res.status(404).json({ success: false, message: 'Fish not found' });
+
+        let updatedData = {
+            fishCategory: req.body.fishCategory,
+            gender: req.body.gender,
+            size: req.body.size,
+            unitPrice: req.body.unitPrice,
+            quantity: req.body.quantity
+        };
+
+        // Check if new image uploaded
+        if (req.file) {
+            // Delete old image
+            const oldImagePath = `uploads/${fish.image}`;
+            if (fs.existsSync(oldImagePath)) {
+                fs.unlinkSync(oldImagePath);
+            }
+
+            // Set new image filename
+            updatedData.image = req.file.filename;
+        }
+
+        await fishModel.findByIdAndUpdate(id, updatedData, { new: true });
+
+        res.json({ success: true, message: 'Fish updated successfully' });
+
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ success: false, message: err.message });
+    }
+};
+
+
 
 
 const getfishByFishId = async(req,res)=>{ // get fish by user id
@@ -99,6 +157,9 @@ const getfishByFishId = async(req,res)=>{ // get fish by user id
     }
 }
 
+
+
+/*
 const deleteFish= async(req,res)=>{
     try
     {
@@ -110,6 +171,35 @@ const deleteFish= async(req,res)=>{
       }
  
           await fishModel.findByIdAndDelete(id);
+ 
+        res.json({success:true,message:'deleted'})
+ 
+    }catch(err){
+ 
+       console.log(err);
+       res.json({success:false,message:'Error'})
+    }
+ }
+    */
+
+
+ const deleteFish= async(req,res)=>{
+    try
+    {
+       const{id} = req.params;
+ 
+      if(!id)
+      {
+       return res.json({success:false , message:'required data is missing'})
+      }
+
+
+      const fish = await fishModel.findById(id)
+      
+      fs.unlink(`uploads/${fish.image}`,()=>{})
+
+
+      await fishModel.findByIdAndDelete(id);
  
         res.json({success:true,message:'deleted'})
  

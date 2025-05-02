@@ -9,16 +9,19 @@ import axios from 'axios';
 import { AppContext } from '../../../context/AppContext';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
+import {assets} from '../../../assets/assets';
 
 const AddFish = () => {
   const { token } = useContext(AppContext);
   const [modalShow, setModalShow] = useState(false);
 
+  const[image,setImage] = useState(false)
   const [fishCategory, setfishCategory] = useState('');
   const [gender, setgender] = useState('');
   const [size, setsize] = useState('');
   const [unitPrice, setunitPrice] = useState(0);
   const [quantity, setquantity] = useState(0);
+
   const [fish, setFish] = useState([]);
   const [id, setId] = useState('');
 
@@ -50,15 +53,31 @@ const AddFish = () => {
     if (!validateForm()) return;
 
     try {
-      const response = await axios.post(
-        'http://localhost:4000/api/fish/create-fish',
-        { fishCategory, gender, size, unitPrice, quantity },
-        { headers: { token } }
-      );
+
+      const formData = new FormData();
+
+      formData.append("fishCategory",fishCategory)
+      formData.append("gender",gender)
+      formData.append("size",size)
+      formData.append("unitPrice",unitPrice)
+      formData.append("quantity",quantity)
+      formData.append("image",image)
+
+
+      const response = await axios.post('http://localhost:4000/api/fish/create-fish',
+          formData
+         ,{headers:{token}})
 
       if (response.data.success) {
         toast.success(response.data.message);
         getFishById();
+
+          setfishCategory("")
+          setgender('')
+          setsize('')
+          setunitPrice(0)
+          setquantity(0)
+          setImage(false)
       }
     } catch (err) {
       console.log(err);
@@ -111,7 +130,7 @@ const AddFish = () => {
   };
 
   const updateFish = async () => {
-    // Validate before updating
+    
     if (!validateForm()) return;
 
     try {
@@ -144,6 +163,17 @@ const AddFish = () => {
       </div>
       <div className="right-column">
         <Form style={{ marginTop: '30px' }}>
+
+          
+        <Row>
+        <Form.Label htmlFor='image'>
+            <img src={image?URL.createObjectURL(image):assets.upload_area} alt="" />
+        </Form.Label>
+
+        <Form.Control onChange={(e)=>setImage(e.target.files[0])}   type='file' id='image' hidden required/>
+
+        </Row>
+        
           <Row>
             <Col>
               <Form.Control
