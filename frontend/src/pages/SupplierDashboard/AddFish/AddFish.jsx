@@ -111,7 +111,7 @@ const AddFish = () => {
   };
 
   const updateFish = async () => {
-    // Validate before updating
+    
     if (!validateForm()) return;
 
     try {
