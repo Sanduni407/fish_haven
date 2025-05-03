@@ -1,0 +1,92 @@
+.post-review-container {
+    display: flex;
+    background-color: #f4f6f8;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .post-review-container .left-column {
+    width: 250px;
+    padding: 20px;
+    background-color: #2f3e46;
+    color: white;
+  }
+  
+  .post-review-container .right-column {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 50px 40px;
+    overflow-y: auto;
+    
+  }
+  
+  .review-content-wrapper {
+    width: 60vw;
+    display: flex;
+    flex-direction: column;
+   
+  
+  }
+  
+  .review-card {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    padding: 10px;
+    margin-bottom: 30px;
+    margin-top: 50px;
+    width:70vw;
+  }
+  
+  .review-card .card-title {
+    font-size: 22px;
+    font-weight: 600;
+    color: #49557e;
+  }
+  
+  .review-card textarea {
+    resize: none;
+    font-size: 16px;
+  }
+  
+  .post-button {
+    background-color: #49557e;
+    color: white;
+    border: none;
+    width: 120px;
+    transition: background-color 0.3s;
+  }
+  
+  .post-button:hover {
+    background-color: #37406a;
+  }
+  
+  .previous-reviews h5 {
+    color: #49557e;
+    margin-bottom: 20px;
+    font-weight: 600;
+  }
+  
+  .review-item {
+    background-color: #fafafa;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    padding: 8px;
+  }
+  
+  .review-item .card-text {
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+  
+  .review-item small {
+    color: #888;
+  }
+  
+  .no-reviews-text {
+    color: #999;
+    font-style: italic;
+  }
