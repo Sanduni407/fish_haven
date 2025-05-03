@@ -6,6 +6,7 @@ import Modal from 'react-bootstrap/Modal';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Row';
 
+
 const ViewEmpSalary = () => {
 
     const[employee, setEmployee] = useState([]);
@@ -19,10 +20,13 @@ const ViewEmpSalary = () => {
     const[selectedId, setSelectedId] = useState('')
 
 
+    const[search, setSearch] = useState('')
+
+
     const fetchAllData = async()=>{
 
         try{
-            const response = await axios.get(`http://localhost:4000/api/employee/get-all-salary`)
+            const response = await axios.get(`http://localhost:4000/api/employee/get-all-salary?searchText=${search}`)
  
             if(response.data.success)
             {
@@ -60,6 +64,10 @@ const ViewEmpSalary = () => {
     useEffect(()=>{
         fetchAllData()
     },[])
+
+    useEffect(()=>{
+      fetchAllData()
+  },[search])
 
     useEffect(()=>{
         if(selectedId)
@@ -126,6 +134,9 @@ const ViewEmpSalary = () => {
 
   <div className="right-column">
 
+  <div style={{display:'flex', justifyContent:'center'}}>
+  <Form.Control placeholder='Search here..' onChange={(e)=>{setSearch(e.target.value)}} style={{width:'500px'}}  />
+  </div>
   <table className="admin-order-table" style={{marginLeft:'300px', width:'1100px'}} >
           <thead>
             <tr>
