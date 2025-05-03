@@ -71,9 +71,17 @@ const getAllOrdersById = async(req,res)=>{
  const getAllOrders = async(req,res)=>{
     try
     {
+
+
+        const{searchText} = req.query;
+
+        const filter = searchText ?{$or:[
+         {status:{$regex:searchText, $options:"i"}},
+         {shippingDate:{$regex:searchText, $options:"i"}}
+        ]}:{};
        
  
-       const orders = await ExportOrderModel.find();
+       const orders = await ExportOrderModel.find(filter);
  
        if(!orders)
        {
@@ -220,4 +228,28 @@ const getOrderByOrderCode = async(req,res)=>{
 }
 
 
-export{CreateAOrder, getAllOrdersById,getAllOrders,getOrderByOrderId, updateOrderstatus,deleteOrder,updateOrder,getOrderByOrderCode}
+const fetchOrderSummary = async(req,res)=>{
+   try{
+
+      const orders = await ExportOrderModel.find();
+
+      let pending = 0, confirmed = 0, rejected = 0;
+
+      orders.forEach(order => {
+         const status = order.status.toLowerCase();
+         if (status === 'pending') pending++;
+         else if (status === 'confirmed') confirmed++;
+         else if (status === 'rejected') rejected++;
+       });
+
+       res.json({ success: true, pending, confirmed, rejected });
+
+   }catch(err)
+   {
+      console.log(err);
+      res.json({success:false,message:err.message})
+   }
+}
+
+
+export{CreateAOrder, getAllOrdersById,getAllOrders,getOrderByOrderId, updateOrderstatus,deleteOrder,updateOrder,getOrderByOrderCode,fetchOrderSummary}
