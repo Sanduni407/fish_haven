@@ -66,7 +66,14 @@ const getAllSalaryDetails = async(req,res) =>{
     try
     {
 
-        const employees = await employeeSalaryModel.find();
+      const{searchText} = req.query;
+
+        const filter = searchText ?{$or:[
+         {name:{$regex:searchText, $options:"i"}}
+        ]}:{};
+
+
+        const employees = await employeeSalaryModel.find(filter);
         res.json({ success: true,  employees});
 
     }
