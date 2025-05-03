@@ -50,8 +50,15 @@ const getAllOrdersById = async(req,res)=>{
     try
     {
        const id = req.body.userId;
+
+       const{searchText} = req.query;
+
+       const filter = searchText ?{$or:[
+         {status:{$regex:searchText, $options:"i"}},
+         {shippingDate:{$regex:searchText, $options:"i"}}
+        ]}:{};
  
-       const orders = await ExportOrderModel.find({userId:id});
+       const orders = await ExportOrderModel.find({userId:id, ...filter});
  
        if(!orders)
        {
