@@ -138,7 +138,17 @@ const ViewDelivery = () => {
             doc.text(`Contact No: ${delivery.contact}`, margin + 2, yPosition);
       
             yPosition += 8;
-            doc.text(`Packaging Type: ${delivery.orderType}`, margin + 2, yPosition);
+            // Split text to apply red color on value part
+            const label = "Packaging Type: ";
+            const value = delivery.orderType == "Exporter Type" ? "Exporter Type - Supply Oxygen" : "Normal Type - Normal Packaging";
+      
+            doc.setTextColor(0, 0, 0); // Black
+            doc.text(label, margin + 2, yPosition);
+      
+            const labelWidth = doc.getTextWidth(label);
+            doc.setTextColor(255, 0, 0); // Red
+            doc.text(value, margin + 2 + labelWidth, yPosition);
+            doc.setTextColor(0, 0, 0); // Reset to black for next items
       
             // Table Data
             const items = delivery.PackagingArray.map(item => [
@@ -152,7 +162,7 @@ const ViewDelivery = () => {
             autoTable(doc, {
               head: [['Variety', 'Quantity', 'Qty per Package', 'No of packages']],
               body: items,
-              startY: yPosition + 15, // Start table below the last text
+              startY: yPosition + 15,
               theme: 'grid',
               headStyles: {
                 fillColor: [15, 30, 80],

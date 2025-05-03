@@ -16,8 +16,8 @@ const CreateDelivery = () => {
     "Betta": 2,
     "Neon tetra": 4,
     "Guppi": 8,
-    "Trout": 2,
-    "Mackerel": 6,
+    "Koi": 6,
+    "Gold fish": 6,
   };
 
   const [userId, setUserId] = useState('');
@@ -166,7 +166,7 @@ const CreateDelivery = () => {
             </Col>
             <Col>
               <label>Quantity</label><br />
-              <Form.Control placeholder="Quantity" type="number" value={quantity} onChange={handleQuantityChange} />
+              <Form.Control placeholder="Quantity" type="number" value={quantity} onChange={handleQuantityChange} required/>
               {quantityError && <p style={{ color: 'red', fontSize: '14px', marginTop: '5px' }}>{quantityError}</p>}
             </Col>
           </Row>
