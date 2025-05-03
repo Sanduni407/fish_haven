@@ -2,6 +2,7 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import userModel from '../models/userModel.js';
 import transporter from '../config/nodemailer.js';
+import employeeSalaryModel from '../models/salaryModel.js';
 
 
 //create a user account
@@ -33,6 +34,13 @@ const registerUser = async (req, res)=>{
         const user = new userModel({name,businessName,businessRegNo,address,email,phone,role,password:hashedPassword});
 
         const newUser = await user.save();
+
+        if (role === "Employer") {
+            await employeeSalaryModel.create({
+              empId: newUser._id,
+              name: newUser.name
+            });
+          }
 
         // send the email which contains the login credentials
         const mailOptions = {
