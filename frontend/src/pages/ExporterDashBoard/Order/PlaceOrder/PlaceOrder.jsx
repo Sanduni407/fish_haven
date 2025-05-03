@@ -63,7 +63,7 @@ const PlaceOrder = () => {
 
                if(!variety || !size || !quantity || !gender)
                   {
-                      toast.error("Please correct the invalid fields before placing an order.");
+                      toast.error("Please correct invalid fields");
                       return;
                  }
                      setCartItems(prevstate => [...prevstate, newItem]);
@@ -146,7 +146,7 @@ const PlaceOrder = () => {
    const placeOrder = async () => {
 
       if (!contactValid || !addressValid  || !dateValid || !orderTypeValid) {
-         toast.error("Please correct the invalid fields before placing an order.");
+         toast.error("Please correct invalid fields");
          return;
       }
 
@@ -192,23 +192,23 @@ const PlaceOrder = () => {
                   <Col>
 
                      <Form.Label>Shipping address</Form.Label>
-                     <Form.Control type='text' placeholder='enter your shipping address' onChange={handleAddressChange} value={shippingAddress} />
-                     {addressValid === false && <p className='error-text'>❌ Invalid Address</p>}
-                     {addressValid === true && <p className='valid-text'>✅</p>}
+                     <Form.Control type='text'  onChange={handleAddressChange} value={shippingAddress} />
+                     {addressValid === false && <p className='error-text'>Invalid Address</p>}
+                    
                   </Col>
 
                   <Col>
                      <Form.Label>Expected Shipment Date</Form.Label>
                      <Form.Control type='date' onChange={handleDateChange} value={shippingDate}/>
-                     {dateValid === false && <p className='error-text'>❌ Select a future date</p>}
-                     {dateValid === true && <p className='valid-text'>✅</p>}
+                     {dateValid === false && <p className='error-text'>Select a future date</p>}
+                   
                   </Col>
 
                   <Col>
                      <Form.Label>Contact Number</Form.Label>
-                     <Form.Control type='text' placeholder='enter your contact number' onChange={handleContactChange}  value={contact}/>
-                     {contactValid === false && <p className='error-text'>❌ Invalid Contact</p>}
-                     {contactValid === true && <p className='valid-text'>✅</p>}
+                     <Form.Control type='text'  onChange={handleContactChange}  value={contact}/>
+                     {contactValid === false && <p className='error-text'>Invalid Contact</p>}
+                    
                   </Col>
 
                   <Col>
@@ -218,8 +218,8 @@ const PlaceOrder = () => {
                         <option value="Normal Type">Normal Type</option>
                         <option value="Exporter Type">Exporter Type</option>
                      </Form.Select>
-                     {orderTypeValid === false && <p className='error-text'>❌ Please select a valid order type</p>}
-                     {orderTypeValid === true && <p className='valid-text'>✅</p>}
+                     {orderTypeValid === false && <p className='error-text'>Please select a valid order type</p>}
+                    
                      
                   </Col>
                </Row>
@@ -235,8 +235,8 @@ const PlaceOrder = () => {
                            <option value={fish} key={index}>{fish}</option>
                         ))}
                      </Form.Select>
-                     {fishVarietyValid === false && <p className='error-text'>❌ Please select a fish variety</p>}
-                     {fishVarietyValid === true && <p className='valid-text'>✅</p>}
+                     {fishVarietyValid === false && <p className='error-text'>Please select a fish variety</p>}
+                    
                   </Col>
 
                   <Col>
@@ -247,8 +247,8 @@ const PlaceOrder = () => {
                         <option value="Small">Small</option>
                         <option value="Large">Large</option>
                      </Form.Select>
-                     {sizeValid === false && size === '' && <p className='error-text'>❌ Please select a size</p>}
-                     {sizeValid === true && <p className='valid-text'>✅</p>}
+                     {sizeValid === false && size === '' && <p className='error-text'>Please select a size</p>}
+                    
                   </Col>
 
                   <Col>
@@ -259,15 +259,15 @@ const PlaceOrder = () => {
                         <option value="Male">Male</option>
                         <option value="Mixed">Mixed</option>
                      </Form.Select>
-                     {genderValid === false && <p className='error-text'>❌ Please select a gender</p>}
-                     {genderValid === true && <p className='valid-text'>✅</p>}
+                     {genderValid === false && <p className='error-text'>Please select a gender</p>}
+                    
                   </Col>
 
                   <Col>
                      <Form.Label>Quantity</Form.Label>
-                     <Form.Control type='number' placeholder='enter quantity' onChange={handleQuantityChange} value={quantity} />
-                     {quantityValid === false && <p className='error-text'>❌ Must be greater than 0</p>}
-                     {quantityValid === true && <p className='valid-text'>✅</p>}
+                     <Form.Control type='number'  onChange={handleQuantityChange} value={quantity} />
+                     {quantityValid === false && <p className='error-text'>Must be greater than 0</p>}
+                    
                   </Col>
                </Row>
             </Form>
@@ -323,7 +323,7 @@ const PlaceOrder = () => {
                </table>
 
                <br /><br />
-               <button className='btn-add-item' onClick={placeOrder} style={{ width: '200px' }}>Place order request</button>
+               <button className='btn-add-item' onClick={placeOrder} style={{ width: '200px' }}>Place order</button>
             </div>
          </div>
       </div>
