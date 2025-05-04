@@ -64,7 +64,7 @@ const PlaceFarmOrders = () => {
       const response = await axios.post('http://localhost:4000/api/order/get-order-by-ordercode',{orderCode});
       setexpectedShipmentDate(response.data.order.shippingDate)
     }catch(err){
-      consoole.log(err)
+      console.log(err)
     }
   }
 
@@ -106,7 +106,7 @@ const PlaceFarmOrders = () => {
   const placeOrder = async()=>{
 
     if (!categoryValid || !sizeValid  || !quantityValid || !dateValid) {
-      toast.error("Please correct the invalid fields before placing an order.");
+      toast.error("Please correct invalid fields");
       return;
      }
    
@@ -174,6 +174,12 @@ const PlaceFarmOrders = () => {
   }
 
   const updateOrder = async()=>{
+
+    if (!categoryValid || !sizeValid  || !quantityValid || !dateValid) {
+      toast.error("Please correct invalid fields");
+      return;
+     }
+
     try{
       const response = await axios.put(`http://localhost:4000/api/order/update-farm-order/${id}`,{orderCode:code,selectedCategory,size,quantity,date,selectedFarm})
 
@@ -219,6 +225,11 @@ const PlaceFarmOrders = () => {
        setSize(order.size)
        setquantity(order.quantity)
        setDate(order.date)
+
+       setCategoryValid(true)
+       setSizeValid(true)
+       setQuantityValid(true)
+       setDateValid(true)
       }
     }catch(err)
     {
@@ -306,14 +317,14 @@ const handleDateChange = (e) => {
                             })}
              </Form.Select>
 
-        {categoryValid === false && <p className='error-text'>❌ Select a category</p>}
-        {categoryValid === true && <p className='valid-text'>✅</p>}
+        {categoryValid === false && <p className='error-text'>Select a category</p>}
+       
 
          </Col>
 
          <Col>
             <Form.Label>Fish Supplier</Form.Label>
-            <Form.Control placeholder="Fish supplier" value={selectedFarm}  readOnly />
+            <Form.Control  value={selectedFarm}  readOnly />
          </Col>
    </Row>
 </Form>
@@ -332,23 +343,23 @@ const handleDateChange = (e) => {
                   <option  value='Medium'>Medium</option>
                  <option  value='Small'>Small</option>
             </Form.Select>
-       {sizeValid === false && <p className='error-text'>❌ Select a size</p>}
-       {sizeValid === true && <p className='valid-text'>✅</p>}
+       {sizeValid === false && <p className='error-text'>Select a size</p>}
+       
 
         </Col>
 
          <Col>
                <Form.Label>Quantity</Form.Label>
-               <Form.Control placeholder="Quantity" type='Number' onChange={handleQuantityChange} value={quantity} />
-        {quantityValid === false && <p className='error-text'>❌ Must be greater than 0</p>}
-       {quantityValid === true && <p className='valid-text'>✅</p>}
+               <Form.Control  type='Number' onChange={handleQuantityChange} value={quantity} />
+        {quantityValid === false && <p className='error-text'>Must be greater than 0</p>}
+      
         </Col>
 
         <Col>
              <Form.Label>Delivery Deadline</Form.Label>
              <Form.Control  type='date' placeholder='Delivery deadline' onChange={handleDateChange} value={date} />
              {dateValid === false && <p className='error-text'>{errMessage}</p>}
-             {dateValid === true && <p className='valid-text'>✅</p>}
+            
        </Col>
  </Row>
 </Form>
@@ -404,11 +415,13 @@ const handleDateChange = (e) => {
              <Row>
 
                 <Col>
+                   <Form.Label className='farm-order-labels'>Order Code</Form.Label>
                    <Form.Control placeholder='Order Code' value={code}  readOnly/>
                 </Col>
             </Row> 
             <Row>
                 <Col>
+                   <Form.Label className='farm-order-labels'>Fish Category</Form.Label>
                    <Form.Select placeholder="Last name" onChange={handleFishCategoryChange} value={selectedCategory}>
                             <option>Select fish category</option>
                                 {fish.map((fish,index)=>{
@@ -417,41 +430,45 @@ const handleDateChange = (e) => {
                                              )
                                              })}
                     </Form.Select>
-                {categoryValid === false && <p className='error-text'>❌ Select a category</p>}
-                {categoryValid === true && <p className='valid-text'>✅</p>}
+                {categoryValid === false && <p className='error-text'>Select a category</p>}
+               
           
                 </Col>
-            </Row>
+            </Row><br/>
             <Row>
                <Col>
+                    <Form.Label className='farm-order-labels'>Fish Supplier</Form.Label>
                     <Form.Control placeholder="Fish supplier" value={selectedFarm} readOnly />
               </Col>
 
                <Col>
+                  <Form.Label className='farm-order-labels'>Fish Size</Form.Label>
                   <Form.Select placeholder="Size" onChange={handleSizeChange} value={size} >
                          <option value="">select size</option>
                          <option  value='large'>Large</option>
                          <option  value='Medium'>Medium</option>
                         <option  value='Small'>Small</option>
                   </Form.Select>
-               {sizeValid === false && <p className='error-text'>❌ Select a size</p>}
-               {sizeValid === true && <p className='valid-text'>✅</p>}
+               {sizeValid === false && <p className='error-text'>Select a size</p>}
+             
               </Col>
            </Row>
 
            <Row>
               <Col>
-                  <Form.Control placeholder="Quantity" type='Number' onChange={handleQuantityChange} value={quantity} />
-                      {quantityValid === false && <p className='error-text'>❌ Must be greater than 0</p>}
-                      {quantityValid === true && <p className='valid-text'>✅</p>}
+                   <Form.Label className='farm-order-labels'>Quantity</Form.Label>
+                  <Form.Control type='Number' onChange={handleQuantityChange} value={quantity} />
+                      {quantityValid === false && <p className='error-text'>Must be greater than 0</p>}
+                     
              </Col>
          </Row>
          
          <Row>
              <Col>
+                   <Form.Label className='farm-order-labels'>Delivery Deadline</Form.Label>
                    <Form.Control  type='date' placeholder='Delivery deadline' onChange={handleDateChange} value={date} />
                    {dateValid === false && <p className='error-text'>{errMessage}</p>}
-                   {dateValid === true && <p className='valid-text'>✅</p>}
+                  
               </Col>
          </Row>
      </Form>

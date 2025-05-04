@@ -22,7 +22,7 @@ const AssignVehicle = () => {
     const [ delCode, setdelCode] = useState("");
     const [status , setStatus] = useState('')
 
-    const [ searchDate, setSearchDate] = useState("");
+    const [searchDate, setSearchDate] = useState("");
 
     const [selectedId, setselectedId] = useState('')
 
@@ -74,7 +74,7 @@ const AssignVehicle = () => {
 
         try{
 
-            const response = await axios.get(`http://localhost:4000/api/delivery/get-all-vehicle`);
+            const response = await axios.get(`http://localhost:4000/api/delivery/get-all-vehicle?searchText=${searchDate}`);
       
             if(response.data.success)
             {
@@ -93,24 +93,10 @@ const AssignVehicle = () => {
     },[])
 
 
-const filter = async()=>{
-
-    try{
-
-        const response = await axios.get(`http://localhost:4000/api/delivery/filter-vehicles/${searchDate}`);
-  
-        if(response.data.success)
-        {
-            setAssignedVehicles(response.data.availableVehicles)
-        }
-
-    }catch(err)
-    {
-        console.log(err)
-    }
-
-
-}
+    useEffect(()=>{
+     
+      getAllDetails()
+  },[searchDate])
 
 const fetchAssignedData= async(id)=>{
     try{
@@ -143,6 +129,7 @@ const update = async()=>{
         if(response.data.success)
         {
             console.log('updated successfully')
+            toast.success('Vehicle details changed successfully')
             getAllDetails()
             setModalShow(false);
 
@@ -162,6 +149,7 @@ const Delete = async()=>{
         if(response.data.success)
         {
             console.log('successfully deleted')
+            toast.success('Record removed successfully')
             getAllDetails()
           
 
@@ -193,7 +181,7 @@ const Delete = async()=>{
 
         <Col>
           <label>Vehicle No</label><br/>
-          <Form.Select placeholder="vehicle No"  onChange={(e)=>{setvehicle(e.target.value)}}>
+          <Form.Select placeholder="vehicle No"  onChange={(e)=>{setvehicle(e.target.value)}}required>
               <option>Assign a vehicle</option>
               <option value="CXX-2316" >CXX-2316</option>
               <option value="DBR-2456" >DBR-2456</option>
@@ -217,9 +205,6 @@ const Delete = async()=>{
 
       <center> <Form> <Row> <Col>
           <Form.Control placeholder='Search here'  onChange={(e)=>{setSearchDate(e.target.value)}} type='date' style={{width:'500px', marginTop:'30px',marginLeft:'200px'}}/>
-        </Col>
-        <Col>
-        <Button variant="primary"  style={{width:'200px', marginTop:'30px',marginRight:'300px'}} onClick={filter}>Search</Button>
         </Col>
         </Row></Form></center>
        

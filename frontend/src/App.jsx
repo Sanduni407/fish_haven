@@ -33,6 +33,8 @@ import ViewUserProfile from './pages/ExporterDashBoard/UserProfile/ViewUserProfi
 import SupplierProfiles from './pages/SupplierDashboard/UserProfile/SupplierProfiles';
 import EmployeeProfiles from './pages/EmployeeDashboard/UserProfile/EmployeeProfiles';
 import ViewAdminOrderRequests from './pages/AdminDashBoard/Order/ViewAdminOrderRequests/ViewAdminOrderRequests';
+import Review from './pages/ExporterDashBoard/Review/Review';
+import ViewEmpSalary from './pages/AdminDashBoard/Employee/ViewEmpSalary';
 
 
 const App = () => {
@@ -82,6 +84,8 @@ const App = () => {
         <Route path='/employee/add-leave' element={<AddLeave/>}/>
         <Route path='/employee/view-leaves' element={<ViewRequest/>}/>
         <Route path='/admin/view-leaves' element={<ViewLeaveReq/>}/>
+        <Route path='/admin/post-review' element={<Review/>}/>
+        <Route path='/admin/mark-attendance' element={<ViewEmpSalary/>}/>
 
 
         {/* Sanjitha */}

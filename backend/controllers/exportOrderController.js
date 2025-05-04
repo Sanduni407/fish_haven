@@ -1,5 +1,9 @@
+import EventEmitter from 'events';
+const inventoryEventEmitter = new EventEmitter();
+
 import DeliveryModel from "../models/deliverModel.js";
 import ExportOrderModel from "../models/exporterOrderModel.js";
+import fishModel from "../models/fishModel.js";
 
 
 const generateOrderCode = async () => {
@@ -50,8 +54,15 @@ const getAllOrdersById = async(req,res)=>{
     try
     {
        const id = req.body.userId;
+
+       const{searchText} = req.query;
+
+       const filter = searchText ?{$or:[
+         {status:{$regex:searchText, $options:"i"}},
+         {shippingDate:{$regex:searchText, $options:"i"}}
+        ]}:{};
  
-       const orders = await ExportOrderModel.find({userId:id});
+       const orders = await ExportOrderModel.find({userId:id, ...filter});
  
        if(!orders)
        {
@@ -71,9 +82,17 @@ const getAllOrdersById = async(req,res)=>{
  const getAllOrders = async(req,res)=>{
     try
     {
+
+
+        const{searchText} = req.query;
+
+        const filter = searchText ?{$or:[
+         {status:{$regex:searchText, $options:"i"}},
+         {shippingDate:{$regex:searchText, $options:"i"}}
+        ]}:{};
        
  
-       const orders = await ExportOrderModel.find();
+       const orders = await ExportOrderModel.find(filter);
  
        if(!orders)
        {
@@ -112,6 +131,44 @@ const getAllOrdersById = async(req,res)=>{
  }
 
 
+
+
+ //update the inventory
+
+inventoryEventEmitter.on('orderConfirmed', async (orderId) => {
+
+   const order = await ExportOrderModel.findById(orderId);
+   const cartItems = order.cart;
+ 
+   for (let item of cartItems) {
+
+     const { variety, size, quantity } = item;
+
+     try {
+
+       const fish = await fishModel.findOne({ fishCategory: variety, size });
+ 
+       if (fish && fish.quantity >= quantity) {
+
+         fish.quantity -= quantity;
+         await fish.save();
+
+       } else {
+
+         console.warn(`Not enough stock for ${variety} (${size}).`);
+
+       }
+     } catch (err) {
+
+       console.error("Error updating inventory:", err);
+
+     }
+   }
+ });
+
+
+
+
  const updateOrderstatus = async(req,res)=>{
    try
    {
@@ -124,6 +181,15 @@ const getAllOrdersById = async(req,res)=>{
      }
 
      const updatedOrder = await ExportOrderModel.findByIdAndUpdate(selectedRowId, { status }, { new: true });
+
+     
+    
+
+     if (status === "Confirmed") {
+      // Emit event to update inventory
+      inventoryEventEmitter.emit('orderConfirmed', selectedRowId);
+    }
+
 
        res.json({success:true,message:'updated'})
 
@@ -220,4 +286,28 @@ const getOrderByOrderCode = async(req,res)=>{
 }
 
 
-export{CreateAOrder, getAllOrdersById,getAllOrders,getOrderByOrderId, updateOrderstatus,deleteOrder,updateOrder,getOrderByOrderCode}
+const fetchOrderSummary = async(req,res)=>{
+   try{
+
+      const orders = await ExportOrderModel.find();
+
+      let pending = 0, confirmed = 0, rejected = 0;
+
+      orders.forEach(order => {
+         const status = order.status.toLowerCase();
+         if (status === 'pending') pending++;
+         else if (status === 'confirmed') confirmed++;
+         else if (status === 'rejected') rejected++;
+       });
+
+       res.json({ success: true, pending, confirmed, rejected });
+
+   }catch(err)
+   {
+      console.log(err);
+      res.json({success:false,message:err.message})
+   }
+}
+
+
+export{CreateAOrder, getAllOrdersById,getAllOrders,getOrderByOrderId, updateOrderstatus,deleteOrder,updateOrder,getOrderByOrderCode,fetchOrderSummary}

@@ -19,6 +19,7 @@ const SideNavBar = ({ role }) => {
       { name: "Manage Inventory", path: "/admin/manage-inventory" },
      //  { name: "Full Inventory", path: "/view/inventory" },
       { name: "View Leave Requests", path: "/admin/view-leaves" },
+      { name: "Mark Attendance", path: "/admin/mark-attendance" },
 
      
     ],
@@ -27,6 +28,7 @@ const SideNavBar = ({ role }) => {
       { name: "View Orders", path: "/exporter/view-order" },
       { name: "Fish Inventory", path: "/exporter/inventory" },
       { name: "User Profile", path: "/exporter-view-profile" },
+      { name: "Reviews", path: "/admin/post-review" },
     ],
     Supplier: [
       { name: "Manage Fish Inventory", path: "/supplier/add-fish" },

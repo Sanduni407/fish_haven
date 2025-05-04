@@ -8,6 +8,8 @@ import Table from "react-bootstrap/Table";
 import axios from 'axios'
 import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom';
+import Form from 'react-bootstrap/Form';
+import { assets } from '../../../../assets/assets';
 
 const ViewOrders = () => {
 
@@ -22,11 +24,13 @@ const ViewOrders = () => {
 
   const [selectedRowId, setSelectedRowId] = useState(null);
 
+  const[search,setSearch] = useState('')
+
   const fetchAllOrders = async()=>{
 
     try{
 
-      const response = await axios.post('http://localhost:4000/api/order/get-orders-byuser',{},{headers:{token}});
+      const response = await axios.post(`http://localhost:4000/api/order/get-orders-byuser?searchText=${search}`,{},{headers:{token}});
 
       if(response.data.success)
       {
@@ -43,7 +47,7 @@ const ViewOrders = () => {
   useEffect(()=>{
     fetchAllOrders()
    
-  },[])
+  },[search])
 
 
   const fetchSelectedRowId = (id) => {
@@ -110,6 +114,13 @@ const ViewOrders = () => {
 
      </div>
  <div className="table-container">
+
+ <div style={{ position: 'relative', width: '40%', marginTop: '20px' }}>
+  <span style={{ position: 'absolute', top: '50%', left: '10px', transform: 'translateY(-50%)',color: '#6c757d',fontSize: '16px'}}><img src={assets.search}/></span>
+  <Form.Control type="search" placeholder="  Search orders here..." onChange={e => setSearch(e.target.value)} style={{ backgroundColor: 'white',paddingLeft: '35px',outline: 'none', boxShadow: 'none', border: 'none'}}/>
+      </div>
+
+
      <table className="order-table">
         <thead>
           <tr>

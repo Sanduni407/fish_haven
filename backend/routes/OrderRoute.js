@@ -1,5 +1,5 @@
 import express from 'express'
-import { CreateAOrder ,getAllOrdersById ,getAllOrders,getOrderByOrderId,updateOrderstatus,deleteOrder,updateOrder,getOrderByOrderCode} from '../controllers/exportOrderController.js';
+import { CreateAOrder ,getAllOrdersById ,getAllOrders,getOrderByOrderId,updateOrderstatus,deleteOrder,updateOrder,getOrderByOrderCode, fetchOrderSummary} from '../controllers/exportOrderController.js';
 import userAuth from '../middleware/auth.js';
 import {  getAllFarmOrders, placeafarmOrder ,getTheFarmByCategory,getOrdersByUserId,deleteFarmOrder,updateFramOrder,getThefarmOrderByOrderId} from '../controllers/farmOrderController.js';
 
@@ -13,6 +13,7 @@ orderRouter.put('/update-status/:selectedRowId',updateOrderstatus);
 orderRouter.delete('/delete-order/:selectedRowId',deleteOrder);
 orderRouter.put('/update-order/:selectedRowId',updateOrder);
 orderRouter.post('/get-order-by-ordercode',getOrderByOrderCode);
+orderRouter.get('/fetch-summary',fetchOrderSummary);
 
 
 orderRouter.post('/place-farm-order',placeafarmOrder);

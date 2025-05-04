@@ -2,7 +2,7 @@ import mongoose from "mongoose"
 
 const DeliverySchema = new mongoose.Schema({
     
-    userId:{ type:String, required:true}, // fetch karaddima ganna
+    userId:{ type:String, required:true},
     orderCode:{type:String,required:true},
     shippingAddress:{type:String, required:true},
     deliveryDate:{type:String, required:true},

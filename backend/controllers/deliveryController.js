@@ -42,8 +42,15 @@ const getAllDeliveries = async(req,res)=>{
     try
     {
        
+      const{searchText} = req.query;
+
+      const filter = searchText ?{$or:[
+         {orderCode:{$regex:searchText, $options:"i"}},
+         {deliveryDate:{$regex:searchText, $options:"i"}},
+         {delCode:{$regex:searchText, $options:"i"}}
+        ]}:{};
  
-       const deliveries = await DeliveryModel.find();
+       const deliveries = await DeliveryModel.find(filter);
  
        if(!deliveries)
        {
