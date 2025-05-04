@@ -49,8 +49,14 @@ const getfishById = async(req,res)=>{ // get fish by user id
 
 const getallFish= async(req,res)=>{
     try{
+
+        const{searchText} = req.query;
+
+        const filter = searchText ?{$or:[
+         {fishCategory:{$regex:searchText, $options:"i"}}
+        ]}:{};
        
-            const allfish = await fishModel.find();
+            const allfish = await fishModel.find(filter);
 
             res.json({success:true,allfish});
 
