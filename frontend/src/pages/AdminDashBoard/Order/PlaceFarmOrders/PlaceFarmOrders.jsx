@@ -64,7 +64,7 @@ const PlaceFarmOrders = () => {
       const response = await axios.post('http://localhost:4000/api/order/get-order-by-ordercode',{orderCode});
       setexpectedShipmentDate(response.data.order.shippingDate)
     }catch(err){
-      consoole.log(err)
+      console.log(err)
     }
   }
 
