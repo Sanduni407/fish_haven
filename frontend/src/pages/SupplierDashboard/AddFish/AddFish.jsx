@@ -10,6 +10,8 @@ import { AppContext } from '../../../context/AppContext';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import {assets} from '../../../assets/assets';
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
 
 const AddFish = () => {
   const { token } = useContext(AppContext);
@@ -156,6 +158,88 @@ const AddFish = () => {
     getFishById();
   }, []);
 
+
+  const downloadFishInventoryPDF = async () => {
+    try {
+      const response = await axios.post(
+        'http://localhost:4000/api/fish/getfishById',
+        {},
+        { headers: { token } }
+      );
+  
+      if (response.data.success) {
+        const fishes = response.data.fishes;
+  
+        const doc = new jsPDF();
+        const pageWidth = doc.internal.pageSize.getWidth();
+        const margin = 10;
+  
+        // Border around the page
+        doc.setDrawColor(0);
+        doc.setLineWidth(0.5);
+        doc.rect(margin, margin, pageWidth - margin * 2, 270);
+  
+        // Header: Fish Haven
+        doc.setFontSize(14);
+        doc.setFont("helvetica", "bold");
+        doc.text("Fish Haven", margin + 2, 18);
+  
+        // Date & Time
+        const generatedAt = new Date().toLocaleString();
+        doc.setFontSize(10);
+        doc.setFont("helvetica", "normal");
+        doc.text(`Generated on: ${generatedAt}`, margin + 2, 25);
+  
+        // Title centered
+        doc.setFontSize(18);
+        doc.setFont("helvetica", "bold");
+        doc.text("Fish Inventory Report", pageWidth / 2, 40, { align: "center" });
+  
+        // Add table headers
+        const tableHead = [['Fish Category', 'Gender', 'Size', 'Unit Price ($)', 'Quantity']];
+        const tableBody = fishes.map(fish => [
+          fish.fishCategory,
+          fish.gender,
+          fish.size,
+          `${fish.unitPrice.toFixed(2)}`,
+          `${fish.quantity}`
+        ]);
+  
+        // Generate styled table similar to Order PDF
+        autoTable(doc, {
+          head: tableHead,
+          body: tableBody,
+          startY: 50,
+          theme: 'grid',
+          headStyles: {
+            fillColor: [15, 30, 80],  // Dark navy blue
+            textColor: 255,
+            fontSize: 11,
+            fontStyle: 'bold'
+          },
+          bodyStyles: {
+            fontSize: 10
+          },
+          styles: {
+            halign: 'center',
+            cellPadding: 3
+          },
+          margin: { left: margin + 5, right: margin + 5 }
+        });
+  
+        // Save the file
+        doc.save("Fish_Inventory_Report.pdf");
+      } else {
+        toast.error("Failed to fetch fish data for PDF.");
+      }
+    } catch (err) {
+      console.error("Error generating fish inventory PDF:", err);
+      toast.error("Failed to generate PDF.");
+    }
+  };
+  
+
+
   return (
     <div className="supplier-add-fish-container">
       <div className="left-column">
@@ -276,7 +360,16 @@ const AddFish = () => {
                 </tr>
               ))}
             </tbody>
-          </table>
+          </table><br/>
+
+          <button
+    className="btnadd"
+    onClick={downloadFishInventoryPDF}
+    style={{ width: '250px', backgroundColor: '#34495e', color: 'white', marginBottom: '30px' }}
+  >
+    📄 Download Report
+  </button>
+
         </div>
       </div>
 

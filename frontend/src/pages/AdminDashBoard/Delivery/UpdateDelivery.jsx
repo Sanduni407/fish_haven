@@ -35,7 +35,7 @@ const UpdateDelivery = () => {
   const [quantity, setQuantity] = useState(0);
   const [qtyForPackage, setqtyForPackage] = useState(0);
   const [NoOfPackages, setNoOfPackages] = useState(0);
-    const [quantityError, setQuantityError] = useState('');
+  const [quantityError, setQuantityError] = useState('');
 
   const fetchaDelivery = async () => {
     try {
@@ -141,43 +141,71 @@ const UpdateDelivery = () => {
     setQuantity(value);
   };
 
-
   return (
-    <div className="admin-update-container">
-      <div className="left-column">
-        <SideNavBar role="Admin" />
-      </div>
-      <div className="right-column">
-        <Form>
-          <Row>
+    <div className="admin-update-delivery-container">
+      <SideNavBar role="Admin" />
+      <div className="admin-update-delivery-content">
+        <center><h2 className="admin-update-delivery-title">Update Delivery</h2></center>
+        <Form className="admin-update-delivery-form">
+          <Row className="admin-update-delivery-row">
             <Col>
-              <label>Order ID</label><br />
-              <Form.Control placeholder='Order code' value={orderCode} readOnly />
+              <Form.Label className="admin-update-delivery-label">Order ID</Form.Label>
+              <Form.Control
+                className="admin-update-delivery-input"
+                placeholder="Order code"
+                value={orderCode}
+                readOnly
+              />
             </Col>
             <Col>
-              <label>Address</label><br />
-              <Form.Control placeholder='Shipping address' value={shippingAddress} readOnly />
+              <Form.Label className="admin-update-delivery-label">Shipping Address</Form.Label>
+              <Form.Control
+                className="admin-update-delivery-input"
+                placeholder="Shipping address"
+                value={shippingAddress}
+                readOnly
+              />
+            </Col>
+            <Col>
+              <Form.Label className="admin-update-delivery-label">Contact Number</Form.Label>
+              <Form.Control
+                className="admin-update-delivery-input"
+                placeholder="Contact number"
+                value={contact}
+                readOnly
+              />
+            </Col>
+            <Col>
+              <Form.Label className="admin-update-delivery-label">Order Type</Form.Label>
+              <Form.Control
+                className="admin-update-delivery-input"
+                placeholder="Order Type"
+                value={orderType}
+                readOnly
+              />
             </Col>
           </Row>
-          <Row>
+          <Row className="admin-update-delivery-row">
             <Col>
-              <label>Contact No</label><br />
-              <Form.Control placeholder="Contact number" value={contact} readOnly />
+              <Form.Label className="admin-update-delivery-label">Shipment Date</Form.Label>
+              <Form.Control
+                className="admin-update-delivery-input"
+                placeholder="Delivery date"
+                value={deliveryDate}
+                type="date"
+                onChange={handleDateChange}
+              />
+              {errMessage && (
+                <p className="admin-update-delivery-error">{errMessage}</p>
+              )}
             </Col>
             <Col>
-              <label>Order Type</label><br />
-              <Form.Control placeholder="Order Type" value={orderType} readOnly />
-            </Col>
-            <Col>
-              <label>Shipment Date</label><br />
-              <Form.Control placeholder='Delivery date' value={deliveryDate} type='date' onChange={handleDateChange} />
-              {errMessage && <p style={{ color: 'red', fontSize: '14px', marginTop: '5px' }}>{errMessage}</p>}
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <label>Fish Variety</label><br />
-              <Form.Select placeholder="Fish variety" onChange={(e) => { setvariety(e.target.value) }} required>
+              <Form.Label className="admin-update-delivery-label">Fish Variety</Form.Label>
+              <Form.Select
+                className="admin-update-delivery-select"
+                onChange={(e) => setvariety(e.target.value)}
+                required
+              >
                 <option>Select fish category</option>
                 {fishCategory.map((fish, index) => (
                   <option value={fish} key={index}>{fish}</option>
@@ -185,40 +213,48 @@ const UpdateDelivery = () => {
               </Form.Select>
             </Col>
             <Col>
-              <label>Quantity</label><br />
+              <Form.Label className="admin-update-delivery-label">Quantity</Form.Label>
               <Form.Control
+                className="admin-update-delivery-input"
                 placeholder="Quantity"
-                type='number'
+                type="number"
                 value={quantity}
                 onChange={handleQuantityChange}
               />
-                {quantityError && <p style={{ color: 'red', fontSize: '14px', marginTop: '5px' }}>{quantityError}</p>}
+              {quantityError && (
+                <p className="admin-update-delivery-error">{quantityError}</p>
+              )}
             </Col>
           </Row>
+          <div className="admin-update-delivery-form-button-container">
+            <button
+              type="button"
+              className="admin-update-delivery-add-button"
+              onClick={() => {
+                if (quantity > 0) {
+                  const item = {
+                    variety: variety,
+                    quantity: quantity,
+                    qtyForPackage: qtyForPackage,
+                    NoOfPackages: NoOfPackages
+                  }
+                  addToCART(item);
+                } else {
+                  toast.error("Please enter a valid quantity greater than 0.");
+                }
+              }}
+            >
+              + Assign Packaging
+            </button>
+          </div>
         </Form>
-
-        <center><button type='button' className='btn-add-item' style={{ width: '200px' }}
-          onClick={() => {
-            if (quantity > 0) {
-              const item = {
-                variety: variety,
-                quantity: quantity,
-                qtyForPackage: qtyForPackage,
-                NoOfPackages: NoOfPackages
-              }
-              addToCART(item);
-            } else {
-              toast.error("Please enter a valid quantity greater than 0.");
-            }
-          }}>+ Assign packaging</button></center>
-
-        <div className="table-style">
-          <table>
+        <div className="admin-update-delivery-table-container">
+          <table className="admin-update-delivery-table">
             <thead>
               <tr>
                 <th>Variety</th>
-                <th>quantity</th>
-                <th>QTY for package</th>
+                <th>Quantity</th>
+                <th>Qty for Package</th>
                 <th>No of Packages</th>
                 <th>Remove</th>
               </tr>
@@ -230,21 +266,32 @@ const UpdateDelivery = () => {
                   <td>{item.quantity}</td>
                   <td>{item.qtyForPackage}</td>
                   <td>{item.NoOfPackages}</td>
-                  <td><button className='btndelete'
-                    onClick={() => {
-                      setPackagingArray(PackagingArray.filter((_, i) => i !== index));
-                    }}>Delete</button></td>
+                  <td>
+                    <button
+                      className="admin-update-delivery-delete-button"
+                      onClick={() => {
+                        setPackagingArray(PackagingArray.filter((_, i) => i !== index));
+                      }}
+                    >
+                      Delete
+                    </button>
+                  </td>
                 </tr>
               ))}
             </tbody>
           </table>
+          <div className="admin-update-delivery-submit-container">
+            <button
+              className="admin-update-delivery-submit-button"
+              onClick={updateDelivery}
+            >
+              Update Delivery
+            </button>
+          </div>
         </div>
-
-        <center><Button variant="secondary" style={{ width: '200px' }} onClick={updateDelivery}>Update Delivery</Button></center>
       </div>
     </div>
   )
 }
 
-export default UpdateDelivery;
-
+export default UpdateDelivery

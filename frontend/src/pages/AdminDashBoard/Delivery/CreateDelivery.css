@@ -1,17 +1,165 @@
-.create-delivery-container {
-    display: flex;
-    height: 100vh;
-  }
-  
-  .create-delivery-container .left-column {
-    width: 250px; 
-    padding: 20px;
-  }
-  
-  .create-delivery-container .right-column {
-    flex-grow: 1; 
-    padding: 20px;
-    margin-left: 80px;
-    
-  }
-  
+.admin-create-delivery-container {
+  display: flex;
+  min-height: 100vh;
+  background: linear-gradient(90deg, #c8e3f4, #597d98);
+}
+
+.admin-create-delivery-content {
+  flex: 1;
+  margin-left: 250px;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.admin-create-delivery-title {
+  color: #01497c;
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.admin-create-delivery-form {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.admin-create-delivery-row {
+  margin-bottom: 20px;
+}
+
+.admin-create-delivery-label {
+  color: #01497c;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.admin-create-delivery-input,
+.admin-create-delivery-select {
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  padding: 10px;
+  font-size: 14px;
+  transition: border-color 0.3s;
+}
+
+.admin-create-delivery-input:focus,
+.admin-create-delivery-select:focus {
+  border-color: #01497c;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(1, 73, 124, 0.1);
+}
+
+.admin-create-delivery-input[readOnly] {
+  background: #e9ecef;
+  cursor: not-allowed;
+}
+
+.admin-create-delivery-error {
+  color: #dc3545;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.admin-create-delivery-form-button-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.admin-create-delivery-add-button {
+  background: linear-gradient(90deg, #3f9cde, #1E3A8A);
+  color: white;
+  border: none;
+  width: 200px;
+  padding: 10px 24px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background-color 0.3s;
+}
+
+.admin-create-delivery-add-button:hover {
+  background-color: #01355a;
+}
+
+.admin-create-delivery-table-container {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.admin-create-delivery-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.admin-create-delivery-table thead {
+  background-color: #01497c;
+  color: white;
+}
+
+.admin-create-delivery-table th,
+.admin-create-delivery-table td {
+  padding: 12px;
+  text-align: center;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.admin-create-delivery-table tbody tr:nth-child(even) {
+  background-color: #f8fafc;
+}
+
+.admin-create-delivery-table tbody tr:hover {
+  background-color: #edf2f7;
+}
+
+.admin-create-delivery-delete-button {
+  background: transparent;
+  border: none;
+  padding: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  transition: background 0.3s;
+}
+
+.admin-create-delivery-delete-button:hover {
+  background: #f8d7da;
+}
+
+.admin-create-delivery-delete-button img {
+  width: 20px;
+  height: 20px;
+}
+
+.admin-create-delivery-submit-container {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.admin-create-delivery-submit-button {
+  background: linear-gradient(90deg, #3f9cde, #1E3A8A);
+  color: white;
+  border: none;
+  width: 200px;
+  padding: 9px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+  transition: background-color 0.3s;
+  margin-top: 20px;
+}
+
+.admin-create-delivery-submit-button:hover {
+  background-color: #01355a;
+}

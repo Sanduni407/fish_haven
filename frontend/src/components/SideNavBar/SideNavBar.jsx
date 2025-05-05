@@ -20,8 +20,6 @@ const SideNavBar = ({ role }) => {
      //  { name: "Full Inventory", path: "/view/inventory" },
       { name: "View Leave Requests", path: "/admin/view-leaves" },
       { name: "Mark Attendance", path: "/admin/mark-attendance" },
-
-     
     ],
     Exporter: [
       { name: "Place Order", path: "/exporter/place-order" },
@@ -49,23 +47,28 @@ const SideNavBar = ({ role }) => {
   };
 
   return (
-    <div className="sidebar">
-      <h2 className="sidebar-title">
-        {role.charAt(0).toUpperCase() + role.slice(1)} Dashboard
-      </h2>
-      <ul className="sidebar-menu">
-        {navItems[role]?.map((item, index) => (
-          <li key={index} className="sidebar-item">
-            <Link to={item.path} className="sidebar-link">
-              {item.name}
-            </Link>
-          </li>
-        ))}
-      </ul>
-
-      <button className="logout-button" onClick={handleLogout}>
-        Logout
-      </button>
+    <div className="sidenav-container">
+      <div className="sidenav-header">
+        <h2 className="sidenav-role-title">
+          {role.charAt(0).toUpperCase() + role.slice(1)} Dashboard
+        </h2>
+      </div>
+      <nav className="sidenav-navigation">
+        <ul className="sidenav-menu-list">
+          {navItems[role]?.map((item, index) => (
+            <li key={index} className="sidenav-menu-item">
+              <Link to={item.path} className="sidenav-menu-link">
+                <span className="sidenav-link-text">{item.name}</span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </nav>
+      <div className="sidenav-footer">
+        <button className="sidenav-logout-btn" onClick={handleLogout}>
+          Logout
+        </button>
+      </div>
     </div>
   );
 };

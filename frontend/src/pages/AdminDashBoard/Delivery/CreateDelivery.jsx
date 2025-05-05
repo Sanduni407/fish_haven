@@ -8,6 +8,7 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Button from 'react-bootstrap/Button';
+import {assets} from '../../../assets/assets'
 
 const CreateDelivery = () => {
   const { id } = useParams();
@@ -123,81 +124,115 @@ const CreateDelivery = () => {
   };
 
   return (
-    <div className="create-delivery-container">
-      <div className="left-column">
-        <SideNavBar role="Admin" />
-      </div>
-      <div className="right-column">
-        <Form>
-          <Row>
+    <div className="admin-create-delivery-container">
+      <SideNavBar role="Admin" />
+      <div className="admin-create-delivery-content">
+        <center><h2 className="admin-create-delivery-title">Create Delivery</h2></center>
+        <Form className="admin-create-delivery-form">
+          <Row className="admin-create-delivery-row">
             <Col>
-              <label>Order ID</label><br />
-              <Form.Control placeholder="Order code" value={orderCode} readOnly />
+              <Form.Label className="admin-create-delivery-label">Order ID</Form.Label>
+              <Form.Control
+                className="admin-create-delivery-input"
+                placeholder="Order code"
+                value={orderCode}
+                readOnly
+              />
             </Col>
             <Col>
-              <label>Address</label><br />
-              <Form.Control placeholder="Shipping address" value={shippingAddress} readOnly />
+              <Form.Label className="admin-create-delivery-label">Shipping Address</Form.Label>
+              <Form.Control
+                className="admin-create-delivery-input"
+                placeholder="Shipping address"
+                value={shippingAddress}
+                readOnly
+              />
+            </Col>
+            <Col>
+              <Form.Label className="admin-create-delivery-label">Contact Number</Form.Label>
+              <Form.Control
+                className="admin-create-delivery-input"
+                placeholder="Contact number"
+                value={contact}
+                readOnly
+              />
             </Col>
           </Row>
-          <Row>
+          <Row className="admin-create-delivery-row">
             <Col>
-              <label>Contact No</label><br />
-              <Form.Control placeholder="Contact number" value={contact} readOnly />
+              <Form.Label className="admin-create-delivery-label">Order Type</Form.Label>
+              <Form.Control
+                className="admin-create-delivery-input"
+                placeholder="Order Type"
+                value={orderType}
+                readOnly
+              />
             </Col>
             <Col>
-              <label>Order Type</label><br />
-              <Form.Control placeholder="Order Type" value={orderType} readOnly />
+              <Form.Label className="admin-create-delivery-label">Shipment Date</Form.Label>
+              <Form.Control
+                className="admin-create-delivery-input"
+                placeholder="Delivery date"
+                type="date"
+                onChange={handleDateChange}
+              />
+              {errMessage && <p className="admin-create-delivery-error">{errMessage}</p>}
             </Col>
             <Col>
-              <label>Shipment Date</label><br />
-              <Form.Control placeholder="Delivery date" type="date" onChange={handleDateChange} />
-              {errMessage && <p style={{ color: 'red', fontSize: '14px', marginTop: '5px' }}>{errMessage}</p>}
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <label>Fish Variety</label><br />
-              <Form.Select placeholder="Fish variety" onChange={(e) => setVariety(e.target.value)} required>
+              <Form.Label className="admin-create-delivery-label">Fish Variety</Form.Label>
+              <Form.Select
+                className="admin-create-delivery-select"
+                onChange={(e) => setVariety(e.target.value)}
+                required
+              >
                 <option>Select fish category</option>
                 {fishCategory.map((fish, index) => (
                   <option value={fish} key={index}>{fish}</option>
                 ))}
               </Form.Select>
             </Col>
-            <Col>
-              <label>Quantity</label><br />
-              <Form.Control placeholder="Quantity" type="number" value={quantity} onChange={handleQuantityChange} required/>
-              {quantityError && <p style={{ color: 'red', fontSize: '14px', marginTop: '5px' }}>{quantityError}</p>}
-            </Col>
           </Row>
+          <Row className="admin-create-delivery-row">
+            <Col>
+              <Form.Label className="admin-create-delivery-label">Quantity</Form.Label>
+              <Form.Control
+                className="admin-create-delivery-input"
+                placeholder="Quantity"
+                type="number"
+                value={quantity}
+                onChange={handleQuantityChange}
+                required
+              />
+              {quantityError && <p className="admin-create-delivery-error">{quantityError}</p>}
+            </Col>
+            <Col></Col>
+            <Col></Col>
+          </Row>
+          <div className="admin-create-delivery-form-button-container">
+            <button
+              type="button"
+              className="admin-create-delivery-add-button"
+              onClick={() => {
+                const item = {
+                  variety,
+                  quantity,
+                  qtyForPackage,
+                  NoOfPackages,
+                };
+                addToCART(item);
+              }}
+            >
+              + Assign Packaging
+            </button>
+          </div>
         </Form>
-
-        <center>
-          <button
-            type="button"
-            className="btn-add-item"
-            style={{ width: '200px' }}
-            onClick={() => {
-              const item = {
-                variety,
-                quantity,
-                qtyForPackage,
-                NoOfPackages,
-              };
-              addToCART(item);
-            }}
-          >
-            + Assign packaging
-          </button>
-        </center>
-
-        <div className="table-style">
-          <table>
+        <div className="admin-create-delivery-table-container">
+          <table className="admin-create-delivery-table">
             <thead>
               <tr>
                 <th>Variety</th>
                 <th>Quantity</th>
-                <th>QTY for package</th>
+                <th>Qty for Package</th>
                 <th>No of Packages</th>
                 <th>Remove</th>
               </tr>
@@ -211,25 +246,27 @@ const CreateDelivery = () => {
                   <td>{item.NoOfPackages}</td>
                   <td>
                     <button
-                      className="btndelete"
+                      className="admin-create-delivery-delete-button"
                       onClick={() => {
                         setPackagingArray(PackagingArray.filter((_, i) => i !== index));
                       }}
                     >
-                      Delete
+                      <img src={assets.deleteimg} alt="delete" />
                     </button>
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
+          <div className="admin-create-delivery-submit-container">
+            <button
+              className="admin-create-delivery-submit-button"
+              onClick={CreateDelivery}
+            >
+              Create Delivery
+            </button>
+          </div>
         </div>
-
-        <center>
-          <Button variant="secondary" style={{ width: '200px' }} onClick={CreateDelivery}>
-            Create Delivery
-          </Button>
-        </center>
       </div>
     </div>
   );

@@ -5,6 +5,7 @@ import view from './vie.jpg'
 import search from './sea.png'
 import deleteimg from './deletetwo.png'
 import downloadimg from './down.png'
+import editimg from './editimg.png'
 
 
 export const assets ={
@@ -15,5 +16,6 @@ export const assets ={
     view,
     search,
     deleteimg,
-    downloadimg
+    downloadimg,
+    editimg
 }

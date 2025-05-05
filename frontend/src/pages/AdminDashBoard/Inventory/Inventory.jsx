@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from "react";
+import './Inventory.css';
 import axios from "axios";
+import Form from 'react-bootstrap/Form';
+import { assets } from "../../../assets/assets";
 
 const Inventory = () => {
   const [fish, setFish] = useState([]);
+  const [search, setSearch] = useState('');
 
   const fetchFish = async () => {
     try {
-      const response = await axios.get("http://localhost:4000/api/fish/getallFish");
-
+      const response = await axios.get(`http://localhost:4000/api/fish/getallFish?searchText=${search}`);
       if (response.data.success) {
         setFish(response.data.allfish);
       }
@@ -18,54 +21,54 @@ const Inventory = () => {
 
   useEffect(() => {
     fetchFish();
-  }, []);
+  }, [search]);
 
   return (
-    <>
-      {/* Header Section */}
-      <div className="text-center my-4">
-        <h2 className="fw-bold">🐟 Premium Export Quality Fish</h2>
-        <p className="text-muted">
-          Explore our finest selection of fresh, high-quality fish sourced from sustainable waters.
-        </p>
-        <img
-          src="https://img.cutenesscdn.com/-/photos.demandstudios.com/getty/article/144/93/463693681.jpg"
-          alt="Premium Fish"
-          className="img-fluid rounded shadow"
-          style={{ maxWidth: "600px" }}
-        />
-      </div>
+    <div className="admin-inventory-view-container">
+      <div className="admin-inventory-view-content">
+        <div className="admin-inventory-view-header">
+          <h2 className="admin-inventory-view-title">Premium Export Quality Fish</h2>
+          <p className="admin-inventory-view-subtitle">
+            Explore our finest selection of fresh, high-quality fish sourced from sustainable waters.
+          </p>
+        </div>
 
-      {/* Fish Cards Grid */}
-      <div className="container mt-4">
-        <div className="row">
-          {fish.map((fish, index) => (
-            <div className="col-md-4 col-lg-3 mb-4" key={index}>
-              <div className="card shadow-sm border-0">
+        <div className="admin-inventory-view-search">
+          <Form.Control
+            type="search"
+            placeholder="Search here..."
+            className="admin-inventory-view-search-input"
+            onChange={e => setSearch(e.target.value)}
+          />
+        </div>
+
+        <div className="admin-inventory-view-grid">
+          {fish.length === 0 ? (
+            <p className="admin-inventory-view-no-results">No fish found.</p>
+          ) : (
+            fish.map((fishItem, index) => (
+              <div className="admin-inventory-view-card" key={index}>
                 <img
-                  src={
-                    fish.imageUrl ||
-                    "https://media.istockphoto.com/id/1147544807/vector/thumbnail-image-vector-graphic.jpg?s=612x612&w=0&k=20&c=rnCKVbdxqkjlcs3xH87-9gocETqpspHFXu5dIGB4wuM="
-                  }
-                  className="card-img-top"
-                  alt={fish.fishCategory}
-                  style={{ height: "180px", objectFit: "cover" }}
+                  src={`http://localhost:4000/images/${fishItem.image}`}
+                  alt={fishItem.fishCategory}
+                  className="admin-inventory-view-card-image"
+                  onError={(e) => { e.target.src = assets.placeholder_fish; }}
                 />
-                <div className="card-body">
-                  <h5 className="card-title">{fish.fishCategory}</h5>
-                  <p className="card-text">
-                    <strong>Gender:</strong> {fish.gender} <br />
-                    <strong>Size:</strong> {fish.size} <br />
-                    <strong>Unit Price:</strong> ${fish.unitPrice} <br />
-                    <strong>Available Quantity:</strong> {fish.quantity} <br />
+                <div className="admin-inventory-view-card-content">
+                  <h5 className="admin-inventory-view-card-title">{fishItem.fishCategory}</h5>
+                  <p className="admin-inventory-view-card-details">
+                    <strong>Gender:</strong> {fishItem.gender} <br />
+                    <strong>Size:</strong> {fishItem.size} <br />
+                    <strong>Unit Price:</strong> ${fishItem.unitPrice} <br />
+                    <strong>Available Quantity:</strong> {fishItem.quantity}
                   </p>
                 </div>
               </div>
-            </div>
-          ))}
+            ))
+          )}
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
