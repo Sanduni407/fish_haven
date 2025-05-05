@@ -9,17 +9,13 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 
 const PlaceOrder = () => {
-
    const { token } = useContext(AppContext);
-
    const [fishCategory, setFishCategory] = useState([]);
    const [shippingAddress, setShippingAddress] = useState('');
    const [shippingDate, setShippingDate] = useState('');
    const [orderType, setOrderType] = useState('');
    const [contact, setContact] = useState('');
    const [cart, setCartItems] = useState([]);
-
-   // Validation States
    const [contactValid, setContactValid] = useState(null);
    const [addressValid, setAddressValid] = useState(null);
    const [quantityValid, setQuantityValid] = useState(null);
@@ -28,15 +24,11 @@ const PlaceOrder = () => {
    const [fishVarietyValid, setFishVarietyValid] = useState(null);
    const [sizeValid, setSizeValid] = useState(null);
    const [genderValid, setGenderValid] = useState(null);
-
-   // Create a cart item
    const [variety, setVariety] = useState('');
    const [size, setSize] = useState('');
    const [gender, setGender] = useState('');
    const [quantity, setQuantity] = useState(0);
 
-
-   //fetch all fis categories
    const fetchAllFishCategory = async () => {
         try {
               const response = await axios.get('http://localhost:4000/api/fish/get-fish-names');
@@ -50,60 +42,44 @@ const PlaceOrder = () => {
            }
        }
 
-
-
    useEffect(() => {
       fetchAllFishCategory();
    }, []);
 
-
-
-   //add fish varities to the order description list
-       const addToCART = (newItem) => {
-
-               if(!variety || !size || !quantity || !gender)
-                  {
+   const addToCART = (newItem) => {
+               if(!variety || !size || !quantity || !gender) {
                       toast.error("Please correct invalid fields");
                       return;
                  }
                      setCartItems(prevstate => [...prevstate, newItem]);
-                       console.log(cart);
+                     setVariety('');
+                     setSize('');
+                     setQuantity('');
+                     setGender('');
+                     setFishVarietyValid(null);
+                     setSizeValid(null);
+                     setQuantityValid(null);
+                     setGenderValid(null);
+   }
 
-                     setVariety('')
-                     setSize('')
-                     setQuantity('')
-                     setGender('')
-
-
-                     setFishVarietyValid(null)
-                     setSizeValid(null)
-                     setQuantityValid(null)
-                     setGenderValid(null)
-                   }
-
-
-    // Contact Number Validation
    const handleContactChange = (e) => {
       const value = e.target.value;
       setContact(value);
       setContactValid(/^\d{10}$/.test(value));
    };
  
-   //shipping address validation
    const handleAddressChange = (e) => {
       const value = e.target.value;
       setShippingAddress(value);
       setAddressValid(/^[a-zA-Z0-9,\/ ]{5,}$/.test(value));
    };
 
-   // Quantity Validation
    const handleQuantityChange = (e) => {
       const value = parseFloat(e.target.value);
       setQuantity(value);
       setQuantityValid(value > 0);
    };
 
-   // shipping date Validation 
    const handleDateChange = (e) => {
       const value = e.target.value;
       const today = new Date();
@@ -114,9 +90,7 @@ const PlaceOrder = () => {
       setDateValid(selectedDate > today);
    };
 
-   // validate details of the dropdowns
    const handleOrderTypeChange = (e) => {
-    
       const value = e.target.value;
       setOrderType(value);
       setOrderTypeValid(value !== '');
@@ -140,156 +114,159 @@ const PlaceOrder = () => {
       setGenderValid(value !== '');
    };
 
-
-
-   //place a order
    const placeOrder = async () => {
-
       if (!contactValid || !addressValid  || !dateValid || !orderTypeValid) {
          toast.error("Please correct invalid fields");
          return;
       }
-
-
       try {
          const response = await axios.post('http://localhost:4000/api/order/create-order', {
             shippingAddress, shippingDate, orderType, contact, cart
          }, { headers: { token } });
-
          if (response.data.success) {
             toast.success('Order placed successfully');
-            console.log(response.data);
-
-            setShippingAddress('')
-            setContact('')
-            setShippingDate('')
-            setOrderType('')
-            setCartItems([])
-
-            setAddressValid(null)
-            setContactValid(null)
-            setDateValid(null)
-            setOrderTypeValid(null)
-
+            setShippingAddress('');
+            setContact('');
+            setShippingDate('');
+            setOrderType('');
+            setCartItems([]);
+            setAddressValid(null);
+            setContactValid(null);
+            setDateValid(null);
+            setOrderTypeValid(null);
          } else {
             toast.error('Order request has been declined');
          }
-
       } catch (err) {
          console.log(err);
       }
    }
 
-
    return (
-
-      <div className='create-order'>
+      <div className='exporter-place-order-container'>
          <SideNavBar role="Exporter" />
-         <div className="content-area">
-            <br/>
-            <Form>
-               <Row>
+         <div className="exporter-place-order-content">
+            <center><h2 className="exporter-place-order-title">Place New Order</h2></center>
+            <Form className="exporter-place-order-form">
+               <Row className="exporter-place-order-row">
                   <Col>
-
-                     <Form.Label>Shipping address</Form.Label>
-                     <Form.Control type='text'  onChange={handleAddressChange} value={shippingAddress} />
-                     {addressValid === false && <p className='error-text'>Invalid Address</p>}
-                    
+                     <Form.Label className="exporter-place-order-label">Shipping Address</Form.Label>
+                     <Form.Control 
+                        className="exporter-place-order-input" 
+                        type='text' 
+                        onChange={handleAddressChange} 
+                        value={shippingAddress} 
+                     />
+                     {addressValid === false && <p className='exporter-place-order-error'>Invalid Address</p>}
                   </Col>
-
                   <Col>
-                     <Form.Label>Expected Shipment Date</Form.Label>
-                     <Form.Control type='date' onChange={handleDateChange} value={shippingDate}/>
-                     {dateValid === false && <p className='error-text'>Select a future date</p>}
-                   
+                     <Form.Label className="exporter-place-order-label">Expected Shipment Date</Form.Label>
+                     <Form.Control 
+                        className="exporter-place-order-input" 
+                        type='date' 
+                        onChange={handleDateChange} 
+                        value={shippingDate}
+                     />
+                     {dateValid === false && <p className='exporter-place-order-error'>Select a future date</p>}
                   </Col>
-
                   <Col>
-                     <Form.Label>Contact Number</Form.Label>
-                     <Form.Control type='text'  onChange={handleContactChange}  value={contact}/>
-                     {contactValid === false && <p className='error-text'>Invalid Contact</p>}
-                    
+                     <Form.Label className="exporter-place-order-label">Contact Number</Form.Label>
+                     <Form.Control 
+                        className="exporter-place-order-input" 
+                        type='text' 
+                        onChange={handleContactChange} 
+                        value={contact}
+                     />
+                     {contactValid === false && <p className='exporter-place-order-error'>Invalid Contact</p>}
                   </Col>
-
                   <Col>
-                     <Form.Label>Order Type</Form.Label>
-                     <Form.Select onChange={handleOrderTypeChange} value={orderType}>
+                     <Form.Label className="exporter-place-order-label">Order Type</Form.Label>
+                     <Form.Select 
+                        className="exporter-place-order-select" 
+                        onChange={handleOrderTypeChange} 
+                        value={orderType}
+                     >
                         <option>Select Order Type</option>
                         <option value="Normal Type">Normal Type</option>
                         <option value="Exporter Type">Exporter Type</option>
                      </Form.Select>
-                     {orderTypeValid === false && <p className='error-text'>Please select a valid order type</p>}
-                    
-                     
+                     {orderTypeValid === false && <p className='exporter-place-order-error'>Please select a valid order type</p>}
                   </Col>
                </Row>
-
-               <br/>
-
-               <Row>
+               <Row className="exporter-place-order-row">
                   <Col>
-                     <Form.Label>Fish Variety</Form.Label>
-                     <Form.Select onChange={handleFishVarietyChange}  value={variety}>
-                        <option>select fish variety</option>
+                     <Form.Label className="exporter-place-order-label">Fish Variety</Form.Label>
+                     <Form.Select 
+                        className="exporter-place-order-select" 
+                        onChange={handleFishVarietyChange} 
+                        value={variety}
+                     >
+                        <option>Select fish variety</option>
                         {fishCategory.map((fish, index) => (
                            <option value={fish} key={index}>{fish}</option>
                         ))}
                      </Form.Select>
-                     {fishVarietyValid === false && <p className='error-text'>Please select a fish variety</p>}
-                    
+                     {fishVarietyValid === false && <p className='exporter-place-order-error'>Please select a fish variety</p>}
                   </Col>
-
                   <Col>
-                     <Form.Label>Fish Size</Form.Label>
-                     <Form.Select onChange={handleSizeChange} value={size}>
-                        <option>select fish size</option>
+                     <Form.Label className="exporter-place-order-label">Fish Size</Form.Label>
+                     <Form.Select 
+                        className="exporter-place-order-select" 
+                        onChange={handleSizeChange} 
+                        value={size}
+                     >
+                        <option>Select fish size</option>
                         <option value="Medium">Medium</option>
                         <option value="Small">Small</option>
                         <option value="Large">Large</option>
                      </Form.Select>
-                     {sizeValid === false && size === '' && <p className='error-text'>Please select a size</p>}
-                    
+                     {sizeValid === false && size === '' && <p className='exporter-place-order-error'>Please select a size</p>}
                   </Col>
-
                   <Col>
-                     <Form.Label>Fish Gender</Form.Label>
-                     <Form.Select onChange={handleGenderChange} value={gender}>
-                        <option>select fish gender</option>
+                     <Form.Label className="exporter-place-order-label">Fish Gender</Form.Label>
+                     <Form.Select 
+                        className="exporter-place-order-select" 
+                        onChange={handleGenderChange} 
+                        value={gender}
+                     >
+                        <option>Select fish gender</option>
                         <option value="Female">Female</option>
                         <option value="Male">Male</option>
                         <option value="Mixed">Mixed</option>
                      </Form.Select>
-                     {genderValid === false && <p className='error-text'>Please select a gender</p>}
-                    
+                     {genderValid === false && <p className='exporter-place-order-error'>Please select a gender</p>}
                   </Col>
-
                   <Col>
-                     <Form.Label>Quantity</Form.Label>
-                     <Form.Control type='number'  onChange={handleQuantityChange} value={quantity} />
-                     {quantityValid === false && <p className='error-text'>Must be greater than 0</p>}
-                    
+                     <Form.Label className="exporter-place-order-label">Quantity</Form.Label>
+                     <Form.Control 
+                        className="exporter-place-order-input" 
+                        type='number' 
+                        onChange={handleQuantityChange} 
+                        value={quantity} 
+                     />
+                     {quantityValid === false && <p className='exporter-place-order-error'>Must be greater than 0</p>}
                   </Col>
                </Row>
+               <div className="exporter-place-order-form-button-container">
+                  <button 
+                     type='button' 
+                     className='exporter-place-order-add-button' 
+                     onClick={() => {
+                        const item = {
+                           variety: variety,
+                           size: size,
+                           gender: gender,
+                           quantity: quantity
+                        }
+                        addToCART(item)
+                     }}
+                  >
+                     + Add Fish
+                  </button>
+               </div>
             </Form>
-
-            <center>
-               <button type='button' className='btn-add-item' onClick={() => {
-                     const item = {
-                        variety: variety,
-                        size: size,
-                        gender: gender,
-                        quantity: quantity
-                     }
-
-                     addToCART(item)
-                  }}
-               >
-                  + Add Fish
-               </button>
-            </center>
-
-            <div className="table-style">
-               <table>
+            <div className="exporter-place-order-table-container">
+               <table className="exporter-place-order-table">
                   <thead>
                      <tr>
                         <th>Variety</th>
@@ -308,7 +285,8 @@ const PlaceOrder = () => {
                               <td>{item.gender}</td>
                               <td>{item.quantity}</td>
                               <td>
-                                 <button  className='btndelete'
+                                 <button 
+                                    className='exporter-place-order-delete-button'
                                     onClick={() => {
                                        setCartItems(cart.filter((_, i) => i !== index));
                                     }}
@@ -321,9 +299,14 @@ const PlaceOrder = () => {
                      })}
                   </tbody>
                </table>
-
-               <br /><br />
-               <button className='btn-add-item' onClick={placeOrder} style={{ width: '200px' }}>Place order</button>
+               <div className="exporter-place-order-submit-container">
+                  <button 
+                     className='exporter-place-order-submit-button' 
+                     onClick={placeOrder}
+                  >
+                     Place Order
+                  </button>
+               </div>
             </div>
          </div>
       </div>

@@ -1,94 +1,159 @@
-.create-order{
+.exporter-place-order-container {
   display: flex;
-  align-items: flex-start; 
-  height: 100vh;
- 
+  min-height: 100vh;
+  background: linear-gradient(90deg, #c8e3f4, #597d98);
 }
 
-
-.content-area{
-  width: calc(100% - 250px); 
-  margin-left: 250px; 
-  padding: 20px;
-  box-sizing: border-box;
-  height: 100%;
-  display:flex;
+.exporter-place-order-content {
+  flex: 1;
+  margin-left: 250px;
+  padding: 30px;
+  display: flex;
   flex-direction: column;
-  gap:30px;
+  gap: 20px;
 }
 
+.exporter-place-order-title {
+  color: #01497c;
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
 
-
-
-.table-style {
-  width: 80%;
-  margin-left: auto;
-  margin-right: auto;
+.exporter-place-order-form {
+  background: white;
   padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  position: relative;
+  margin-left: 15px;
 }
 
-table {
+.exporter-place-order-row {
+  margin-bottom: 20px;
+}
+
+.exporter-place-order-label {
+  color: #01497c;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.exporter-place-order-input,
+.exporter-place-order-select {
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  padding: 10px;
+  font-size: 14px;
+  transition: border-color 0.3s;
+}
+
+.exporter-place-order-input:focus,
+.exporter-place-order-select:focus {
+  border-color: #01497c;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(1, 73, 124, 0.1);
+}
+
+.exporter-place-order-error {
+  color: #dc3545;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.exporter-place-order-form-button-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.exporter-place-order-add-button {
+  background: linear-gradient(90deg, #3f9cde, #1E3A8A);
+  color: white;
+  border: none;
+  width:220px;
+  padding: 10px 24px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background-color 0.3s;
+}
+
+.exporter-place-order-add-button:hover {
+  background-color: #01355a;
+}
+
+.exporter-place-order-table-container {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-left: 15px;
+}
+
+.exporter-place-order-table {
   width: 100%;
   border-collapse: collapse;
-  background-color: white;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  margin-top: 30px;
 }
 
-thead {
-  background-color: #1b263b; 
+.exporter-place-order-table thead {
+  background-color: #01497c;
   color: white;
-  text-align: left;
 }
 
-th, td {
-  padding: 12px 16px;
+.exporter-place-order-table th,
+.exporter-place-order-table td {
+  padding: 12px;
   text-align: center;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid #e5e7eb;
 }
 
-tbody tr:nth-child(even) {
-  background-color: #f8f9fa; 
+.exporter-place-order-table tbody tr:nth-child(even) {
+  background-color: #f8fafc;
 }
 
-tbody tr:hover {
-  background-color: #e9ecef; 
+.exporter-place-order-table tbody tr:hover {
+  background-color: #edf2f7;
 }
 
-.btndelete {
-  background-color: #d9534f; 
+.exporter-place-order-delete-button {
+  background-color: #dc3545;
   color: white;
   border: none;
-  padding: 6px 12px;
-  cursor: pointer;
-  border-radius: 5px;
-  transition: 0.3s;
-}
-
-.btndelete:hover {
-  background-color: #c9302c;
-}
-
-.btn-add-item{
-  background-color: #d9534f; 
   width:150px;
+  padding: 6px 2px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s;
+}
+
+.exporter-place-order-delete-button:hover {
+  background-color: #b02a37;
+}
+
+.exporter-place-order-submit-container {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.exporter-place-order-submit-button {
+  
+  background: linear-gradient(90deg, #3f9cde, #1E3A8A);
   color: white;
   border: none;
-  padding: 10px 12px;
+  width:220px;
+  padding: 9px 32px;
+  border-radius: 6px;
   cursor: pointer;
-  border-radius: 5px;
-  transition: 0.3s;
+  font-size: 16px;
+  font-weight: 500;
+  transition: background-color 0.3s;
+  margin-top: 60px;
 }
 
-
-.valid-text {
-  color: green;
-  margin-left: 3px;
+.exporter-place-order-submit-button:hover {
+  background-color: #01355a;
 }
-
-.error-text {
-  color: red;
-  margin-left: 3px;
-}
-

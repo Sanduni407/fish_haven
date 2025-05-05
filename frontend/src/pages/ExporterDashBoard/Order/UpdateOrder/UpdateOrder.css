@@ -1,162 +1,157 @@
-.create-order{
+.exporter-update-order-container {
   display: flex;
-  align-items: flex-start; 
-  height: 100vh;
- 
+  min-height: 100vh;
+  background: linear-gradient(90deg, #c8e3f4, #597d98);
 }
 
-
-.content-area{
-  width: calc(100% - 250px); 
-  margin-left: 250px; 
-  padding: 20px;
-  box-sizing: border-box;
-  height: 100%;
-  display:flex;
+.exporter-update-order-content {
+  flex: 1;
+  margin-left: 250px;
+  padding: 30px;
+  display: flex;
   flex-direction: column;
-  gap:30px;
+  gap: 20px;
 }
 
-.exporter-details{
-  margin-top: 100px;
-  display: flex;
-  justify-content: center;
-  gap:20px;
+.exporter-update-order-title {
+  color: #01497c;
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 20px;
 }
 
-.fish-details{
-
-  display: flex;
-  justify-content: center;
-  gap:20px;
-}
-
-.exporter-details input{
-  border: none;
-  outline: none;
-  border:1px solid #1b263b;
-  background-color: white;
-  padding:10px 80px;
-  
-}
-
-.fish-details input,select{
-
-  border: none;
-  outline: none;
-  border:1px solid #1b263b;
-  background-color: white;
-  padding:10px 90px;
-}
-
-.fish-details input{
-
-  border: none;
-  outline: none;
-  border:1px solid #1b263b;
-  padding:10px 10px;
-}
-
-
-.exporter-details input,
-.exporter-details select,
-.fish-details input,
-.fish-details select {
-  color: #444; 
-  font-size: 16px;
-  padding: 8px;
-  border-radius: 5px;
-}
-
-
-.exporter-details input::placeholder,
-.fish-details input::placeholder {
-  color: #777; 
-  font-size: 16px;
-  opacity: 1; 
-}
-
-
-.exporter-details input[type="date"] {
-  color: #444; 
-  font-size: 16px;
-}
-
-
-.exporter-details input[type="date"]::-webkit-datetime-edit {
-  color: #777; 
-  font-size: 16px;
-}
-
-.table-style {
-  width: 80%;
-  margin-left: auto;
-  margin-right: auto;
+.exporter-update-order-form {
+  background: white;
   padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  position: relative;
+  margin-left: 15px;
 }
 
-table {
+.exporter-update-order-row {
+  margin-bottom: 20px;
+}
+
+.exporter-update-order-label {
+  color: #01497c;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.exporter-update-order-input,
+.exporter-update-order-select {
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  padding: 10px;
+  font-size: 14px;
+  transition: border-color 0.3s;
+}
+
+.exporter-update-order-input:focus,
+.exporter-update-order-select:focus {
+  border-color: #01497c;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(1, 73, 124, 0.1);
+}
+
+.exporter-update-order-error {
+  color: #dc3545;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.exporter-update-order-form-button-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.exporter-update-order-add-button {
+  background: linear-gradient(90deg, #3f9cde, #1E3A8A);
+  color: white;
+  border: none;
+  width:150px;
+  padding: 10px 24px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background-color 0.3s;
+}
+
+.exporter-update-order-add-button:hover {
+  background-color: #01355a;
+}
+
+.exporter-update-order-table-container {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-left: 15px;
+}
+
+.exporter-update-order-table {
   width: 100%;
   border-collapse: collapse;
-  background-color: white;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-thead {
-  background-color: #1b263b; 
+.exporter-update-order-table thead {
+  background-color: #01497c;
   color: white;
-  text-align: left;
 }
 
-th, td {
-  padding: 12px 16px;
+.exporter-update-order-table th,
+.exporter-update-order-table td {
+  padding: 12px;
   text-align: center;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid #e5e7eb;
 }
 
-tbody tr:nth-child(even) {
-  background-color: #f8f9fa; 
+.exporter-update-order-table tbody tr:nth-child(even) {
+  background-color: #f8fafc;
 }
 
-tbody tr:hover {
-  background-color: #e9ecef; 
+.exporter-update-order-table tbody tr:hover {
+  background-color: #edf2f7;
 }
 
-.btndelete {
-  background-color: #d9534f; 
+.exporter-update-order-delete-button {
+  background-color: #dc3545;
   color: white;
   border: none;
+  width:100px;
   padding: 6px 12px;
+  border-radius: 6px;
   cursor: pointer;
-  border-radius: 5px;
-  transition: 0.3s;
+  font-size: 14px;
+  transition: background-color 0.3s;
 }
 
-.btndelete:hover {
-  background-color: #c9302c;
+.exporter-update-order-delete-button:hover {
+  background-color: #b02a37;
 }
 
-.btn-update{
-  background-color: #d9534f; 
-  width:150px;
+.exporter-update-order-submit-container {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.exporter-update-order-submit-button {
+  background: linear-gradient(90deg, #3f9cde, #1E3A8A);
   color: white;
   border: none;
-  padding: 10px 12px;
+  width:200px;
+  padding: 9px 20px;
+  border-radius: 6px;
+  margin-top: 20px;
   cursor: pointer;
-  border-radius: 5px;
-  transition: 0.3s;
-}
- 
-
-.valid-text {
-  color: green;
-  margin-left: 3px;
+  font-size: 16px;
+  font-weight: 500;
+  transition: background-color 0.3s;
 }
 
-.error-text {
-  color: red;
-  margin-left: 3px;
+.exporter-update-order-submit-button:hover {
+  background-color: #01355a;
 }
-
