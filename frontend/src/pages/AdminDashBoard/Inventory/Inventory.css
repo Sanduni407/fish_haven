@@ -1,0 +1,138 @@
+.admin-inventory-view-container {
+    min-height: 100vh;
+    background: linear-gradient(90deg, #c8e3f4, #597d98);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+  
+  .admin-inventory-view-content {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 40px 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+  
+  .admin-inventory-view-header {
+    text-align: center;
+    margin: 30px 0;
+  }
+  
+  .admin-inventory-view-title {
+    color: #01497c;
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: -0.8px;
+    position: relative;
+    margin-bottom: 16px;
+  }
+  
+  .admin-inventory-view-title::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, #01497c, #0268a6);
+    border-radius: 2px;
+  }
+  
+  .admin-inventory-view-subtitle {
+    color: #4a5568;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.6;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .admin-inventory-view-search {
+    display: flex;
+    justify-content: center;
+    margin: 30px 0;
+  }
+  
+  .admin-inventory-view-search-input {
+    max-width: 500px;
+    width: 100%;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    padding: 12px 12px 12px 40px;
+    font-size: 14px;
+    background: #f8fbff url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="%234a5568" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cx="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>') no-repeat 12px center;
+    background-size: 20px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+  
+  .admin-inventory-view-search-input:focus {
+    border-color: #01497c;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(1, 73, 124, 0.15);
+  }
+  
+  .admin-inventory-view-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 24px;
+  }
+  
+  .admin-inventory-view-card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    border: 1px solid #e5e7eb;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .admin-inventory-view-card:hover {
+    transform: scale(1.03);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+  }
+  
+  .admin-inventory-view-card-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+  }
+  
+  .admin-inventory-view-card-content {
+    padding: 20px;
+  }
+  
+  .admin-inventory-view-card-title {
+    color: #2d3748;
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+  
+  .admin-inventory-view-card-details {
+    color: #4a5568;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.6;
+    margin: 0;
+  }
+  
+  .admin-inventory-view-card-details strong {
+    color: #2d3748;
+    font-weight: 600;
+  }
+  
+  .admin-inventory-view-no-results {
+    grid-column: 1 / -1;
+    text-align: center;
+    color: #6c757d;
+    font-size: 16px;
+    padding: 40px 0;
+  }
+  
+  @media (max-width: 576px) {
+    .admin-inventory-view-search-input {
+      width: 90%;
+    }
+  }

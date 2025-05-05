@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import './Inventory.css';
 import axios from "axios";
 import Form from 'react-bootstrap/Form';
 import { assets } from "../../../assets/assets";
@@ -23,101 +24,51 @@ const Inventory = () => {
   }, [search]);
 
   return (
-    <>
-      {/* Header Section */}
-      <div style={{ textAlign: 'center', margin: '2rem 0' }}>
-        <h2 style={{ fontWeight: 'bold' }}>Premium Export Quality Fish</h2>
-        <p style={{ color: '#6c757d' }}>
-          Explore our finest selection of fresh, high-quality fish sourced from sustainable waters.
-        </p>
-      </div>
+    <div className="admin-inventory-view-container">
+      <div className="admin-inventory-view-content">
+        <div className="admin-inventory-view-header">
+          <h2 className="admin-inventory-view-title">Premium Export Quality Fish</h2>
+          <p className="admin-inventory-view-subtitle">
+            Explore our finest selection of fresh, high-quality fish sourced from sustainable waters.
+          </p>
+        </div>
 
-      {/* Search Bar - Centered */}
-      <div style={{ display: 'flex', justifyContent: 'center', margin: '2rem 0' }}>
-        <div style={{ position: 'relative', width: '100%', maxWidth: '400px' }}>
+        <div className="admin-inventory-view-search">
           <Form.Control
             type="search"
-            placeholder="  Search here..."
+            placeholder="Search here..."
+            className="admin-inventory-view-search-input"
             onChange={e => setSearch(e.target.value)}
-            style={{
-              backgroundColor: '#edf2f4',
-              paddingLeft: '35px',
-              outline: 'none',
-              boxShadow: 'none',
-              border: 'none',
-              width: '100%'
-            }}
           />
         </div>
-      </div>
 
-      {/* Fish Cards Grid with proper spacing */}
-      <div style={{ 
-        maxWidth: '1200px', 
-        margin: '0 auto', 
-        padding: '0 15px'
-      }}>
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(270px, 1fr))',
-          gap: '20px',
-          justifyContent: 'center'
-        }}>
+        <div className="admin-inventory-view-grid">
           {fish.length === 0 ? (
-            <p style={{ textAlign: 'center', gridColumn: '1/-1' }}>No fish found.</p>
+            <p className="admin-inventory-view-no-results">No fish found.</p>
           ) : (
             fish.map((fishItem, index) => (
-              <div
-                key={index}
-                style={{
-                  minWidth: '270px',
-                  transition: 'transform 0.3s ease'
-                }}
-              >
-                <div style={{
-                  height: '100%',
-                  borderRadius: '4px',
-                  overflow: 'hidden',
-                  boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
-                  border: 'none',
-                  transition: 'all 0.3s ease'
-                }}>
-                  <img
-                    src={`http://localhost:4000/images/${fishItem.image}`}
-                    style={{ 
-                      width: '100%',
-                      height: '180px',
-                      objectFit: 'cover',
-                      display: 'block'
-                    }}
-                    alt={fishItem.fishCategory}
-                  />
-                  <div style={{ padding: '1.25rem' }}>
-                    <h5 style={{ 
-                      marginBottom: '0.75rem',
-                      fontSize: '1.25rem',
-                      fontWeight: '500'
-                    }}>
-                      {fishItem.fishCategory}
-                    </h5>
-                    <p style={{ 
-                      marginBottom: '0',
-                      color: '#212529',
-                      lineHeight: '1.6'
-                    }}>
-                      <strong>Gender:</strong> {fishItem.gender} <br />
-                      <strong>Size:</strong> {fishItem.size} <br />
-                      <strong>Unit Price:</strong> ${fishItem.unitPrice} <br />
-                      <strong>Available Quantity:</strong> {fishItem.quantity} <br />
-                    </p>
-                  </div>
+              <div className="admin-inventory-view-card" key={index}>
+                <img
+                  src={`http://localhost:4000/images/${fishItem.image}`}
+                  alt={fishItem.fishCategory}
+                  className="admin-inventory-view-card-image"
+                  onError={(e) => { e.target.src = assets.placeholder_fish; }}
+                />
+                <div className="admin-inventory-view-card-content">
+                  <h5 className="admin-inventory-view-card-title">{fishItem.fishCategory}</h5>
+                  <p className="admin-inventory-view-card-details">
+                    <strong>Gender:</strong> {fishItem.gender} <br />
+                    <strong>Size:</strong> {fishItem.size} <br />
+                    <strong>Unit Price:</strong> ${fishItem.unitPrice} <br />
+                    <strong>Available Quantity:</strong> {fishItem.quantity}
+                  </p>
                 </div>
               </div>
             ))
           )}
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
