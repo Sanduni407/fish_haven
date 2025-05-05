@@ -1,19 +1,156 @@
-.main {
+.view-user-acc-container {
     display: flex;
     align-items: flex-start;
-    height: 100vh;
-}
-
-
-.exporter-table-container {
+    min-height: 100vh;
+    background: linear-gradient(90deg, #123248, #1E3A8A);
+    position: relative;
+    overflow: hidden;
+    padding: 20px;
+  }
+  
+  /* Table container with card styling */
+  .view-user-acc-table-container {
     width: calc(100% - 250px);
-    margin-left: 250px; 
+    margin-left: 250px;
     padding: 20px;
     box-sizing: border-box;
-}
-
-.btn-btn{
-    width:200px;
-    color:white;
+    background: #F7F9FC;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Button styling */
+  .view-user-acc-button {
+    width: 200px;
+    padding: 12px;
     margin-left: 20px;
-}
+    margin-bottom: 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: linear-gradient(90deg, #3f9cde, #1E3A8A);
+    color: white;
+    text-transform: uppercase;
+  }
+  
+  .view-user-acc-button:hover {
+    background: linear-gradient(90deg, #3145a0, #6a91d4);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(255, 215, 0, 0.4);
+  }
+  
+  .view-user-acc-button:first-child {
+    margin-left: 0;
+  }
+  
+  /* Table styling */
+  .view-user-acc-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: #FFFFFF;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid #E0E0E0;
+  }
+  
+  .view-user-acc-table thead {
+    background: linear-gradient(90deg, #123248, #1E3A8A);
+    color: white;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+  }
+  
+  .view-user-acc-table th {
+    padding: 15px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 16px;
+    border-bottom: 2px solid #ddd;
+  }
+  
+  .view-user-acc-table tbody tr:nth-child(even) {
+    background: #F5F7FA;
+  }
+  
+  .view-user-acc-table tbody tr:hover {
+    background: #E8F5E9;
+    transition: background 0.3s ease;
+  }
+  
+  .view-user-acc-table td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #E0E0E0;
+    font-size: 14px;
+    color: #424242;
+  }
+  
+  .view-user-acc-table td:last-child {
+    text-align: center;
+  }
+  
+  .view-user-acc-table-btn {
+    padding: 8px 15px;
+    font-size: 14px;
+    border-radius: 5px;
+    background: #D32F2F;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  .view-user-acc-table-btn:hover {
+    background: #C62828;
+  }
+  
+  /* Placeholder for loading state (optional, can be styled further) */
+  .view-user-acc-table-container:empty::after {
+    content: 'Loading user accounts...';
+    display: block;
+    text-align: center;
+    color: #666;
+    padding: 20px;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .view-user-acc-container {
+      flex-direction: column;
+      height: auto;
+    }
+  
+    .view-user-acc-table-container {
+      width: 100%;
+      margin-left: 0;
+      margin-top: 20px;
+    }
+  
+    .view-user-acc-button {
+      width: 100%;
+      margin-left: 0;
+      margin-bottom: 10px;
+    }
+  
+    .view-user-acc-table {
+      display: block;
+      overflow-x: auto;
+    }
+  
+    .view-user-acc-table th,
+    .view-user-acc-table td {
+      min-width: 120px;
+      padding: 10px;
+      font-size: 12px;
+    }
+  
+    .view-user-acc-table-btn {
+      padding: 6px 12px;
+      font-size: 12px;
+    }
+  }

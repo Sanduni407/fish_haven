@@ -1,16 +1,138 @@
-.admin-create-acc-container {
-    display: flex;
-    height: 100vh; 
+.create-acc-form-container {
+  display: flex;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #E6F0FA, #FFFFFF);
+  position: relative;
+  overflow: hidden;
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.create-acc-form-left-column {
+  width: 250px;
+  padding: 20px;
+}
+
+.create-acc-form-right-column {
+  flex-grow: 1;
+  padding: 20px;
+  display: flex;
+  flex-direction: column; /* Changed to column to stack form and button vertically */
+  justify-content: center;
+  align-items: center;
+}
+
+/* Form container with transparent gradient and glassmorphism styling */
+.create-acc-form-right-column form {
+  background: linear-gradient(90deg, #123248, #1E3A8A);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 30px;
+  width: 100%;
+  max-width: 900px;
+  margin: 0;
+  transition: transform 0.3s ease;
+}
+
+.create-acc-form-right-column form:hover {
+  transform: translateY(-5px);
+}
+
+/* Form label styling */
+.create-acc-form-label {
+  font-weight: 600;
+  color: #fcfdfd;
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+/* Form input and select styling */
+.create-acc-form-control,
+.create-acc-form-select {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 10px;
+  border: 1px solid #B0BEC5;
+  border-radius: 8px;
+  background: #FFFFFF;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  color: #333;
+}
+
+.create-acc-form-control:focus,
+.create-acc-form-select:focus {
+  border-color: #0288D1;
+  outline: none;
+  box-shadow: 0 0 8px rgba(2, 136, 209, 0.2);
+  background: #F5F9FF;
+}
+
+/* Row spacing */
+.create-acc-form-row {
+  margin-bottom: 15px;
+}
+
+/* Button styling */
+.create-acc-form-button {
+  width: 300px;
+  padding: 12px;
+  margin-top: 20px; /* Space above button at the bottom */
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: linear-gradient(90deg, #0288D1, #1E3A8A);
+  color: white;
+  text-transform: uppercase;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.create-acc-form-button:hover {
+  background: linear-gradient(90deg, #0277BD, #1565C0);
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(2, 136, 209, 0.3);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .create-acc-form-container {
+    flex-direction: column;
+    height: auto;
   }
-  
-  .admin-create-acc-container .left-column {
-    width: 250px; 
+
+  .create-acc-form-left-column {
+    width: 100%;
+    padding: 10px;
+  }
+
+  .create-acc-form-right-column {
+    padding: 10px;
+  }
+
+  .create-acc-form-right-column form {
     padding: 20px;
   }
-  
-  .admin-create-acc-container .right-column {
-    flex-grow: 1; 
-      padding: 20px;
-  
+
+  .create-acc-form-label {
+    font-size: 12px;
   }
-  
+
+  .create-acc-form-control,
+  .create-acc-form-select {
+    padding: 10px;
+    font-size: 12px;
+  }
+
+  .create-acc-form-button {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+  }
+}
