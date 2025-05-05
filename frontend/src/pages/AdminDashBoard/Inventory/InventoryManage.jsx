@@ -1,14 +1,16 @@
 import React, { useContext, useEffect, useState } from 'react';
+import './InventoryManage.css';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
+import Table from 'react-bootstrap/Table';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import { AppContext } from '../../../context/AppContext';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import SideNavBar from '../../../components/SideNavBar/SideNavBar';
-import {assets} from '../../../assets/assets'
+import {assets} from '../../../assets/assets';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 
@@ -16,7 +18,7 @@ const InventoryManage = () => {
   const { token } = useContext(AppContext);
   const [modalShow, setModalShow] = useState(false);
 
-  const[image,setImage] =useState(false)
+  const[image,setImage] =useState(false);
   const [fishCategory, setfishCategory] = useState('');
   const [gender, setgender] = useState('');
   const [size, setsize] = useState('');
@@ -27,20 +29,17 @@ const InventoryManage = () => {
   const [id, setId] = useState('');
 
   const validateForm = () => {
-    
     const nameEn = /^[a-zA-Z\s]+$/;
     if (!nameEn.test(fishCategory)) {
       toast.error('Fish name must only contain letters!');
       return false;
     }
 
-    
     if (unitPrice <= 0) {
       toast.error('Unit price must be a positive number!');
       return false;
     }
 
-    
     if (quantity <= 0) {
       toast.error('Quantity must be a positive number!');
       return false;
@@ -50,11 +49,9 @@ const InventoryManage = () => {
   };
 
   const createfish = async () => {
-    
     if (!validateForm()) {
       return;
     }
-
 
     if (!fishCategory || !gender || !size || unitPrice === 0 || quantity === 0) {
       toast.error('All fields are required!');
@@ -62,31 +59,27 @@ const InventoryManage = () => {
     }
 
     try {
-
       const formData = new FormData();
-
-      formData.append("fishCategory",fishCategory)
-      formData.append("gender",gender)
-      formData.append("size",size)
-      formData.append("unitPrice",unitPrice)
-      formData.append("quantity",quantity)
-      formData.append("image",image)
-
+      formData.append("fishCategory",fishCategory);
+      formData.append("gender",gender);
+      formData.append("size",size);
+      formData.append("unitPrice",unitPrice);
+      formData.append("quantity",quantity);
+      formData.append("image",image);
 
       const response = await axios.post('http://localhost:4000/api/fish/create-fish',
-          formData
-         ,{headers:{token}})
+          formData,
+         {headers:{token}});
 
       if (response.data.success) {
         toast.success(response.data.message);
         getFishById();
-
-          setfishCategory("")
-          setgender('')
-          setsize('')
-          setunitPrice(0)
-          setquantity(0)
-          setImage(false)
+        setfishCategory("");
+        setgender('');
+        setsize('');
+        setunitPrice(0);
+        setquantity(0);
+        setImage(false);
       }
     } catch (err) {
       console.log(err);
@@ -158,12 +151,11 @@ const InventoryManage = () => {
         toast.success('Fish updated successfully');
         getFishById();
         setModalShow(false);
-
-        setfishCategory("")
-          setgender('')
-          setsize('')
-          setunitPrice(0)
-          setquantity(0)
+        setfishCategory("");
+        setgender('');
+        setsize('');
+        setunitPrice(0);
+        setquantity(0);
       }
     } catch (err) {
       console.log(err);
@@ -173,10 +165,6 @@ const InventoryManage = () => {
   useEffect(() => {
     getFishById();
   }, []);
-
-
-
-
 
   const downloadFishInventoryPDF = async () => {
     try {
@@ -193,28 +181,23 @@ const InventoryManage = () => {
         const pageWidth = doc.internal.pageSize.getWidth();
         const margin = 10;
   
-        // Border around the page
         doc.setDrawColor(0);
         doc.setLineWidth(0.5);
         doc.rect(margin, margin, pageWidth - margin * 2, 270);
   
-        // Header: Fish Haven
         doc.setFontSize(14);
         doc.setFont("helvetica", "bold");
         doc.text("Fish Haven", margin + 2, 18);
   
-        // Date & Time
         const generatedAt = new Date().toLocaleString();
         doc.setFontSize(10);
         doc.setFont("helvetica", "normal");
         doc.text(`Generated on: ${generatedAt}`, margin + 2, 25);
   
-        // Title centered
         doc.setFontSize(18);
         doc.setFont("helvetica", "bold");
         doc.text("Fish Inventory Report", pageWidth / 2, 40, { align: "center" });
   
-        // Add table headers
         const tableHead = [['Fish Category', 'Gender', 'Size', 'Unit Price ($)', 'Quantity']];
         const tableBody = fishes.map(fish => [
           fish.fishCategory,
@@ -224,14 +207,13 @@ const InventoryManage = () => {
           `${fish.quantity}`
         ]);
   
-        // Generate styled table similar to Order PDF
         autoTable(doc, {
           head: tableHead,
           body: tableBody,
           startY: 50,
           theme: 'grid',
           headStyles: {
-            fillColor: [15, 30, 80],  // Dark navy blue
+            fillColor: [15, 30, 80],
             textColor: 255,
             fontSize: 11,
             fontStyle: 'bold'
@@ -246,7 +228,6 @@ const InventoryManage = () => {
           margin: { left: margin + 5, right: margin + 5 }
         });
   
-        // Save the file
         doc.save("Fish_Inventory_Report.pdf");
       } else {
         toast.error("Failed to fetch fish data for PDF.");
@@ -256,84 +237,104 @@ const InventoryManage = () => {
       toast.error("Failed to generate PDF.");
     }
   };
-  
-
-  
 
   return (
-    <div className="supplier-add-fish-container">
-      <div className="left-column">
-        <SideNavBar role="Admin" />
-      </div>
-      <div className="right-column">
-        <Form style={{ marginTop: '30px' }}>
-
-        <Row>
-        <Form.Label htmlFor='image'>
-            <img src={image?URL.createObjectURL(image):assets.upload_area} alt="" />
-        </Form.Label>
-
-        <Form.Control onChange={(e)=>setImage(e.target.files[0])}   type='file' id='image' hidden required/>
-
-        </Row>
-
-          <Row>
-            <Col>
-              <Form.Control
-                type="text"
-                value={fishCategory}
-                onChange={(e) => setfishCategory(e.target.value)}
-                placeholder="Fish category (e.g., Fighter)"
-              />
-            </Col>
-            <Col>
-              <Form.Select onChange={(e) => setgender(e.target.value)} placeholder="Gender">
-                <option>Select gender</option>
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-                <option value="Missed">Missed</option>
-              </Form.Select>
-            </Col>
-            <Col>
-              <Form.Select onChange={(e) => setsize(e.target.value)} placeholder="Size">
-                <option>Select size</option>
-                <option value="small">Small</option>
-                <option value="Medium">Medium</option>
-                <option value="Large">Large</option>
-              </Form.Select>
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <Form.Control
-                value={unitPrice}
-                type="number"
-                onChange={(e) => setunitPrice(e.target.value)}
-                placeholder="Unit Price"
-              />
-            </Col>
-            <Col>
-              <Form.Control
-                type="number"
-                value={quantity}
-                onChange={(e) => setquantity(e.target.value)}
-                placeholder="Available Quantity"
-              />
-            </Col>
-          </Row>
-        </Form>
-        <center>
-          <button
-            className="btnadd"
+    <div className="admin-inventory-manage-container">
+      <SideNavBar role="Admin" />
+      <div className="admin-inventory-manage-content">
+        <h2 className="admin-inventory-manage-title">Manage Inventory</h2>
+        <div className="admin-inventory-manage-form">
+          <Form>
+            <Row className="admin-inventory-manage-row">
+              <Col>
+                <Form.Label className="admin-inventory-manage-label" htmlFor="fish-image">
+                  <div className="admin-inventory-manage-image-preview">
+                    <img
+                      src={image ? URL.createObjectURL(image) : assets.upload_area}
+                      alt="Fish preview"
+                    />
+                  </div>
+                </Form.Label>
+                <Form.Control
+                  onChange={(e) => setImage(e.target.files[0])}
+                  type="file"
+                  id="fish-image"
+                  accept="image/*"
+                  hidden
+                  required
+                />
+              </Col>
+            </Row>
+            <Row className="admin-inventory-manage-row">
+              <Col>
+                <Form.Label className="admin-inventory-manage-label">Fish Category</Form.Label>
+                <Form.Control
+                  className="admin-inventory-manage-input"
+                  type="text"
+                  value={fishCategory}
+                  onChange={(e) => setfishCategory(e.target.value)}
+                  placeholder="Fish category (e.g., Fighter)"
+                />
+              </Col>
+              <Col>
+                <Form.Label className="admin-inventory-manage-label">Gender</Form.Label>
+                <Form.Select
+                  className="admin-inventory-manage-select"
+                  onChange={(e) => setgender(e.target.value)}
+                  value={gender}
+                >
+                  <option value="">Select gender</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                  <option value="Missed">Missed</option>
+                </Form.Select>
+              </Col>
+              <Col>
+                <Form.Label className="admin-inventory-manage-label">Size</Form.Label>
+                <Form.Select
+                  className="admin-inventory-manage-select"
+                  onChange={(e) => setsize(e.target.value)}
+                  value={size}
+                >
+                  <option value="">Select size</option>
+                  <option value="small">Small</option>
+                  <option value="Medium">Medium</option>
+                  <option value="Large">Large</option>
+                </Form.Select>
+              </Col>
+            </Row>
+            <Row className="admin-inventory-manage-row">
+              <Col>
+                <Form.Label className="admin-inventory-manage-label">Unit Price</Form.Label>
+                <Form.Control
+                  className="admin-inventory-manage-input"
+                  type="number"
+                  value={unitPrice}
+                  onChange={(e) => setunitPrice(e.target.value)}
+                  placeholder="Unit Price"
+                />
+              </Col>
+              <Col>
+                <Form.Label className="admin-inventory-manage-label">Available Quantity</Form.Label>
+                <Form.Control
+                  className="admin-inventory-manage-input"
+                  type="number"
+                  value={quantity}
+                  onChange={(e) => setquantity(e.target.value)}
+                  placeholder="Available Quantity"
+                />
+              </Col>
+            </Row>
+          </Form>
+          <Button
+            className="admin-inventory-manage-add-button"
             onClick={createfish}
-            style={{ width: '200px', backgroundColor: '#1e194d', color: 'white', marginBottom: '30px', marginTop: '20px' }}
           >
-            + Add Fish to Catalogue
-          </button>
-        </center>
-
-        <div className="table-style">
-          <table>
+            Add Fish to Catalogue
+          </Button>
+        </div>
+        <div className="admin-inventory-manage-table-container">
+          <Table responsive="md" className="admin-inventory-manage-table">
             <thead>
               <tr>
                 <th>Fish Name (Category)</th>
@@ -355,102 +356,131 @@ const InventoryManage = () => {
                   <td>{fish.quantity}</td>
                   <td>
                     <button
-                      style={{ backgroundColor: '#a93226', color: 'white' }}
+                      className="admin-inventory-manage-remove-button"
                       onClick={() => deletefish(fish._id)}
                     >
-                      Remove
+                      <img src={assets.deleteimg} alt="delete" />
                     </button>
                   </td>
                   <td>
                     <button
-                      style={{ backgroundColor: '#16a085', color: 'white' }}
+                      className="admin-inventory-manage-update-button"
                       onClick={() => {
                         getFishByFishId(fish._id);
                         setModalShow(true);
                       }}
                     >
-                      Update
+                      <img src={assets.editimg} alt="edit" />
                     </button>
                   </td>
                 </tr>
               ))}
             </tbody>
-          </table><br/>
-
-          
-      
-  <button
-    className="btnadd"
-    onClick={downloadFishInventoryPDF}
-    style={{ width: '250px', backgroundColor: '#34495e', color: 'white', marginBottom: '30px' }}
-  >
-    📄 Download Report
-  </button>
-
+          </Table>
+          <Button
+            className="admin-inventory-manage-download-button"
+            onClick={downloadFishInventoryPDF}
+          >
+            📄 Download Report
+          </Button>
         </div>
-      </div>
-
-
-
-
-
-
-      <Modal show={modalShow} onHide={()=>{setModalShow(false)}} centered>
+        <Modal show={modalShow} onHide={() => setModalShow(false)} centered>
           <Modal.Header closeButton>
-            <Modal.Title>Update Fish Details</Modal.Title>
+            <Modal.Title className="admin-inventory-manage-modal-title">
+              Update Fish Details
+            </Modal.Title>
           </Modal.Header>
           <Modal.Body>
-          <Form style={{marginTop:'30px'}}>
-
-        <Row>
-        <Col> 
-            <Form.Control type='text' value={fishCategory} onChange={(e)=>{setfishCategory(e.target.value)}} placeholder='fish name (fish category ex-: fighter'/>
-          </Col>
-  
-          <Col>
-            <Form.Select  value={gender} onChange={(e)=>{setgender(e.target.value)}} placeholder='gender'>
-            <option>Select gender</option>
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
-            <option value="Missed">Missed</option>
-              </Form.Select>
-            
-          </Col>
-          <Col>
-            <Form.Select  value={size} onChange={(e)=>{setsize(e.target.value)}} placeholder='fish size'>
-            <option>Select size</option>
-            <option value="small">small</option>
-            <option value="Medium">Medium</option>
-            <option value="Large">Large</option>
-              </Form.Select>
-            
-          </Col>
-         
-        </Row>
-        <Row> 
-          <Col>
-            <Form.Control value={unitPrice} onChange={(e)=>{setunitPrice(parseFloat(e.target.value))}} placeholder='Unit Price'/>
-          </Col>
-        <Col>
-            <Form.Control type='Number' value={quantity} onChange={(e)=>{setquantity(parseFloat(e.target.value))}} placeholder='Available Quantity'/>
-          </Col>   
-        </Row>
-      </Form>  
+            <Form>
+              <Row className="admin-inventory-manage-modal-row">
+                <Col>
+                  <Form.Label className="admin-inventory-manage-modal-label">
+                    Fish Category
+                  </Form.Label>
+                  <Form.Control
+                    className="admin-inventory-manage-modal-input"
+                    type="text"
+                    value={fishCategory}
+                    onChange={(e) => setfishCategory(e.target.value)}
+                    placeholder="Fish category (e.g., Fighter)"
+                  />
+                </Col>
+                <Col>
+                  <Form.Label className="admin-inventory-manage-modal-label">
+                    Gender
+                  </Form.Label>
+                  <Form.Select
+                    className="admin-inventory-manage-modal-select"
+                    value={gender}
+                    onChange={(e) => setgender(e.target.value)}
+                  >
+                    <option value="">Select gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Missed">Missed</option>
+                  </Form.Select>
+                </Col>
+                <Col>
+                  <Form.Label className="admin-inventory-manage-modal-label">
+                    Size
+                  </Form.Label>
+                  <Form.Select
+                    className="admin-inventory-manage-modal-select"
+                    value={size}
+                    onChange={(e) => setsize(e.target.value)}
+                  >
+                    <option value="">Select size</option>
+                    <option value="small">Small</option>
+                    <option value="Medium">Medium</option>
+                    <option value="Large">Large</option>
+                  </Form.Select>
+                </Col>
+              </Row>
+              <Row className="admin-inventory-manage-modal-row">
+                <Col>
+                  <Form.Label className="admin-inventory-manage-modal-label">
+                    Unit Price
+                  </Form.Label>
+                  <Form.Control
+                    className="admin-inventory-manage-modal-input"
+                    value={unitPrice}
+                    onChange={(e) => setunitPrice(parseFloat(e.target.value))}
+                    placeholder="Unit Price"
+                  />
+                </Col>
+                <Col>
+                  <Form.Label className="admin-inventory-manage-modal-label">
+                    Available Quantity
+                  </Form.Label>
+                  <Form.Control
+                    className="admin-inventory-manage-modal-input"
+                    type="number"
+                    value={quantity}
+                    onChange={(e) => setquantity(parseFloat(e.target.value))}
+                    placeholder="Available Quantity"
+                  />
+                </Col>
+              </Row>
+            </Form>
           </Modal.Body>
           <Modal.Footer>
-          <Button variant="secondary" style={{backgroundColor:'#16a085'}} onClick={updateFish}>
+            <Button
+              className="admin-inventory-manage-modal-update-button"
+              onClick={updateFish}
+            >
               Update
             </Button>
-            <Button variant="secondary" onClick={()=> setModalShow(false)}>
+            <Button
+              className="admin-inventory-manage-modal-close-button"
+              onClick={() => setModalShow(false)}
+            >
               Close
             </Button>
           </Modal.Footer>
         </Modal>
-
-
+      </div>
     </div>
   );
 };
 
 export default InventoryManage;
-

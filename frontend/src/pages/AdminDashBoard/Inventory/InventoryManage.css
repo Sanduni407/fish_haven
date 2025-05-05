@@ -1,11 +1,11 @@
-.admin-assign-vehicle-container {
+.admin-inventory-manage-container {
     display: flex;
     min-height: 100vh;
     background: linear-gradient(90deg, #c8e3f4, #597d98);
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   }
   
-  .admin-assign-vehicle-content {
+  .admin-inventory-manage-content {
     flex: 1;
     margin-left: 250px;
     padding: 40px;
@@ -14,7 +14,7 @@
     gap: 30px;
   }
   
-  .admin-assign-vehicle-title {
+  .admin-inventory-manage-title {
     color: #01497c;
     font-size: 32px;
     font-weight: 700;
@@ -23,7 +23,7 @@
     position: relative;
   }
   
-  .admin-assign-vehicle-title::after {
+  .admin-inventory-manage-title::after {
     content: '';
     position: absolute;
     bottom: -8px;
@@ -34,7 +34,7 @@
     border-radius: 2px;
   }
   
-  .admin-assign-vehicle-form {
+  .admin-inventory-manage-form {
     background: white;
     padding: 24px;
     border-radius: 12px;
@@ -42,20 +42,20 @@
     border: 1px solid #e5e7eb;
   }
   
-  .admin-assign-vehicle-row {
+  .admin-inventory-manage-row {
     margin-bottom: 20px;
   }
   
-  .admin-assign-vehicle-label {
+  .admin-inventory-manage-label {
     font-size: 14px;
     font-weight: 600;
     color: #2d3748;
     margin-bottom: 8px;
+    cursor: pointer;
   }
   
-  .admin-assign-vehicle-input,
-  .admin-assign-vehicle-select,
-  .admin-assign-vehicle-search-input {
+  .admin-inventory-manage-input,
+  .admin-inventory-manage-select {
     border: 1px solid #d1d5db;
     border-radius: 8px;
     padding: 12px;
@@ -64,27 +64,36 @@
     transition: border-color 0.3s, box-shadow 0.3s;
   }
   
-  .admin-assign-vehicle-input:focus,
-  .admin-assign-vehicle-select:focus,
-  .admin-assign-vehicle-search-input:focus {
+  .admin-inventory-manage-input:focus,
+  .admin-inventory-manage-select:focus {
     border-color: #01497c;
     outline: none;
     box-shadow: 0 0 0 3px rgba(1, 73, 124, 0.15);
   }
   
-  .admin-assign-vehicle-input[readOnly] {
-    background: #e9ecef;
-    cursor: not-allowed;
+  .admin-inventory-manage-image-preview {
+    background: #f8fbff;
+    border: 2px dashed #d1d5db;
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    margin-bottom: 12px;
+    transition: border-color 0.3s;
   }
   
-  .admin-assign-vehicle-search-input {
-    width: 300px;
-    max-width: 90%;
-    margin: 20px auto;
-    display: block;
+  .admin-inventory-manage-image-preview:hover {
+    border-color: #01497c;
   }
   
-  .admin-assign-vehicle-place-button {
+  .admin-inventory-manage-image-preview img {
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+  
+  .admin-inventory-manage-add-button {
     background: linear-gradient(90deg, #01497c 0%, #0268a6 100%);
     color: white;
     border: none;
@@ -99,13 +108,13 @@
     transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
   }
   
-  .admin-assign-vehicle-place-button:hover {
+  .admin-inventory-manage-add-button:hover {
     background: linear-gradient(90deg, #01355a 0%, #01497c 100%);
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(1, 73, 124, 0.3);
   }
   
-  .admin-assign-vehicle-table-container {
+  .admin-inventory-manage-table-container {
     background: white;
     padding: 24px;
     border-radius: 12px;
@@ -113,40 +122,40 @@
     border: 1px solid #e5e7eb;
   }
   
-  .admin-assign-vehicle-table {
+  .admin-inventory-manage-table {
     width: 100%;
     border-collapse: separate;
     border-spacing: 0;
   }
   
-  .admin-assign-vehicle-table thead {
+  .admin-inventory-manage-table thead {
     background: linear-gradient(90deg, #01497c 0%, #0268a6 100%);
     color: white;
   }
   
-  .admin-assign-vehicle-table th,
-  .admin-assign-vehicle-table td {
+  .admin-inventory-manage-table th,
+  .admin-inventory-manage-table td {
     padding: 14px;
     text-align: center;
     border-bottom: 1px solid #e5e7eb;
   }
   
-  .admin-assign-vehicle-table th {
+  .admin-inventory-manage-table th {
     font-weight: 600;
     font-size: 14px;
     letter-spacing: 0.5px;
   }
   
-  .admin-assign-vehicle-table tbody tr:nth-child(even) {
+  .admin-inventory-manage-table tbody tr:nth-child(even) {
     background: #f8fbff;
   }
   
-  .admin-assign-vehicle-table tbody tr:hover {
+  .admin-inventory-manage-table tbody tr:hover {
     background: #e6f0fa;
     transition: background 0.2s;
   }
   
-  .admin-assign-vehicle-update-button {
+  .admin-inventory-manage-update-button {
     background: transparent;
     border: none;
     padding: 8px;
@@ -160,17 +169,17 @@
     transition: background 0.3s, box-shadow 0.3s;
   }
   
-  .admin-assign-vehicle-update-button:hover {
+  .admin-inventory-manage-update-button:hover {
     background: #d4edda;
     box-shadow: 0 2px 8px rgba(40, 167, 69, 0.2);
   }
   
-  .admin-assign-vehicle-update-button img {
+  .admin-inventory-manage-update-button img {
     width: 20px;
     height: 20px;
   }
   
-  .admin-assign-vehicle-delete-button {
+  .admin-inventory-manage-remove-button {
     background: transparent;
     border: none;
     padding: 8px;
@@ -184,36 +193,56 @@
     transition: background 0.3s, box-shadow 0.3s;
   }
   
-  .admin-assign-vehicle-delete-button:hover {
+  .admin-inventory-manage-remove-button:hover {
     background: #f8d7da;
     box-shadow: 0 2px 8px rgba(220, 53, 69, 0.2);
   }
   
-  .admin-assign-vehicle-delete-button img {
+  .admin-inventory-manage-remove-button img {
     width: 20px;
     height: 20px;
   }
   
-  .admin-assign-vehicle-modal-title {
+  .admin-inventory-manage-download-button {
+    background: linear-gradient(90deg, #01497c 0%, #0268a6 100%);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    width: 250px;
+    margin-top: 20px;
+    transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
+  }
+  
+  .admin-inventory-manage-download-button:hover {
+    background: linear-gradient(90deg, #01355a 0%, #01497c 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(1, 73, 124, 0.3);
+  }
+  
+  .admin-inventory-manage-modal-title {
     color: #01497c;
     font-size: 22px;
     font-weight: 700;
     letter-spacing: -0.3px;
   }
   
-  .admin-assign-vehicle-modal-row {
+  .admin-inventory-manage-modal-row {
     margin-bottom: 20px;
   }
   
-  .admin-assign-vehicle-modal-label {
+  .admin-inventory-manage-modal-label {
     font-size: 14px;
     font-weight: 600;
     color: #2d3748;
     margin-bottom: 8px;
   }
   
-  .admin-assign-vehicle-modal-input,
-  .admin-assign-vehicle-modal-select {
+  .admin-inventory-manage-modal-input,
+  .admin-inventory-manage-modal-select {
     border: 1px solid #d1d5db;
     border-radius: 8px;
     padding: 12px;
@@ -222,19 +251,14 @@
     transition: border-color 0.3s, box-shadow 0.3s;
   }
   
-  .admin-assign-vehicle-modal-input:focus,
-  .admin-assign-vehicle-modal-select:focus {
+  .admin-inventory-manage-modal-input:focus,
+  .admin-inventory-manage-modal-select:focus {
     border-color: #01497c;
     outline: none;
     box-shadow: 0 0 0 3px rgba(1, 73, 124, 0.15);
   }
   
-  .admin-assign-vehicle-modal-input[readOnly] {
-    background: #e9ecef;
-    cursor: not-allowed;
-  }
-  
-  .admin-assign-vehicle-modal-update-button {
+  .admin-inventory-manage-modal-update-button {
     background: linear-gradient(90deg, #28a745 0%, #34c759 100%);
     color: white;
     border: none;
@@ -247,13 +271,13 @@
     transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
   }
   
-  .admin-assign-vehicle-modal-update-button:hover {
+  .admin-inventory-manage-modal-update-button:hover {
     background: linear-gradient(90deg, #218838 0%, #28a745 100%);
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
   }
   
-  .admin-assign-vehicle-modal-close-button {
+  .admin-inventory-manage-modal-close-button {
     background: linear-gradient(90deg, #6c757d 0%, #5a6268 100%);
     color: white;
     border: none;
@@ -266,7 +290,7 @@
     transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
   }
   
-  .admin-assign-vehicle-modal-close-button:hover {
+  .admin-inventory-manage-modal-close-button:hover {
     background: linear-gradient(90deg, #5a6268 0%, #4b5259 100%);
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(108, 117, 125, 0.3);

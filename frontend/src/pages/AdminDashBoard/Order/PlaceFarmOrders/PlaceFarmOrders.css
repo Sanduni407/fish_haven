@@ -1,59 +1,247 @@
-.admin-farm-orders-container{
-    display: flex;
-    height: 100vh;
+.admin-place-farm-orders-container {
+  display: flex;
+  min-height: 100vh;
+  background: linear-gradient(90deg, #c8e3f4, #597d98);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
-.admin-farm-orders-container .left-column{
-
-    width: 250px; 
-    padding: 20px;
+.admin-place-farm-orders-content {
+  flex: 1;
+  margin-left: 250px;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
 }
 
-.admin-farm-orders-container .right-column{
-
-    flex-grow: 1;
-    background-color: #f4f4f4;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.admin-place-farm-orders-title {
+  color: #01497c;
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  letter-spacing: -0.8px;
+  position: relative;
 }
 
-.right-column .first-row{
-    margin-top: 50px;
-    width:100%;
-    
+.admin-place-farm-orders-title::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, #01497c, #0268a6);
+  border-radius: 2px;
 }
 
-.right-column .second-row{
-   
-  width:900px;
-    
+.admin-place-farm-orders-form {
+  background: white;
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e5e7eb;
 }
 
-.farm-order-update
-{
-    display:flex;
-    justify-content: center;
-    gap:10px;
+.admin-place-farm-orders-row {
+  margin-bottom: 20px;
 }
 
+.admin-place-farm-orders-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #2d3748;
+  margin-bottom: 8px;
+}
 
-.valid-text {
-    color: green;
-    margin-left: 3px;
-  }
-  
-  .error-text {
-    color: red;
-    margin-left: 3px;
-  }
+.admin-place-farm-orders-input,
+.admin-place-farm-orders-select {
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 14px;
+  background: #f8fbff;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
 
+.admin-place-farm-orders-input:focus,
+.admin-place-farm-orders-select:focus {
+  border-color: #01497c;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(1, 73, 124, 0.15);
+}
 
-  .farm-order-labels{
-    font-size: 14px;
-    font-weight: 600;
-   
-  }
+.admin-place-farm-orders-error-text {
+  color: #dc3545;
+  font-size: 12px;
+  margin-top: 4px;
+  margin-left: 3px;
+}
 
+.admin-place-farm-orders-place-button {
+  background: linear-gradient(90deg, #01497c 0%, #0268a6 100%);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  width: 200px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
+}
 
+.admin-place-farm-orders-place-button:hover {
+  background: linear-gradient(90deg, #01355a 0%, #01497c 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(1, 73, 124, 0.3);
+}
+
+.admin-place-farm-orders-table-container {
+  background: white;
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e5e7eb;
+}
+
+.admin-place-farm-orders-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.admin-place-farm-orders-table thead {
+  background: linear-gradient(90deg, #01497c 0%, #0268a6 100%);
+  color: white;
+}
+
+.admin-place-farm-orders-table th,
+.admin-place-farm-orders-table td {
+  padding: 14px;
+  text-align: center;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.admin-place-farm-orders-table th {
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+}
+
+.admin-place-farm-orders-table tbody tr:nth-child(even) {
+  background: #f8fbff;
+}
+
+.admin-place-farm-orders-table tbody tr:hover {
+  background: #e6f0fa;
+  transition: background 0.2s;
+}
+
+.admin-place-farm-orders-update-button {
+  background: linear-gradient(90deg, #28a745 0%, #34c759 100%);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  transition: background 0.3s, transform 0.2s;
+}
+
+.admin-place-farm-orders-update-button:hover {
+  background: linear-gradient(90deg, #218838 0%, #28a745 100%);
+  transform: translateY(-2px);
+}
+
+.admin-place-farm-orders-delete-button {
+  background: linear-gradient(90deg, #dc3545 0%, #e4606d 100%);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  transition: background 0.3s, transform 0.2s;
+}
+
+.admin-place-farm-orders-delete-button:hover {
+  background: linear-gradient(90deg, #c82333 0%, #dc3545 100%);
+  transform: translateY(-2px);
+}
+
+.admin-place-farm-orders-modal-title {
+  color: #01497c;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+}
+
+.admin-place-farm-orders-modal-row {
+  margin-bottom: 20px;
+}
+
+.admin-place-farm-orders-modal-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #2d3748;
+  margin-bottom: 8px;
+}
+
+.admin-place-farm-orders-modal-input,
+.admin-place-farm-orders-modal-select {
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 14px;
+  background: #f8fbff;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.admin-place-farm-orders-modal-input:focus,
+.admin-place-farm-orders-modal-select:focus {
+  border-color: #01497c;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(1, 73, 124, 0.15);
+}
+
+.admin-place-farm-orders-modal-update-button {
+  background: linear-gradient(90deg, #28a745 0%, #34c759 100%);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  width: 230px;
+  transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
+}
+
+.admin-place-farm-orders-modal-update-button:hover {
+  background: linear-gradient(90deg, #218838 0%, #28a745 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+}
+
+.admin-place-farm-orders-modal-close-button {
+  background: linear-gradient(90deg, #6c757d 0%, #5a6268 100%);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  width: 230px;
+  transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
+}
+
+.admin-place-farm-orders-modal-close-button:hover {
+  background: linear-gradient(90deg, #5a6268 0%, #4b5259 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(108, 117, 125, 0.3);
+}
