@@ -3,9 +3,7 @@ import './ExporterRegisterForm.css';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-
 const ExporterRegisterForm = () => {
-
   const navigate = useNavigate();
 
   const [name, setName] = useState('');
@@ -16,7 +14,7 @@ const ExporterRegisterForm = () => {
   const [phone, setPhone] = useState('');
   const [errors, setErrors] = useState({});
 
-  //validation
+  // Validation
   const validate = () => {
     let newErrors = {};
 
@@ -63,33 +61,40 @@ const ExporterRegisterForm = () => {
 
   return (
     <div className="exporter-form-container">
-      <form className="exporter-form" onSubmit={requestRegistration}>
+      <div className="exporter-form-box">
+        <div className="welcome-section">
+          <h2>Register as an Exporter</h2>
+          <p>Fill in your details to join our platform and start your journey with us.</p>
+        </div>
+        <form className="exporter-form" onSubmit={requestRegistration}>
+          <h3>Exporter Registration</h3>
+          <p>Please enter your details</p>
 
-        <label>Name</label>
-        <input type="text" name="name" onChange={(e) => setName(e.target.value)} value={name} required />
+          <label>Name</label>
+          <input type="text" name="name" onChange={(e) => setName(e.target.value)} value={name} required />
 
-        <label>Business Name</label>
-        <input type="text" name="businessName" onChange={(e) => setBusinessName(e.target.value)} value={businessName} required />
+          <label>Business Name</label>
+          <input type="text" name="businessName" onChange={(e) => setBusinessName(e.target.value)} value={businessName} required />
 
-        <label>Business Registration Number</label>
-        <input type="text" name="businessRegNo" onChange={(e) => setBusinessRegNo(e.target.value)} value={businessRegNo} required />
+          <label>Business Registration Number</label>
+          <input type="text" name="businessRegNo" onChange={(e) => setBusinessRegNo(e.target.value)} value={businessRegNo} required />
 
-        <label>Email</label>
-        <input type="email" name="email" onChange={(e) => setEmail(e.target.value)} value={email} required />
-        {errors.email && <p className="error">{errors.email}</p>}
+          <label>Email</label>
+          <input type="email" name="email" onChange={(e) => setEmail(e.target.value)} value={email} required />
+          {errors.email && <p className="error">{errors.email}</p>}
 
-        <label>Phone</label>
-        <input type="text" name="phone" onChange={(e) => setPhone(e.target.value)} value={phone} required />
-        {errors.phone && <p className="error">{errors.phone}</p>}
+          <label>Phone</label>
+          <input type="text" name="phone" onChange={(e) => setPhone(e.target.value)} value={phone} required />
+          {errors.phone && <p className="error">{errors.phone}</p>}
 
-        <label>Address</label>
-        <input type="text" name="address" onChange={(e) => setAddress(e.target.value)} value={address} required />
+          <label>Address</label>
+          <input type="text" name="address" onChange={(e) => setAddress(e.target.value)} value={address} required />
 
-        <button type="submit">Register</button>
-      </form>
+          <button type="submit">Register</button>
+        </form>
+      </div>
     </div>
   );
 };
 
 export default ExporterRegisterForm;
-

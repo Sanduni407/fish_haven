@@ -88,49 +88,49 @@ const CreateAccForm = () => {
   };
 
   return (
-    <div className="admin-create-acc-container">
-      <div className="left-column">
+    <div className="create-acc-form-container">
+      <div className="create-acc-form-left-column">
         <SideNavBar role={"Admin"} />
       </div>
-      <div className="right-column">
-        <Form style={{ marginTop: '50px' }}>
-          <Row>
+      <div className="create-acc-form-right-column">
+        <Form>
+          <Row className="create-acc-form-row">
             <Col>
-              <Form.Label>Full Name</Form.Label>
-              <Form.Control type="text" name="name" onChange={(e) => setName(e.target.value)} value={name} required />
+              <Form.Label className="create-acc-form-label">Full Name</Form.Label>
+              <Form.Control className="create-acc-form-control" type="text" name="name" onChange={(e) => setName(e.target.value)} value={name} required />
             </Col>
             <Col>
-              <Form.Label>Business Name</Form.Label>
-              <Form.Control type="text" name="businessName" onChange={(e) => setBusinessName(e.target.value)} value={businessName} />
-            </Col>
-          </Row>
-
-          <Row>
-            <Col>
-              <Form.Label>Business Reg No</Form.Label>
-              <Form.Control type="text" name="businessRegNo" onChange={(e) => setBusinessRegNo(e.target.value)} value={businessRegNo} />
-            </Col>
-            <Col>
-              <Form.Label>Email</Form.Label>
-              <Form.Control type="email" name="email" onChange={(e) => setEmail(e.target.value)} value={email} required />
-            </Col>
-            <Col>
-              <Form.Label>Contact No</Form.Label>
-              <Form.Control type="text" name="phone" onChange={(e) => setPhone(e.target.value)} value={phone} required />
+              <Form.Label className="create-acc-form-label">Business Name</Form.Label>
+              <Form.Control className="create-acc-form-control" type="text" name="businessName" onChange={(e) => setBusinessName(e.target.value)} value={businessName} />
             </Col>
           </Row>
 
-          <Row>
+          <Row className="create-acc-form-row">
             <Col>
-              <Form.Label>Address</Form.Label>
-              <Form.Control type="text" name="address" onChange={(e) => setAddress(e.target.value)} value={address} required />
+              <Form.Label className="create-acc-form-label">Business Reg No</Form.Label>
+              <Form.Control className="create-acc-form-control" type="text" name="businessRegNo" onChange={(e) => setBusinessRegNo(e.target.value)} value={businessRegNo} />
+            </Col>
+            <Col>
+              <Form.Label className="create-acc-form-label">Email</Form.Label>
+              <Form.Control className="create-acc-form-control" type="email" name="email" onChange={(e) => setEmail(e.target.value)} value={email} required />
+            </Col>
+            <Col>
+              <Form.Label className="create-acc-form-label">Contact No</Form.Label>
+              <Form.Control className="create-acc-form-control" type="text" name="phone" onChange={(e) => setPhone(e.target.value)} value={phone} required />
             </Col>
           </Row>
 
-          <Row>
+          <Row className="create-acc-form-row">
             <Col>
-              <Form.Label>Role</Form.Label>
-              <Form.Select onChange={(e) => setRole(e.target.value)}>
+              <Form.Label className="create-acc-form-label">Address</Form.Label>
+              <Form.Control className="create-acc-form-control" type="text" name="address" onChange={(e) => setAddress(e.target.value)} value={address} required />
+            </Col>
+          </Row>
+
+          <Row className="create-acc-form-row">
+            <Col>
+              <Form.Label className="create-acc-form-label">Role</Form.Label>
+              <Form.Select className="create-acc-form-select" onChange={(e) => setRole(e.target.value)}>
                 <option>Select role</option>
                 <option value="Exporter">Exporter</option>
                 <option value="Supplier">Supplier</option>
@@ -138,14 +138,13 @@ const CreateAccForm = () => {
               </Form.Select>
             </Col>
             <Col>
-              <Form.Label>Password</Form.Label>
-              <Form.Control type="text" name="password" onChange={(e) => setPassword(e.target.value)} value={password} required />
+              <Form.Label className="create-acc-form-label">Password</Form.Label>
+              <Form.Control className="create-acc-form-control" type="text" name="password" onChange={(e) => setPassword(e.target.value)} value={password} required />
             </Col>
           </Row>
         </Form>
-
         <center>
-          <button onClick={createAccount} style={{ backgroundColor: '#49557e', color: 'white', width: '300px', marginTop: '20px' }}>
+          <button onClick={createAccount} className="create-acc-form-button">
             Create account
           </button>
         </center>

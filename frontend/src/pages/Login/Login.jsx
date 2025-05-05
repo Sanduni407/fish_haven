@@ -51,30 +51,40 @@ const Login = () => {
   return (
     <div className="login-container">
       <div className="login-box">
-        <h2>Sign In</h2>
-        <form onSubmit={onSubmitHandler}>
-          <input 
-            onChange={e => setEmail(e.target.value)} 
-            value={email} 
-            type="email" 
-            placeholder="Email" 
-            required 
-          />
-
-          <input 
-            onChange={e => setPassword(e.target.value)} 
-            value={password} 
-            type="password" 
-            placeholder="Password" 
-            required 
-          />
-
-          <a className="forgot-password" onClick={() => navigate('/password-reset')}>
-            Forgot Password?
-          </a>
-
-          <button type="submit">Sign In</button>
-        </form>
+        <div className="welcome-section">
+          <h2>Welcome Back</h2>
+          <p>Enter your credentials to access your account and continue your journey with us.</p>
+        </div>
+        <div className="form-section">
+          <center><h2>Sign In</h2></center>
+          <center><p>Please enter your details</p></center>
+          <form onSubmit={onSubmitHandler}>
+            <input 
+              onChange={e => setEmail(e.target.value)} 
+              value={email} 
+              type="email" 
+              placeholder="Enter your email" 
+              required 
+            />
+            <input 
+              onChange={e => setPassword(e.target.value)} 
+              value={password} 
+              type="password" 
+              placeholder="Enter your password" 
+              required 
+            />
+            <div className="checkbox-row">
+              <label>
+                <input type="checkbox" /> Remember me
+              </label>
+              <a className="forgot-password" onClick={() => navigate('/password-reset')}>
+                Forgot Password?
+              </a>
+            </div>
+            <button type="submit">Sign In</button>
+          </form>
+          <p className="signup-text">Don't have an account? Contact admin</p>
+        </div>
       </div>
     </div>
   );
