@@ -31,7 +31,7 @@ const CreateDelivery = () => {
   const [errMessage, setErrMessage] = useState('');
   const [PackagingArray, setPackagingArray] = useState([]);
   const [variety, setVariety] = useState('');
-  const [quantity, setQuantity] = useState(0);
+  const [quantity, setQuantity] = useState('');
   const [qtyForPackage, setQtyForPackage] = useState(0);
   const [NoOfPackages, setNoOfPackages] = useState(0);
   const [fishCategory, setFishCategory] = useState([]);
@@ -93,10 +93,25 @@ const CreateDelivery = () => {
   };
 
   const addToCART = (newItem) => {
+    if (!newItem.quantity || newItem.quantity <= 0) {
+      toast.error('Quantity must be greater than 0 to add to the package.');
+      return;
+    }
     setPackagingArray((prevState) => [...prevState, newItem]);
   };
 
   const CreateDelivery = async () => {
+    // Validate PackagingArray and quantity before submission
+    if (PackagingArray.length === 0) {
+      toast.error('Please add at least one fish package before submitting.');
+      return;
+    }
+    for (const item of PackagingArray) {
+      if (!item.quantity || item.quantity <= 0) {
+        toast.error('All packages must have a quantity greater than 0.');
+        return;
+      }
+    }
     try {
       const response = await axios.post('http://localhost:4000/api/delivery/create-delivery', { userId, orderCode, shippingAddress, deliveryDate, orderType, contact, PackagingArray });
       if (response.data.success) {

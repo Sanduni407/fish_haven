@@ -24,7 +24,7 @@ const SideNavBar = ({ role }) => {
     Exporter: [
       { name: "Place Order", path: "/exporter/place-order" },
       { name: "View Orders", path: "/exporter/view-order" },
-      { name: "Fish Inventory", path: "/exporter/inventory" },
+      { name: "Fish Inventory", path: "/view/inventory" },
       { name: "User Profile", path: "/exporter-view-profile" },
       { name: "Reviews", path: "/admin/post-review" },
     ],

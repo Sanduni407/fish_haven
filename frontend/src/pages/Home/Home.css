@@ -1,0 +1,261 @@
+.home-page-wrapper {
+    min-height: 100vh;
+    background-color: #ffffff;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    color: #333;
+    position: relative;
+  }
+  
+  .home-content-area {
+    padding: 60px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 80px;
+  }
+  
+  .home-welcome-text {
+    text-align: left;
+    width: 90%;
+    max-width: 1200px;
+  }
+  
+  .home-welcome-title {
+    font-size: 36px;
+    font-weight: 800;
+    color: #01497c;
+    margin-bottom: 15px;
+  }
+  
+  .home-quality-note {
+    font-size: 16px;
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 30px;
+  }
+  
+  .home-fish-display {
+    position: relative;
+    width: 90%;
+    max-width: 1200px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 40px;
+  }
+  
+  .home-glass-effect {
+    position: absolute;
+    top: -20px;
+    left: 0;
+    right: 0;
+    height: 20px;
+    background: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(5px);
+    z-index: 1;
+  }
+  
+  .home-fish-card-item {
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    z-index: 2;
+    overflow: hidden;
+  }
+  
+  .home-fish-card-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  }
+  
+  .home-fish-card-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+  }
+  
+  .home-fish-card-details {
+    padding: 15px;
+  }
+  
+  .home-fish-card-name {
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 10px;
+    text-align: left;
+  }
+  
+  .home-fish-card-info {
+    font-size: 14px;
+    color: #666;
+    line-height: 1.5;
+    text-align: left;
+  }
+  
+  .home-fish-card-info p {
+    margin: 5px 0;
+  }
+  
+  .home-fish-empty {
+    font-size: 18px;
+    color: #666;
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .home-about-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 90%;
+    max-width: 1200px;
+    gap: 40px;
+  }
+  
+  .home-about-story {
+    flex: 1;
+  }
+  
+  .home-about-heading {
+    font-size: 30px;
+    font-weight: 700;
+    color: #01497c;
+    margin-bottom: 20px;
+  }
+  
+  .home-about-description {
+    font-size: 16px;
+    color: #666;
+    line-height: 1.8;
+    margin-bottom: 25px;
+  }
+  
+  .home-fish-images {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .home-fish-image {
+    width: 350px;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+  }
+  
+  .home-fish-image:hover {
+    transform: translateY(-5px);
+  }
+  
+  .home-contact-link {
+    background: linear-gradient(90deg, #3385c1, #065a8e);
+    color: #ffffff;
+    border: none;
+    padding: 12px 30px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.3s ease;
+  }
+  
+  .home-contact-link:hover {
+    background: linear-gradient(90deg, #013a5f, #015f99);
+    transform: translateY(-2px);
+  }
+  
+  @media (max-width: 768px) {
+    .home-content-area {
+      padding: 40px 15px;
+      gap: 50px;
+    }
+  
+    .home-welcome-title {
+      font-size: 28px;
+    }
+  
+    .home-quality-note {
+      font-size: 14px;
+    }
+  
+    .home-fish-display {
+      grid-template-columns: 1fr;
+      gap: 30px;
+    }
+  
+    .home-about-section {
+      flex-direction: column;
+      gap: 30px;
+    }
+  
+    .home-about-heading {
+      font-size: 26px;
+    }
+  
+    .home-about-description {
+      font-size: 14px;
+    }
+  
+    .home-fish-images {
+      flex-direction: column;
+      
+    }
+  
+    .home-fish-image {
+      width: 100%;
+      max-width: 700px;
+      height: auto;
+    }
+  
+    .home-contact-link {
+      padding: 10px 25px;
+      font-size: 14px;
+      width:200px;
+    }
+  }
+  
+  @media (max-width: 576px) {
+    .home-content-area {
+      padding: 30px 10px;
+      gap: 40px;
+    }
+  
+    .home-welcome-title {
+      font-size: 24px;
+    }
+  
+    .home-quality-note {
+      font-size: 12px;
+    }
+  
+    .home-fish-card-image {
+      height: 150px;
+    }
+  
+    .home-fish-card-name {
+      font-size: 16px;
+    }
+  
+    .home-fish-card-info {
+      font-size: 12px;
+    }
+  
+    .home-about-heading {
+      font-size: 22px;
+    }
+  
+    .home-about-description {
+      font-size: 12px;
+    }
+  
+    .home-contact-link {
+      padding: 8px 20px;
+      font-size: 12px;
+    }
+  }

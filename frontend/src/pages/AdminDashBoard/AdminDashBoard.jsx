@@ -4,7 +4,7 @@ import SideNavBar from '../../components/SideNavBar/SideNavBar'
 import { useNavigate } from 'react-router-dom'
 
 const AdminDashBoard = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate() 
 
   const dashboardSections = [
     {

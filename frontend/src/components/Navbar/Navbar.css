@@ -1,198 +1,198 @@
 /* Navbar Container */
 .premium-navbar {
-    width: 100%;
-    background: transparent;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
+  width: 100%;
+  background: transparent;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 }
 
 .premium-navbar-container {
-    width: 90%;
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 1.2rem 0; /* Increased padding */
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  width: 90%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 1.2rem 0; /* Increased padding */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 /* Logo Styling */
 .premium-navbar-logo {
-    text-decoration: none;
-    font-size: 1.7rem; /* Increased font size */
-    font-weight: 700;
-    display: flex;
-    align-items: center;
-    transition: transform 0.3s ease;
+  text-decoration: none;
+  font-size: 1.7rem; /* Increased font size */
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  transition: transform 0.3s ease;
 }
 
 .premium-logo-text {
-    background: linear-gradient(90deg, #3f9cde, #1E3A8A); /* New gradient */
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    font-weight: 700; /* Bold text */
+  background: linear-gradient(90deg, #3f9cde, #1E3A8A); /* New gradient */
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-weight: 700; /* Bold text */
 }
 
 .premium-navbar-logo:hover {
-    transform: translateX(5px);
+  transform: translateX(5px);
 }
 
 /* Navbar Menu */
 .premium-navbar-menu {
-    display: flex;
-    list-style: none;
-    gap: 2rem; /* Increased gap */
-    margin: 0;
-    padding: 0;
+  display: flex;
+  list-style: none;
+  gap: 2rem; /* Increased gap */
+  margin: 0;
+  padding: 0;
 }
 
 .premium-nav-item {
-    position: relative;
+  position: relative;
 }
 
 .premium-nav-link {
-    text-decoration: none;
-    font-weight: 600; /* Bold text */
-    font-size: 1.1rem; /* Increased font size */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    transition: all 0.3s ease;
-    padding: 0.6rem 0; /* Increased padding */
+  text-decoration: none;
+  font-weight: 600; /* Bold text */
+  font-size: 1.1rem; /* Increased font size */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: all 0.3s ease;
+  padding: 0.6rem 0; /* Increased padding */
 }
 
 .premium-nav-text {
-    position: relative;
-    z-index: 1;
-    transition: all 0.3s ease;
-    background: linear-gradient(90deg, #3f9cde, #1E3A8A); /* New gradient */
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    font-weight: 600; /* Bold text */
+  position: relative;
+  z-index: 1;
+  transition: all 0.3s ease;
+  background: linear-gradient(90deg, #3f9cde, #1E3A8A); /* New gradient */
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-weight: 600; /* Bold text */
 }
 
 .premium-nav-underline {
-    height: 2.5px; /* Slightly thicker */
-    width: 0;
-    background: #000000;
-    transition: all 0.3s ease;
-    margin-top: 3px; /* Increased margin */
+  height: 2.5px; /* Slightly thicker */
+  width: 0;
+  background: #000000;
+  transition: all 0.3s ease;
+  margin-top: 3px; /* Increased margin */
 }
 
 .premium-nav-link:hover .premium-nav-text {
-    color: #000000;
-    background: none; /* Remove gradient on hover */
-    -webkit-background-clip: initial;
-    background-clip: initial;
-    transform: translateY(-2px);
+  color: #000000;
+  background: none; /* Remove gradient on hover */
+  -webkit-background-clip: initial;
+  background-clip: initial;
+  transform: translateY(-2px);
 }
 
 .premium-nav-link:hover .premium-nav-underline {
-    width: 100%;
+  width: 100%;
 }
 
 .premium-active .premium-nav-text {
-    color: #000000;
-    background: none; /* Remove gradient for active */
-    -webkit-background-clip: initial;
-    background-clip: initial;
-    font-weight: 700; /* Bolder for active */
+  color: #000000;
+  background: none; /* Remove gradient for active */
+  -webkit-background-clip: initial;
+  background-clip: initial;
+  font-weight: 700; /* Bolder for active */
 }
 
 .premium-active .premium-nav-underline {
-    width: 100%;
-    background: #000000;
+  width: 100%;
+  background: #000000;
 }
 
 /* Navbar Right Section */
 .premium-navbar-right {
-    display: flex;
-    align-items: center;
-    gap: 1.2rem; /* Increased gap */
+  display: flex;
+  align-items: center;
+  gap: 1.2rem; /* Increased gap */
 }
 
 /* Sign In Button */
 .premium-signin-btn {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    background: linear-gradient(90deg, #3f9cde, #1E3A8A);
-    color: #07080c; /* Changed to blue */
-    border: 1px solid #1a2a6c; /* Changed to blue */
-    padding: 0.6rem 1.5rem;
-    border-radius: 50px;
-    font-weight: 500;
-    font-size: 0.95rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: linear-gradient(90deg, #3f9cde, #1E3A8A);
+  color: #07080c; /* Changed to blue */
+  border: 1px solid #1a2a6c; /* Changed to blue */
+  padding: 0.6rem 1.5rem;
+  border-radius: 50px;
+  font-weight: 500;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
 .premium-signin-btn:hover {
-    background: #000000;
-    -webkit-background-clip: initial;
-    background-clip: initial;
-    color: white !important;
-    border-color: #000000;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background: #000000;
+  -webkit-background-clip: initial;
+  background-clip: initial;
+  color: white !important;
+  border-color: #000000;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .premium-btn-icon {
-    width: 20px; /* Slightly larger */
-    height: 20px;
-    transition: transform 0.3s ease;
+  width: 20px; /* Slightly larger */
+  height: 20px;
+  transition: transform 0.3s ease;
 }
 
 .premium-signin-btn:hover .premium-btn-icon {
-    transform: translateX(4px); /* Increased movement */
-    fill: white; /* Change icon color on hover */
+  transform: translateX(4px); /* Increased movement */
+  fill: white; /* Change icon color on hover */
 }
 
 /* Responsive Styles */
 @media (max-width: 1050px) {
-    .premium-navbar-menu {
-        gap: 1.5rem;
-    }
-    
-    .premium-nav-link {
-        font-size: 1rem;
-    }
-    
-    .premium-signin-btn {
-        padding: 0.7rem 1.5rem;
-        font-size: 1rem;
-    }
+  .premium-navbar-menu {
+      gap: 1.5rem;
+  }
+  
+  .premium-nav-link {
+      font-size: 1rem;
+  }
+  
+  .premium-signin-btn {
+      padding: 0.7rem 1.5rem;
+      font-size: 1rem;
+  }
 }
 
 @media (max-width: 900px) {
-    .premium-navbar-menu {
-        display: none;
-    }
-    
-    .premium-navbar-container {
-        justify-content: space-between;
-    }
-    
-    .premium-signin-btn {
-        padding: 0.6rem 1.2rem;
-    }
+  .premium-navbar-menu {
+      display: none;
+  }
+  
+  .premium-navbar-container {
+      justify-content: space-between;
+  }
+  
+  .premium-signin-btn {
+      padding: 0.6rem 1.2rem;
+  }
 }
 
 /* Animation */
 @keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+  from {
+      opacity: 0;
+      transform: translateY(-10px);
+  }
+  to {
+      opacity: 1;
+      transform: translateY(0);
+  }
 }
 
 .premium-navbar {
-    animation: fadeIn 0.5s ease-out;
+  animation: fadeIn 0.5s ease-out;
 }

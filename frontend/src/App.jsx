@@ -35,6 +35,7 @@ import EmployeeProfiles from './pages/EmployeeDashboard/UserProfile/EmployeeProf
 import ViewAdminOrderRequests from './pages/AdminDashBoard/Order/ViewAdminOrderRequests/ViewAdminOrderRequests';
 import Review from './pages/ExporterDashBoard/Review/Review';
 import ViewEmpSalary from './pages/AdminDashBoard/Employee/ViewEmpSalary';
+import SupplierDashboard from './pages/SupplierDashboard/SupplierDashboard';
 
 
 const App = () => {
@@ -47,6 +48,7 @@ const App = () => {
         <Route path='/' element={<Home/>}/>
         <Route path='/exporter-dashboard' element={<ExporterDashBoard/>}/>
         <Route path='/admin-dashboard' element={<AdminDashBoard/>}/>
+        <Route path='/supplier-dashboard' element={<SupplierDashboard/>}/>
 
         
         {/*Sanduni */}
