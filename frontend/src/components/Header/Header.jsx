@@ -8,7 +8,7 @@ const Header = () => {
         <div className='header-contents'>
           <h2>Experience the Premium Export Journey</h2>
           <p>Explore a vibrant collection of exotic ornamental fish, carefully bred and selected to meet global export standards. Enhance your aquariums with premium-quality fish, sourced with expertise and care.</p>
-          <button>Explore Collection</button>
+          <button onClick={() => window.scrollTo({ top: document.getElementById('explore-menu').offsetTop, behavior: 'smooth' })}>Explore Collection</button>
         </div>
       </div>
     </div>

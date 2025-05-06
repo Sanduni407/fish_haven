@@ -34,7 +34,7 @@ const Login = () => {
         } else if (role === 'Admin') {
           navigate('/admin-dashboard');
         } else if (role === 'Supplier') {
-          navigate('/supplier/add-fish');
+          navigate('/supplier-dashboard');
         } else if (role === 'Employer') {
           navigate('/employee/dashboard');
         }
