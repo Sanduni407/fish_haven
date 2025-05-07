@@ -108,11 +108,11 @@ const getOrdersByUserId = async(req,res)=>{
 const updateFramOrder = async(req,res)=>
     {
          const{id} = req.params;
-         const{orderCode,selectedCategory,selectedFarm,size,quantity, date} = req.body;
+         const{orderCode,selectedCategory,selectedFarm,size,quantity, date,userId} = req.body;
     
          try
          {
-           const updatedOrder = await FarmOrderModel.findByIdAndUpdate(id,{orderCode,selectedCategory,selectedFarm,size,quantity, date},{new:true});
+           const updatedOrder = await FarmOrderModel.findByIdAndUpdate(id,{orderCode,selectedCategory,selectedFarm,size,quantity, date,userId},{new:true});
     
            if(!updatedOrder )
            {

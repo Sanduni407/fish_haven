@@ -297,7 +297,7 @@ const InventoryManage = () => {
                   value={size}
                 >
                   <option value="">Select size</option>
-                  <option value="small">Small</option>
+                  <option value="Small">Small</option>
                   <option value="Medium">Medium</option>
                   <option value="Large">Large</option>
                 </Form.Select>
@@ -430,7 +430,7 @@ const InventoryManage = () => {
                     onChange={(e) => setsize(e.target.value)}
                   >
                     <option value="">Select size</option>
-                    <option value="small">Small</option>
+                    <option value="Small">Small</option>
                     <option value="Medium">Medium</option>
                     <option value="Large">Large</option>
                   </Form.Select>

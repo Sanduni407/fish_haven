@@ -23,7 +23,7 @@ const ExporterDashBoard = () => {
       title: 'View Full Inventory',
       description: 'Browse the complete inventory available.',
       icon: '🐟',
-      path: '/exporter/view-inventory',
+      path: '/view/inventory',
     },
     {
       title: 'Post a Review',

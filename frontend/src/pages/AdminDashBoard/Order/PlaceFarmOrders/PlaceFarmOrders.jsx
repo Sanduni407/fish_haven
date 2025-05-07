@@ -87,6 +87,7 @@ const PlaceFarmOrders = () => {
         if(modalShow == true)
         {
           setupdateselectedFarm(user.businessName)
+          setUserId(user._id)
         }
         else
         {
@@ -173,8 +174,9 @@ const PlaceFarmOrders = () => {
       return;
     }
     try {
-      const response = await axios.put(`http://localhost:4000/api/order/update-farm-order/${id}`, { orderCode: code, selectedCategory:updateselectedCategory, size:updatesize, quantity:updatequantity, date:updatedate, selectedFarm:updateselectedFarm })
+      const response = await axios.put(`http://localhost:4000/api/order/update-farm-order/${id}`, { orderCode: code, selectedCategory:updateselectedCategory, size:updatesize, quantity:updatequantity, date:updatedate, selectedFarm:updateselectedFarm ,userId})
       if (response.data.success) {
+        toast.success('order updated successfully')
         fetchFarmOrders()
         setselectedCategory('')
         setselectedFarm('')
