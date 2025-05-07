@@ -17,8 +17,9 @@ const UpdateDelivery = () => {
     "Betta": 2,
     "Neon tetra": 4,
     "Guppi": 8,
-    "Trout": 2,
-    "Mackerel": 6
+    "Koi": 6,
+    "Gold fish": 6,
+    "Neo": 3,
   };
 
   const [delCode, setdelCode] = useState('')

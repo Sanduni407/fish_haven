@@ -19,6 +19,7 @@ const CreateDelivery = () => {
     "Guppi": 8,
     "Koi": 6,
     "Gold fish": 6,
+    "Neo": 3,
   };
 
   const [userId, setUserId] = useState('');
