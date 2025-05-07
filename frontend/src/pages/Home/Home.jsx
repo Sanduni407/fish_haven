@@ -9,6 +9,7 @@ import { assets } from '../../assets/assets';
 const Home = () => {
   const [fish, setFish] = useState([]);
   const [search, setSearch] = useState('');
+  const [reviews, setreviews] = useState([]);
 
   const fetchFish = async () => {
     try {
@@ -21,8 +22,20 @@ const Home = () => {
     }
   };
 
+  const fetchReviews = async () => {
+    try {
+      const response = await axios.get(`http://localhost:4000/api/employee/get-all-reviews`);
+      if (response.data.success) {
+        setreviews(response.data.reviews);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   useEffect(() => {
     fetchFish();
+    fetchReviews();
   }, []);
 
   return (
@@ -73,6 +86,27 @@ const Home = () => {
             <img src={assets.homeimgtwo} alt="Fish Display 2" className='home-fish-image' />
           </div>
         </div>
+
+        <div className='home-review-section'>
+          <h2 className='home-review-heading'>What Our Customers Say</h2>
+          {reviews.length === 0 ? (
+            <p className="home-review-empty">No reviews yet.</p>
+          ) : (
+            <div className='home-review-list'>
+              {reviews.map((review, index) => (
+                <div className="home-review-card" key={index}>
+                  <h3 className='home-review-business-name'>{review.businessName}</h3>
+                  <p className='home-review-text'>{review.review}</p>
+                  <div className='home-review-meta'>
+                    <span className='home-review-date'>{review.date}</span>
+                    <span className='home-review-time'>{review.time}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+        
       </div>
       <div id='footer'><Footer /></div>
     </div>
