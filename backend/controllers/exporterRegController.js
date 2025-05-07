@@ -1,5 +1,14 @@
 import exporterRegistrationModel from "../models/exporterModel.js";
+import userActivityModel from "../models/userActivityModel.js"; // NEW: Imported for logging activities
 
+// NEW: Utility function to log user activities
+const logActivity = async (userId, action, details) => {
+  try {
+    await userActivityModel.create({ userId, action, details });
+  } catch (error) {
+    console.log('Error logging activity:', error);
+  }
+};
 
 //user make a request to register as a exporter
 const createRegisterRequest = async (req, res)=>{
@@ -12,18 +21,17 @@ const createRegisterRequest = async (req, res)=>{
         return res.json({success:false, message:"Missing Details"})
     }
 
-
     try{
        
-
         const newRequest = new exporterRegistrationModel({name,businessName,businessRegNo,address,email,phone});
 
         await newRequest.save();
 
+        // NEW: Log the exporter registration request activity
+        // Since this is a registration request, we don't have a userId yet, so userId is null
+        await logActivity(null, 'exporter_registration_request', `Exporter registration request submitted with email ${email}`);
 
         res.json({success:true, message:"registration request submitted successfully"});
-
-
 
     }catch(error)
     {
@@ -59,7 +67,5 @@ const getARequestById = async(req,res)=>{
   res.status(500).json({ success: false, message: 'Error fetching request' });
 }
 }
-
-
 
 export {createRegisterRequest,getallRequest,getARequestById}

@@ -9,6 +9,7 @@ import deliveryRoute from "./routes/deliveryRoute.js";
 import fishRouter from "./routes/fishRoute.js";
 import employeeRouter from "./routes/employeeRoute.js";
 import requestRouter from "./routes/exporterRegRouter.js";
+import userActivityRouter from "./routes/userActivityRoutes.js"; // NEW: Imported user activity router
 
 const app = express();
 const port = process.env.PORT || 4000
@@ -35,8 +36,8 @@ app.use('/api/employee',employeeRouter)
 
 app.use('/api/reg-request',requestRouter)
 
+app.use('/api/user-activities', userActivityRouter) // NEW: Added user activity route
 
 app.listen(port, ()=>{
     console.log(`Server started on PORT:${port}`)
 });
-
