@@ -1,186 +1,337 @@
 .supplier-dashboard-container {
-    display: flex;
-    min-height: 100vh;
-    background: url('../../../public/bluefish.webp') no-repeat center center/cover;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    position: relative;
+  display: flex;
+  min-height: 100vh;
+  background: url('../../../public/bluefish.webp') no-repeat center center/cover;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  position: relative;
+}
+
+/* Add overlay for better text contrast */
+.supplier-dashboard-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(0, 29, 61, 0.7), rgba(0, 88, 139, 0.4));
+  z-index: 0;
+}
+
+.supplier-dashboard-left-column {
+  width: 260px;
+  padding: 20px;
+  z-index: 1;
+  position: relative;
+}
+
+.supplier-dashboard-right-column {
+  flex: 1;
+  padding: 50px;
+  display: flex;
+  justify-content: center;
+  z-index: 1;
+  position: relative;
+}
+
+.supplier-dashboard-content {
+  max-width: 1500px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+  align-items: center;
+}
+
+.supplier-dashboard-header {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.supplier-dashboard-title {
+  color: #ffffff;
+  font-size: 42px;
+  font-weight: 800;
+  margin-bottom: 20px;
+  letter-spacing: -1.5px;
+  text-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+  background: linear-gradient(90deg, rgba(1, 73, 124, 0.85), rgba(2, 104, 166, 0.85));
+  padding: 15px 30px;
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+}
+
+.supplier-dashboard-title::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.3) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: rotate(30deg);
+  animation: shine 4s infinite;
+}
+
+.supplier-dashboard-subtitle {
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 500;
+  margin-top: 10px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.supplier-dashboard-cards {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 35px;
+}
+
+.supplier-dashboard-row {
+  display: flex;
+  gap: 35px;
+  width: 100%;
+}
+
+.supplier-dashboard-row-top {
+  justify-content: space-between;
+}
+
+.supplier-dashboard-card {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 20px;
+  padding: 35px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  flex: 1;
+  min-width: 300px;
+  max-width: calc((100% - 70px) / 3);
+  color: #ffffff;
+}
+
+.supplier-dashboard-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 0.1) 0%, 
+    rgba(255, 255, 255, 0) 100%);
+  z-index: 0;
+}
+
+.supplier-dashboard-card:hover {
+  transform: translateY(-8px) scale(1.03);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3);
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.supplier-dashboard-card:hover::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 5px;
+  background: linear-gradient(90deg, #0288d1, #03a9f4, #4fc3f7);
+  animation: gradientShift 3s infinite;
+}
+
+.supplier-dashboard-card-icon-container {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 25px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(2, 136, 209, 0.8), rgba(3, 169, 244, 0.5));
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  transition: transform 0.4s ease;
+}
+
+.supplier-dashboard-card:hover .supplier-dashboard-card-icon-container {
+  transform: scale(1.15) rotate(5deg);
+}
+
+.supplier-dashboard-card-icon {
+  font-size: 32px;
+  color: #ffffff;
+  z-index: 1;
+}
+
+.supplier-dashboard-card-title {
+  color: #ffffff;
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 15px;
+  letter-spacing: -0.5px;
+  z-index: 1;
+}
+
+.supplier-dashboard-card-description {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 16px;
+  line-height: 1.7;
+  margin: 0;
+  z-index: 1;
+}
+
+/* Water ripple effect */
+@keyframes ripple {
+  0% {
+    transform: scale(0);
+    opacity: 0.5;
   }
-  
-  .supplier-dashboard-left-column {
-    width: 260px;
-    padding: 20px;
+  100% {
+    transform: scale(2);
+    opacity: 0;
   }
-  
-  .supplier-dashboard-right-column {
-    flex: 1;
-    padding: 50px;
-    display: flex;
-    justify-content: center;
+}
+
+.ripple-effect {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(0);
+  animation: ripple 1s linear;
+}
+
+/* Shining effect */
+@keyframes shine {
+  0% {
+    left: -100%;
+    opacity: 0;
   }
-  
-  .supplier-dashboard-content {
-    max-width: 1500px;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 50px;
-    align-items: center;
+  20% {
+    left: 100%;
+    opacity: 0.6;
   }
-  
-  .supplier-dashboard-title {
-    color: #ffffff;
-    font-size: 42px;
-    font-weight: 800;
-    margin-bottom: 30px;
-    letter-spacing: -1.5px;
-    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
-    background: linear-gradient(90deg, rgba(1, 73, 124, 0.85), rgba(2, 104, 166, 0.85));
-    padding: 15px 30px;
-    border-radius: 12px;
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
-    display: inline-block;
+  100% {
+    left: 100%;
+    opacity: 0;
   }
-  
-  .supplier-dashboard-cards {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 35px;
+}
+
+/* Gradient animation */
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
   }
-  
-  .supplier-dashboard-row {
-    display: flex;
-    gap: 35px;
-    width: 100%;
+  50% {
+    background-position: 100% 50%;
   }
-  
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@media (max-width: 1200px) {
   .supplier-dashboard-row-top {
-    justify-content: space-between;
+    flex-wrap: wrap;
   }
   
   .supplier-dashboard-card {
-    background: rgba(255, 255, 255, 0.05); /* Translucent white for glass effect */
-    backdrop-filter: blur(10px); /* Frosted glass blur effect */
-    -webkit-backdrop-filter: blur(5px); /* Safari support */
-    border-radius: 20px;
-    padding: 35px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-    border: 1px solid rgba(255, 255, 255, 0.05); /* Subtle border */
-    cursor: pointer;
-    transition: transform 0.4s ease, box-shadow 0.4s ease, background 0.4s ease;
-    display: flex;
+    max-width: calc((100% - 35px) / 2);
+    flex: 0 1 calc((100% - 35px) / 2);
+  }
+}
+
+@media (max-width: 768px) {
+  .supplier-dashboard-left-column {
+    width: 220px;
+    padding: 15px;
+  }
+
+  .supplier-dashboard-right-column {
+    padding: 30px;
+  }
+
+  .supplier-dashboard-content {
+    gap: 30px;
+  }
+
+  .supplier-dashboard-title {
+    font-size: 34px;
+    padding: 12px 24px;
+  }
+
+  .supplier-dashboard-row {
     flex-direction: column;
-    align-items: center;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
+    gap: 25px;
+  }
+
+  .supplier-dashboard-row-top {
+    justify-content: center;
+  }
+
+  .supplier-dashboard-card {
+    max-width: 100%;
     flex: 1;
-    min-width: 300px;
-    max-width: calc((100% - 70px) / 3); /* Matches top row card width */
-    color: #ffffff; /* Ensure text is visible against the background */
   }
-  
-  .supplier-dashboard-card:hover {
-    transform: translateY(-8px) scale(1.03);
-    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.25);
-    background: rgba(255, 255, 255, 0.25); /* Slightly less translucent on hover */
+}
+
+@media (max-width: 576px) {
+  .supplier-dashboard-container {
+    flex-direction: column;
   }
-  
+
+  .supplier-dashboard-left-column {
+    width: 100%;
+    padding: 10px;
+  }
+
+  .supplier-dashboard-right-column {
+    padding: 20px;
+  }
+
+  .supplier-dashboard-content {
+    gap: 20px;
+  }
+
+  .supplier-dashboard-title {
+    font-size: 28px;
+    padding: 10px 20px;
+  }
+
+  .supplier-dashboard-card-icon-container {
+    width: 70px;
+    height: 70px;
+  }
+
   .supplier-dashboard-card-icon {
-    font-size: 56px;
-    margin-bottom: 25px;
-    color: #01497c;
-    transition: transform 0.4s ease;
-    z-index: 1;
+    font-size: 28px;
   }
-  
-  .supplier-dashboard-card:hover .supplier-dashboard-card-icon {
-    transform: scale(1.15) rotate(5deg);
-  }
-  
+
   .supplier-dashboard-card-title {
-    color: #ffffff;
-    font-size: 24px;
-    font-weight: 700;
-    margin-bottom: 15px;
-    letter-spacing: -0.5px;
-    z-index: 1;
+    font-size: 22px;
   }
-  
+
   .supplier-dashboard-card-description {
-    color: #ffffff;
-    font-size: 16px;
-    line-height: 1.7;
-    margin: 0;
-    z-index: 1;
+    font-size: 15px;
   }
-  
-  @media (max-width: 768px) {
-    .supplier-dashboard-left-column {
-      width: 220px;
-      padding: 15px;
-    }
-  
-    .supplier-dashboard-right-column {
-      padding: 30px;
-    }
-  
-    .supplier-dashboard-content {
-      gap: 30px;
-    }
-  
-    .supplier-dashboard-title {
-      font-size: 34px;
-      padding: 12px 24px;
-    }
-  
-    .supplier-dashboard-row {
-      flex-direction: column;
-      gap: 25px;
-    }
-  
-    .supplier-dashboard-row-top {
-      justify-content: center;
-      max-width: 100%;
-    }
-  
-    .supplier-dashboard-card {
-      padding: 28px;
-    }
-  }
-  
-  @media (max-width: 576px) {
-    .supplier-dashboard-container {
-      flex-direction: column;
-    }
-  
-    .supplier-dashboard-left-column {
-      width: 100%;
-      padding: 10px;
-    }
-  
-    .supplier-dashboard-right-column {
-      padding: 20px;
-    }
-  
-    .supplier-dashboard-content {
-      gap: 20px;
-    }
-  
-    .supplier-dashboard-title {
-      font-size: 28px;
-      padding: 10px 20px;
-    }
-  
-    .supplier-dashboard-card-icon {
-      font-size: 48px;
-    }
-  
-    .supplier-dashboard-card-title {
-      font-size: 22px;
-    }
-  
-    .supplier-dashboard-card-description {
-      font-size: 15px;
-    }
-  }
+}
