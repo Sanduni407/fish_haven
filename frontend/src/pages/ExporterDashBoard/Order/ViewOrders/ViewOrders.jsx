@@ -89,6 +89,7 @@ const ViewOrders = () => {
               <thead>
                 <tr>
                   <th></th>
+                  <th>Order Code</th>
                   <th>Shipping Address</th>
                   <th>Shipping Date</th>
                   <th>Order Type</th>
@@ -110,6 +111,7 @@ const ViewOrders = () => {
                         onChange={() => fetchSelectedRowId(order._id)} 
                       />
                     </td>
+                    <td>{order.orderCode}</td>
                     <td>{order.shippingAddress}</td>
                     <td>{order.shippingDate}</td>
                     <td>{order.orderType}</td>
