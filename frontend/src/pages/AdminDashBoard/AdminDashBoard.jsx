@@ -37,6 +37,13 @@ const AdminDashBoard = () => {
       icon: '🐟',
       path: '/admin/manage-inventory',
     },
+    // NEW: Added section for user activity logs
+    {
+      title: 'User Activity Logs',
+      description: 'View logs of user management activities.',
+      icon: '📜',
+      path: '/admin/user-activity-logs',
+    },
   ]
 
   return (
@@ -60,6 +67,20 @@ const AdminDashBoard = () => {
           </div>
           <div className="admin-dashboard-row admin-dashboard-row-bottom">
             {dashboardSections.slice(3, 5).map((section, index) => (
+              <div
+                key={index}
+                className="admin-dashboard-card"
+                onClick={() => navigate(section.path)}
+              >
+                <span className="admin-dashboard-card-icon">{section.icon}</span>
+                <h3 className="admin-dashboard-card-title">{section.title}</h3>
+                <p className="admin-dashboard-card-description">{section.description}</p>
+              </div>
+            ))}
+          </div>
+          {/* NEW: Added a separate row for the "User Activity Logs" section */}
+          <div className="admin-dashboard-row admin-dashboard-row-bottom">
+            {dashboardSections.slice(5).map((section, index) => (
               <div
                 key={index}
                 className="admin-dashboard-card"
