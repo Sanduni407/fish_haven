@@ -17,19 +17,41 @@ const PlaceFarmOrders = () => {
   const [orders, setOrders] = useState([])
   const [expectedshipmentDate, setexpectedShipmentDate] = useState('')
   const [modalShow, setModalShow] = useState(false);
+
   const [id, setId] = useState('')
+  const [code, setOrderCode] = useState('')
+
   const [selectedCategory, setselectedCategory] = useState('')
   const [selectedFarm, setselectedFarm] = useState('')
   const [size, setSize] = useState('')
   const [quantity, setquantity] = useState('')
-  const [code, setOrderCode] = useState('')
   const [date, setDate] = useState('')
   const [userId, setUserId] = useState('')
+
   const [categoryValid, setCategoryValid] = useState(null);
   const [sizeValid, setSizeValid] = useState(null);
   const [quantityValid, setQuantityValid] = useState(null);
   const [dateValid, setDateValid] = useState(null);
   const [errMessage, setErrMessage] = useState('')
+
+  //updated values
+
+
+  const [updateselectedCategory, setupdateselectedCategory] = useState('')
+  const [updateselectedFarm, setupdateselectedFarm] = useState('')
+  const [updatesize, setupdateSize] = useState('')
+  const [updatequantity, setupdatequantity] = useState('')
+  const [updatedate, setupdateDate] = useState('')
+
+
+  const [updatecategoryValid, setupdateCategoryValid] = useState(null);
+  const [updatesizeValid, setupdateSizeValid] = useState(null);
+  const [updatequantityValid, setupdateQuantityValid] = useState(null);
+  const [updatedateValid, setupdateDateValid] = useState(null);
+  const [updateerrMessage, setupdateErrMessage] = useState('')
+  
+
+
 
   const fetchAllFishCategories = async () => {
     try {
@@ -57,13 +79,23 @@ const PlaceFarmOrders = () => {
     fetchaOrder()
   }, [])
 
-  const fetchBusinessName = async () => {
+  const fetchBusinessName = async (selectedCategory) => {
     try {
       const response = await axios.post('http://localhost:4000/api/order/get-the-farm', { selectedCategory });
       if (response.data.success) {
         const user = response.data.user
-        setselectedFarm(user.businessName)
-        setUserId(user._id)
+        if(modalShow == true)
+        {
+          setupdateselectedFarm(user.businessName)
+        }
+        else
+        {
+          setselectedFarm(user.businessName)
+          setUserId(user._id)
+        }
+      
+        
+        
       }
     } catch (err) {
       console.log(err)
@@ -72,9 +104,20 @@ const PlaceFarmOrders = () => {
 
   useEffect(() => {
     if (selectedCategory) {
-      fetchBusinessName();
+      fetchBusinessName(selectedCategory);
     }
+   
   }, [selectedCategory]);
+
+
+  useEffect(()=>{
+
+    if(updateselectedCategory)
+      {
+        fetchBusinessName(updateselectedCategory);
+      }
+
+  },[updateselectedCategory])
 
   const placeOrder = async () => {
     if (!categoryValid || !sizeValid || !quantityValid || !dateValid) {
@@ -84,6 +127,8 @@ const PlaceFarmOrders = () => {
     try {
       const response = await axios.post('http://localhost:4000/api/order/place-farm-order', { orderCode, selectedCategory, size, quantity, date, selectedFarm, userId })
       if (response.data.success) {
+        toast.success('order placed successfully')
+
         fetchFarmOrders()
         setselectedCategory('')
         setselectedFarm('')
@@ -123,12 +168,12 @@ const PlaceFarmOrders = () => {
   }
 
   const updateOrder = async () => {
-    if (!categoryValid || !sizeValid || !quantityValid || !dateValid) {
+    if (!updatecategoryValid || !updatesizeValid || !updatequantityValid || !updatedateValid) {
       toast.error("Please correct invalid fields");
       return;
     }
     try {
-      const response = await axios.put(`http://localhost:4000/api/order/update-farm-order/${id}`, { orderCode: code, selectedCategory, size, quantity, date, selectedFarm })
+      const response = await axios.put(`http://localhost:4000/api/order/update-farm-order/${id}`, { orderCode: code, selectedCategory:updateselectedCategory, size:updatesize, quantity:updatequantity, date:updatedate, selectedFarm:updateselectedFarm })
       if (response.data.success) {
         fetchFarmOrders()
         setselectedCategory('')
@@ -153,16 +198,17 @@ const PlaceFarmOrders = () => {
       if (response.data.success) {
         const order = response.data.Order
         setId(order._id)
-        setselectedCategory(order.selectedCategory)
+        setupdateselectedCategory(order.selectedCategory)
         setOrderCode(order.orderCode)
-        setselectedFarm(order.selectedFarm)
-        setSize(order.size)
-        setquantity(order.quantity)
-        setDate(order.date)
-        setCategoryValid(true)
-        setSizeValid(true)
-        setQuantityValid(true)
-        setDateValid(true)
+        setupdateselectedFarm(order.selectedFarm)
+        setupdateSize(order.size)
+        setupdatequantity(order.quantity)
+        setupdateDate(order.date)
+
+        setupdateCategoryValid(true)
+        setupdateSizeValid(true)
+        setupdateQuantityValid(true)
+        setupdateDateValid(true)
       }
     } catch (err) {
       console.log(err)
@@ -187,6 +233,7 @@ const PlaceFarmOrders = () => {
     setQuantityValid(value > 0);
   };
 
+
   const handleDateChange = (e) => {
     const selectedDate = new Date(e.target.value);
     const maxDate = new Date(expectedshipmentDate);
@@ -201,6 +248,47 @@ const PlaceFarmOrders = () => {
       setDate(e.target.value);
     }
   };
+
+  
+
+
+  // validate the update fields 
+
+  const handleupdateFishCategoryChange = (e) => {
+    const value = e.target.value;
+    setupdateselectedCategory(value);
+    setupdateCategoryValid(value !== '');
+  };
+
+  const handleupdateSizeChange = (e) => {
+    const value = e.target.value;
+    setupdateSize(value);
+    setupdateSizeValid(value !== '');
+  };
+
+
+  const handleupdateQuantityChange = (e) => {
+    const value = parseFloat(e.target.value);
+    setupdatequantity(value);
+    setupdateQuantityValid(value > 0);
+  };
+
+
+  
+  const handleupdateDateChange = async(e) => {
+    const selectedDate = new Date(e.target.value);
+    const minDate = new Date();
+    if (selectedDate <= minDate) {
+      setupdateErrMessage(`Deadline date must be a future date`);
+      setupdateDateValid(false);
+      setupdateDate('');
+    } else {
+      setupdateErrMessage('');
+      setupdateDateValid(true);
+      setupdateDate(e.target.value);
+    }
+  };
+
 
   return (
     <div className="admin-place-farm-orders-container">
@@ -352,15 +440,15 @@ const PlaceFarmOrders = () => {
                   <Form.Label className="admin-place-farm-orders-modal-label">Fish Category</Form.Label>
                   <Form.Select
                     className="admin-place-farm-orders-modal-select"
-                    onChange={handleFishCategoryChange}
-                    value={selectedCategory}
+                    onChange={handleupdateFishCategoryChange}
+                    value={updateselectedCategory}
                   >
                     <option>Select fish category</option>
                     {fish.map((fish, index) => (
                       <option key={index} value={fish}>{fish}</option>
                     ))}
                   </Form.Select>
-                  {categoryValid === false && <p className="admin-place-farm-orders-error-text">Select a category</p>}
+                  {updatecategoryValid === false && <p className="admin-place-farm-orders-error-text">Select a category</p>}
                 </Col>
               </Row>
               <Row className="admin-place-farm-orders-modal-row">
@@ -368,7 +456,7 @@ const PlaceFarmOrders = () => {
                   <Form.Label className="admin-place-farm-orders-modal-label">Fish Supplier</Form.Label>
                   <Form.Control
                     className="admin-place-farm-orders-modal-input"
-                    value={selectedFarm}
+                    value={updateselectedFarm}
                     readOnly
                   />
                 </Col>
@@ -376,15 +464,15 @@ const PlaceFarmOrders = () => {
                   <Form.Label className="admin-place-farm-orders-modal-label">Fish Size</Form.Label>
                   <Form.Select
                     className="admin-place-farm-orders-modal-select"
-                    onChange={handleSizeChange}
-                    value={size}
+                    onChange={handleupdateSizeChange}
+                    value={updatesize}
                   >
                     <option value="">Select size</option>
                     <option value="large">Large</option>
                     <option value="Medium">Medium</option>
                     <option value="Small">Small</option>
                   </Form.Select>
-                  {sizeValid === false && <p className="admin-place-farm-orders-error-text">Select a size</p>}
+                  {updatesizeValid === false && <p className="admin-place-farm-orders-error-text">Select a size</p>}
                 </Col>
               </Row>
               <Row className="admin-place-farm-orders-modal-row">
@@ -393,10 +481,10 @@ const PlaceFarmOrders = () => {
                   <Form.Control
                     className="admin-place-farm-orders-modal-input"
                     type="Number"
-                    onChange={handleQuantityChange}
-                    value={quantity}
+                    onChange={handleupdateQuantityChange}
+                    value={updatequantity}
                   />
-                  {quantityValid === false && <p className="admin-place-farm-orders-error-text">Must be greater than 0</p>}
+                  {updatequantityValid === false && <p className="admin-place-farm-orders-error-text">Must be greater than 0</p>}
                 </Col>
               </Row>
               <Row className="admin-place-farm-orders-modal-row">
@@ -405,10 +493,10 @@ const PlaceFarmOrders = () => {
                   <Form.Control
                     className="admin-place-farm-orders-modal-input"
                     type="date"
-                    onChange={handleDateChange}
-                    value={date}
+                    onChange={handleupdateDateChange}
+                    value={updatedate}
                   />
-                  {dateValid === false && <p className="admin-place-farm-orders-error-text">{errMessage}</p>}
+                  {updatedateValid === false && <p className="admin-place-farm-orders-error-text">{updateerrMessage}</p>}
                 </Col>
               </Row>
             </Form>
