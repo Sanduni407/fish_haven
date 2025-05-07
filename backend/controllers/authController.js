@@ -1,9 +1,18 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import userModel from '../models/userModel.js';
+import userActivityModel from '../models/userActivityModel.js'; // NEW: Imported for logging activities
 import transporter from '../config/nodemailer.js';
 import employeeSalaryModel from '../models/salaryModel.js';
 
+// NEW: Utility function to log user activities
+const logActivity = async (userId, action, details) => {
+  try {
+    await userActivityModel.create({ userId, action, details });
+  } catch (error) {
+    console.log('Error logging activity:', error);
+  }
+};
 
 //create a user account
 
@@ -42,6 +51,9 @@ const registerUser = async (req, res)=>{
             });
           }
 
+        // NEW: Log the registration activity
+        await logActivity(newUser._id, 'register', `User registered with email ${email}`);
+
         // send the email which contains the login credentials
         const mailOptions = {
             from: process.env.SENDER_EMAIL,
@@ -58,15 +70,12 @@ const registerUser = async (req, res)=>{
 
         res.json({success:true, message:"User registered successfully"});
 
-
-
     }catch(error)
     {
         console.log(error)
          res.json({success:false, message: error.message})
     }
 }
-
 
 //login user
 
@@ -97,8 +106,10 @@ const loginUser = async(req,res)=>{
 
         const token = createToken(user._id);
 
-        res.json({success:true, token , role:user.role});
+        // NEW: Log the login activity
+        await logActivity(user._id, 'login', `User logged in with email ${email}`);
 
+        res.json({success:true, token , role:user.role});
 
     }
     catch(error)
@@ -114,7 +125,6 @@ const loginUser = async(req,res)=>{
 const createToken = (id) =>{
     return jwt.sign({id},process.env.JWT_SECRET)
 }
-
 
 //send otp to reset password
 
@@ -170,7 +180,6 @@ const generateOTP = ()=>{
   return otp;
 }
 
-
 //reset user password
 
 const resetPassword = async(req,res)=>{
@@ -206,11 +215,12 @@ const resetPassword = async(req,res)=>{
         user.resetOtp = "";
         user.resetOtpExpireAt = 0;
 
+        await user.save();
 
+        // NEW: Log the password reset activity
+        await logActivity(user._id, 'reset_password', `User reset password for email ${email}`);
 
-       await user.save();
-
-       return res.json({success: true, message: 'Password has been reset successfully'})
+        return res.json({success: true, message: 'Password has been reset successfully'})
 
     }catch(error)
     {
@@ -220,16 +230,13 @@ const resetPassword = async(req,res)=>{
 
 }
 
-
 //fetch all user account details from the database and display to admin
 const getAllUserAccounts = async(req,res)=>{
-
 
     try{
 
         const users = await userModel.find();
         
-
         return res.json({success: true, users})
 
     }catch(error)
@@ -238,9 +245,7 @@ const getAllUserAccounts = async(req,res)=>{
         res.json({success:false, message: error.message})
     }
 
-
 }
-
 
 //get user details by id to display in user profiles
 
@@ -277,13 +282,20 @@ const updateUserById = async(req,res)=>{
      const id = req.params.id; // Get user id from request parameters
         const { name, businessName, businessRegNo, address, email, phone } = req.body; // Get data from request body
     
-        
         try {
-           await userModel.findByIdAndUpdate(id, //find user by id and update
+           const user = await userModel.findByIdAndUpdate(id, //find user by id and update
                 { name: name, businessName: businessName, businessRegNo: businessRegNo, address: address, email: email, phone: phone },{new:true});
+            
+            if (!user) { // NEW: Added check for user not found
+                return res.status(404).json({ success: false, message: 'User not found' });
+            }
+            
+            // NEW: Log the profile update activity
+            await logActivity(id, 'profile_updated', `User updated profile for email ${email}`);
                
         } catch (err) {
             console.log(err); // If error
+            res.json({success:false, message: err.message}) // NEW: Added error response
         }
     
          return res.status(200).json({ success:true, message:'successfully updated' });
@@ -300,6 +312,9 @@ const deleteUser = async (req, res) => {
          if (!user) { // If user not found
         return res.status(404).json({ success: false,message: 'unable to delete' });
     }
+
+        // NEW: Log the delete user activity
+        await logActivity(id, 'delete_user', `User deleted with email ${user.email}`);
 
     return res.status(200).json({ success:true,message: 'User deleted successfully' }); // If user deleted successfully
 

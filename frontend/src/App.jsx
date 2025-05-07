@@ -36,14 +36,13 @@ import ViewAdminOrderRequests from './pages/AdminDashBoard/Order/ViewAdminOrderR
 import Review from './pages/ExporterDashBoard/Review/Review';
 import ViewEmpSalary from './pages/AdminDashBoard/Employee/ViewEmpSalary';
 import SupplierDashboard from './pages/SupplierDashboard/SupplierDashboard';
-
+import UserActivityLog from './components/UserActivityLog'; // NEW: Imported UserActivityLog from components folder
 
 const App = () => {
   return (
     <div>
         <ToastContainer/>
       <Routes>
-
 
         <Route path='/' element={<Home/>}/>
         <Route path='/exporter-dashboard' element={<ExporterDashBoard/>}/>
@@ -62,8 +61,7 @@ const App = () => {
         <Route path='/admin/view-farm-orders' element={<PlaceFarmOrders/>}/>
         <Route path='/supplier/view-order' element={<ViewOrderRequest/>}/>
 
-
-        {/* danushi  */}
+        {/* danushi */}
         <Route path='/login' element={<Login/>}/>
         <Route path='/exporter-register' element={<ExporterRegisterForm/>}/>
         <Route path='/password-reset' element={<PasswordResetPage/>}/>
@@ -89,14 +87,13 @@ const App = () => {
         <Route path='/admin/post-review' element={<Review/>}/>
         <Route path='/admin/mark-attendance' element={<ViewEmpSalary/>}/>
 
-
         {/* Sanjitha */}
         <Route path='/supplier/add-fish' element={<AddFish/>}/>
         <Route path='/admin/manage-inventory' element={<InventoryManage/>}/>
         <Route path='/view/inventory' element={<Inventory/>}/>
 
-
-        
+        {/* NEW: Added route for User Activity Logs */}
+        <Route path='/admin/user-activity-logs' element={<UserActivityLog/>}/>
 
       </Routes>
     </div>
