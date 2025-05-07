@@ -192,12 +192,42 @@
 }
 
 .home-review-card {
-  background: #ffffff;
+  background: linear-gradient(135deg, #024b7b, #83b0c5);
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   padding: 20px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   text-align: left;
+  position: relative;
+  overflow: hidden;
+}
+
+.home-review-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  animation: mirrorShine 1.5s infinite;
+}
+
+@keyframes mirrorShine {
+  0% {
+    left: -100%;
+  }
+  50% {
+    left: 100%;
+  }
+  100% {
+    left: 100%;
+  }
 }
 
 .home-review-card:hover {
@@ -208,13 +238,13 @@
 .home-review-business-name {
   font-size: 18px;
   font-weight: 600;
-  color: #333;
+  color: #e0f7fa;
   margin-bottom: 10px;
 }
 
 .home-review-text {
   font-size: 14px;
-  color: #666;
+  color: #b0bec5;
   line-height: 1.6;
   margin-bottom: 15px;
 }
@@ -223,7 +253,7 @@
   display: flex;
   justify-content: space-between;
   font-size: 12px;
-  color: #999;
+  color: #b0bec5;
 }
 
 .home-review-date,

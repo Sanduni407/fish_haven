@@ -68,4 +68,30 @@ const getARequestById = async(req,res)=>{
 }
 }
 
-export {createRegisterRequest,getallRequest,getARequestById}
+
+
+const deleteRegisterRequest = async(req,res)=>{
+
+  try
+     {
+        const{id} = req.params;
+  
+       if(!id)
+       {
+        return res.json({success:false , message:'required data is missing'})
+       }
+  
+           await exporterRegistrationModel.findByIdAndDelete(id);
+  
+         res.json({success:true,message:'deleted'})
+  
+     }catch(err){
+  
+        console.log(err);
+        res.json({success:false,message:'Error'})
+     }
+
+}
+
+
+export {createRegisterRequest,getallRequest,getARequestById,deleteRegisterRequest}

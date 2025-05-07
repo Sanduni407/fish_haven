@@ -3,6 +3,8 @@ import './ReqRequestTable.css'
 import { useNavigate } from 'react-router-dom'
 import SideNavBar from '../../../components/SideNavBar/SideNavBar'
 import axios from 'axios'
+import { toast } from 'react-toastify';
+import {assets} from '../../../assets/assets'
 
 const ReqRequestTable = () => {
   const navigate = useNavigate()
@@ -13,6 +15,18 @@ const ReqRequestTable = () => {
       const response = await axios.get('http://localhost:4000/api/reg-request/get-all-requests')
       if (response.data.success) {
         setRequest(response.data.requests)
+      }
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  const deleteRegisterRequest = async (id) => {
+    try {
+      const response = await axios.delete(`http://localhost:4000/api/reg-request/delete-a-request/${id}`)
+      if (response.data.success) {
+        getallexporterRequests()
+        toast.success('Request deleted successfully')
       }
     } catch (err) {
       console.log(err)
@@ -42,6 +56,7 @@ const ReqRequestTable = () => {
                   <th>Phone</th>
                   <th>Address</th>
                   <th>Action</th>
+                  <th></th>
                 </tr>
               </thead>
               <tbody>
@@ -59,6 +74,14 @@ const ReqRequestTable = () => {
                         onClick={() => navigate(`/create-acc/${row._id}`)}
                       >
                         Create Account
+                      </button>
+                    </td>
+                    <td>
+                      <button
+                        className="admin-register-requests-delete-button"
+                        onClick={() => {deleteRegisterRequest(row._id)}}
+                      >
+                        <img src={assets.deleteimg} alt="Delete"/>
                       </button>
                     </td>
                   </tr>
