@@ -31,3 +31,20 @@ export const getUserActivities = async (req, res) => {
     res.status(500).json({ success: false, message: 'Server error' });
   }
 };
+
+
+
+// DELETE: Delete all user activity records
+export const deleteAllUserActivities = async (req, res) => {
+  try {
+    const result = await UserActivity.deleteMany({});
+    res.status(200).json({ 
+      success: true, 
+      message: 'All user activity records have been deleted.', 
+      deletedCount: result.deletedCount 
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: 'Failed to delete records' });
+  }
+};
