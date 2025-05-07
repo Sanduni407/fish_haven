@@ -4,7 +4,8 @@ import { AppContext } from '../context/AppContext';
 import './UserActivityLog.css';
 import { toast } from 'react-toastify';
 import SideNavBar from './SideNavBar/SideNavBar';
-
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
 
 const UserActivityLog = () => {
   const { token } = useContext(AppContext);
@@ -47,6 +48,66 @@ const UserActivityLog = () => {
 
   const handleFilterChange = (e) => {
     setFilters({ ...filters, [e.target.name]: e.target.value });
+  };
+
+  const downloadOrderPDF = async () => {
+    try {
+      const response = await axios.get('http://localhost:4000/api/user-activities', {
+        headers: { token },
+        params: filters
+      });
+      if (response.data.success) {
+        const activitiesData = response.data.activities;
+        const doc = new jsPDF();
+        const pageWidth = doc.internal.pageSize.getWidth();
+        const margin = 10;
+        doc.setDrawColor(0);
+        doc.setLineWidth(0.5);
+        doc.rect(margin, margin, pageWidth - margin * 2, 270);
+        doc.setFontSize(14);
+        doc.setFont("helvetica", "bold");
+        doc.text("Fish Haven", margin + 2, 18);
+        const generatedAt = new Date().toLocaleString();
+        doc.setFontSize(10);
+        doc.setFont("helvetica", "normal");
+        doc.text(`Generated on: ${generatedAt}`, margin + 2, 25);
+        doc.setFontSize(18);
+        doc.setFont("helvetica", "bold");
+        doc.text("User Activity Report", pageWidth / 2, 40, { align: "center" });
+        doc.setFontSize(12);
+        doc.setFont("helvetica", "normal");
+        let yPosition = 55;
+        const filteredActivities = activitiesData.map(activity => [
+          activity.userId ? `${activity.userId.name} (${activity.userId.email})` : 'N/A',
+          activity.action,
+          activity.details,
+          new Date(activity.timestamp).toLocaleString()
+        ]);
+        autoTable(doc, {
+          head: [['User', 'Action', 'Details', 'Timestamp']],
+          body: filteredActivities,
+          startY: yPosition + 15,
+          theme: 'grid',
+          headStyles: {
+            fillColor: [15, 30, 80],
+            textColor: 255,
+            fontSize: 11,
+            fontStyle: 'bold'
+          },
+          bodyStyles: {
+            fontSize: 10
+          },
+          styles: {
+            halign: 'center'
+          },
+          margin: { left: margin + 5, right: margin + 5 }
+        });
+        const fileName = `User_Activity_Report_${new Date().toISOString().split('T')[0]}.pdf`;
+        doc.save(fileName);
+      }
+    } catch (err) {
+      console.error("Error downloading PDF:", err);
+    }
   };
 
   return (
@@ -125,9 +186,14 @@ const UserActivityLog = () => {
               </tbody>
             </table>
           </div>
-          <button onClick={deleteallActivities} className="user-tracking-clear-button">
-            Clear All
-          </button>
+          <div className="user-tracking-buttons-container">
+            <button onClick={deleteallActivities} className="user-tracking-clear-button">
+              Clear All
+            </button>
+            <button onClick={downloadOrderPDF} className="user-tracking-download-button">
+              Download Report
+            </button>
+          </div>
         </div>
       </div>
     </div>
