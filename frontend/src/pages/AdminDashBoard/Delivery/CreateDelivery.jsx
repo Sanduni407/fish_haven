@@ -15,11 +15,13 @@ const CreateDelivery = () => {
 
   const predefinedPackageSizes = {
     "Betta": 2,
-    "Neon tetra": 4,
+    "Angel fish": 7,
     "Guppi": 8,
     "Koi": 6,
     "Gold fish": 6,
     "Neo": 3,
+    "Pearl gurami": 2,
+    "Platy": 8,
   };
 
   const [userId, setUserId] = useState('');
