@@ -44,8 +44,8 @@ const Home = () => {
       <Header />
       <div className='home-content-area'>
         <div className='home-welcome-text'>
-          <h2 className='home-welcome-title'>Explore the Luxurious Fish Collection</h2>
-          <p className='home-quality-note'>Experience the highest quality fish, meticulously bred for vibrant colors and robust health, ensuring excellence in every specimen.</p>
+          <marquee><h2 className='home-welcome-title'>Explore the Luxurious Fish Collection</h2></marquee><br />
+          <p className='home-quality-note'><h3>Experience the highest quality fish, meticulously bred for vibrant colors and robust health, ensuring excellence in every specimen.</h3></p>
         </div>
         <div id='explore-menu' className='home-fish-display'>
           <div className='home-glass-effect'></div>

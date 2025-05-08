@@ -49,7 +49,7 @@ const UserActivityLog = () => {
   const handleFilterChange = (e) => {
     setFilters({ ...filters, [e.target.name]: e.target.value });
   };
-
+//pdf generation
   const downloadOrderPDF = async () => {
     try {
       const response = await axios.get('http://localhost:4000/api/user-activities', {
