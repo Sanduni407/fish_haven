@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './ExporterRegisterForm.css';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Navbar from '../../components/Navbar/Navbar';
 
 const ExporterRegisterForm = () => {
   const navigate = useNavigate();
@@ -60,6 +61,8 @@ const ExporterRegisterForm = () => {
   };
 
   return (
+    <>
+    <Navbar/>
     <div className="exporter-form-container">
       <div className="exporter-form-box">
         <div className="welcome-section">
@@ -94,6 +97,7 @@ const ExporterRegisterForm = () => {
         </form>
       </div>
     </div>
+    </>
   );
 };
 
