@@ -81,30 +81,7 @@ const getUniqueFishNames = async (req, res) => {
 
 
 
-/*
-const updateFish = async(req,res)=>{
 
-    const {id} = req.params; // extract unique fish id
-    const {fishCategory, gender, size, unitPrice,quantity } = req.body;
-
-    try{
-          const updatefish = await fishModel.findByIdAndUpdate(id, {
-            fishCategory, gender, size, unitPrice,quantity }, { new: true });
-            
-      if (!updatefish) return res.status(404).json({ success: false, message: 'Fish not found' });
-
-      res.json({ success: true, message: 'Fish updated successfully' });
-
-    }catch(err)
-    {
-        console.log(err)
-
-        res.json({ success: false, message: err.message });
-    }
-  
-
-}
-*/
 
 
 const updateFish = async (req, res) => {
@@ -165,28 +142,7 @@ const getfishByFishId = async(req,res)=>{ // get fish by user id
 
 
 
-/*
-const deleteFish= async(req,res)=>{
-    try
-    {
-       const{id} = req.params;
- 
-      if(!id)
-      {
-       return res.json({success:false , message:'required data is missing'})
-      }
- 
-          await fishModel.findByIdAndDelete(id);
- 
-        res.json({success:true,message:'deleted'})
- 
-    }catch(err){
- 
-       console.log(err);
-       res.json({success:false,message:'Error'})
-    }
- }
-    */
+
 
 
  const deleteFish= async(req,res)=>{
