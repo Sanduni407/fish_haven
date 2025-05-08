@@ -2,8 +2,13 @@ import React, { useState } from 'react'
 import './PasswordResetPage.css'
 import axios from 'axios'
 import { toast } from 'react-toastify'
+import Navbar from '../../components/Navbar/Navbar'
+import { useNavigate } from 'react-router-dom'
 
 const PasswordResetPage = () => {
+
+  const navigate = useNavigate();
+
   const [email, setEmail] = useState('')
   const [newPassword, setNewPassword] = useState('')
   const [isEmailSent, setIsEmailSent] = useState(false)
@@ -36,6 +41,7 @@ const PasswordResetPage = () => {
       const response = await axios.post('http://localhost:4000/api/auth/reset-password', { newPassword, otp, email })
       if (response.data.success) {
         toast.success('Password reset successfully')
+        navigate('/login')
       }
     } catch (error) {
       console.log(error)
@@ -46,6 +52,8 @@ const PasswordResetPage = () => {
   }
 
   return (
+    <>
+    <Navbar/>
     <div className="pr-main-container">
       <div className="pr-content-wrapper">
         <div className="pr-left-section">
@@ -142,6 +150,7 @@ const PasswordResetPage = () => {
         </div>
       </div>
     </div>
+    </>
   )
 }
 

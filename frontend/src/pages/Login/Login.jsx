@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { AppContext } from '../../context/AppContext';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import Navbar from '../../components/Navbar/Navbar';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -49,6 +50,8 @@ const Login = () => {
   };
 
   return (
+    <>
+    <Navbar/>
     <div className="login-container">
       <div className="login-box">
         <div className="welcome-section">
@@ -87,6 +90,7 @@ const Login = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 
