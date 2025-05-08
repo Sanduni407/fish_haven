@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
-import './Navbar.css'
+import React, { useState } from 'react';
+import './Navbar.css';
 import { Link } from "react-router-dom";
+import logo from '../../assets/logo.png'; // Updated path
 
 const Navbar = () => {
   const [menu, setMenu] = useState("home");
@@ -16,7 +17,8 @@ const Navbar = () => {
     <nav className='premium-navbar'>
       <div className='premium-navbar-container'>
         <Link to='/' className='premium-navbar-logo'>
-          <span className='premium-logo-text'>AquaExport</span>
+          <img src={logo} alt="Fish-Haven Logo" className='premium-logo-img' />
+          <span className='premium-logo-text'>Fish-Haven</span>
         </Link>
         
         <ul className="premium-navbar-menu">
@@ -84,7 +86,7 @@ const Navbar = () => {
         </div>
       </div>
     </nav>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;

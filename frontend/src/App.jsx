@@ -72,7 +72,7 @@ const App = () => {
         <Route path='/exporter-view-profile' element={<ViewUserProfile/>}/>
         <Route path='/supplier-view-profile' element={<SupplierProfiles/>}/>
         <Route path='/employee-view-profile' element={<EmployeeProfiles/>}/>
-
+        <Route path='/admin/user-activity-logs' element={<UserActivityLog/>}/>
         {/*Minuli */}
         <Route path='/admin/create-delivery/:id' element={<CreateDelivery/>}/>
         <Route path='/admin/view-deliveries' element={<ViewDelivery/>}/>
@@ -92,8 +92,8 @@ const App = () => {
         <Route path='/admin/manage-inventory' element={<InventoryManage/>}/>
         <Route path='/view/inventory' element={<Inventory/>}/>
 
-        {/* NEW: Added route for User Activity Logs */}
-        <Route path='/admin/user-activity-logs' element={<UserActivityLog/>}/>
+      
+       
 
       </Routes>
     </div>
